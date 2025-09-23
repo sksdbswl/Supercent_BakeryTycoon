@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMover : MonoBehaviour
 {
+    private Player player;
+    
     [Header("Settings")]
     public float moveSpeed = 5f;
 
@@ -19,6 +21,7 @@ public class PlayerMover : MonoBehaviour
 
     private void Awake()
     {
+        player = GetComponent<Player>();
         controller = GetComponent<CharacterController>();
         mainCam = Camera.main;
     }
@@ -45,10 +48,11 @@ public class PlayerMover : MonoBehaviour
     }
     #endregion
 
+
     private void Update()
     {
         Vector3 move = Vector3.zero;
-
+        
         // 1. 모바일 조이스틱
         if (joystick != null && joystick.MoveInput.sqrMagnitude > 0.01f)
         {
@@ -77,8 +81,14 @@ public class PlayerMover : MonoBehaviour
         {
             move.y = 0;
             controller.Move(move * moveSpeed * Time.deltaTime);
-            
             transform.forward = move.normalized; // 이동 방향 바라보기
+            player.animator.ResetTrigger(PlayerAnimationController.Idle);
+            player.animator.SetTrigger(PlayerAnimationController.Move);
+        }
+        else
+        {
+            player.animator.ResetTrigger(PlayerAnimationController.Move);
+            player.animator.SetTrigger(PlayerAnimationController.Idle);
         }
     }
 }
