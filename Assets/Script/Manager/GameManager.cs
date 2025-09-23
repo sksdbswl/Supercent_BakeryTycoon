@@ -7,9 +7,10 @@ public class GameManager : Singleton<GameManager>
     public CameraController mainCamera;
     
     /// <summary>
-    /// 손님 종류 및 빵 종류 셋팅
+    /// 손님 종류 및 스폰
     /// </summary>
     [SerializeField] public CustomerTable CustomerTable;
+    [SerializeField] public CustomerSpawnerManager CustomerSpawnerManager;
     
     protected override void Awake()
     {

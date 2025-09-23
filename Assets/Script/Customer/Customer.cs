@@ -6,7 +6,7 @@ public class Customer : MonoBehaviour
     public CustomerStateMachine CustomerStateMachine { get; private set; }
     public Animator animator;
     public NavMeshAgent navAgent { get; private set; }
-    
+    public PooledObject PooledObject { get; set; }
     // SO 데이터
     public CustomerData customerData; 
     
@@ -14,9 +14,8 @@ public class Customer : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
-        
+        PooledObject =GetComponent<PooledObject>();
         CustomerStateMachine = new CustomerStateMachine(this);
-        //CustomerStateMachine.ChangeState(CustomerStateMachine.VisitState);
         
         InitCustomer();
     }

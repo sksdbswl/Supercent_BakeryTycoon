@@ -5,7 +5,7 @@ public class CustomerSpawnerManager : MonoBehaviour
 {
     [SerializeField] private GameObject customerPrefab; 
     [SerializeField] private Transform spawnParent;     
-    [SerializeField] private Transform spawnPosition;
+    [SerializeField] public Transform spawnPosition;
 
     // [SerializeField] private int maxActiveCustomers = 10; // 동시에 매장에 있을 최대 손님
     // [SerializeField] private int maxShowCaseActiveCustomers = 5; // 쇼케이스 기준 손님
@@ -60,6 +60,8 @@ public class CustomerSpawnerManager : MonoBehaviour
                 int spawnCount = Random.Range(1, 4);
                 spawnCount = Mathf.Min(spawnCount, availableSlots);
 
+                Debug.Log($"spawnCount:: {spawnCount}");
+                
                 for (int i = 0; i < spawnCount; i++)
                 {
                     SpawnCustomer();

@@ -21,7 +21,7 @@ public class CustomerStateMachine : StateMachine
     public VisitState VisitState { get; }
     public BakeWaitingState BakeWaitingState { get; }
     public OrderWaitingState OrderWaitingState { get; }
-    public BuyState BuyState { get; }
+    //public BuyState BuyState { get; }
     public CheckOutState CheckOutState { get; } // 식사 또는 포장
     public LeavingState LeavingState { get; }
     
@@ -33,7 +33,7 @@ public class CustomerStateMachine : StateMachine
         VisitState = new VisitState(this);
         BakeWaitingState = new BakeWaitingState(this);
         OrderWaitingState = new OrderWaitingState(this);
-        BuyState = new BuyState(this);
+        //BuyState = new BuyState(this);
         CheckOutState = new CheckOutState(this);
         LeavingState = new LeavingState(this);
     }
