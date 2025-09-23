@@ -16,11 +16,4 @@ public class GameManager : Singleton<GameManager>
         base.Awake();
         mainCamera.GetComponent<CameraController>();
     }
-    
-    private void Start()
-    {
-        // customerDataLoader.ImportCustomerJson();
-        //
-        // Debug.Log($"Loaded {customers.Length} customers");
-    }
 }
