@@ -3,21 +3,19 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public PlayerStateMachine PlayerStateMachine { get; private set; }
-    public Animator animator;
+    public Animator animator { get; private set; }
+    public PlayerMover Mover { get; private set; } 
 
 
     private void Awake()
     {
         // 초기 플레이어 설정
         animator = GetComponentInChildren<Animator>();
-
+        Mover = GetComponent<PlayerMover>(); 
+        
         // 초기 플레이어 생성 및 FSM 시작 선언
         PlayerStateMachine = new PlayerStateMachine(this);
         PlayerStateMachine.ChangeState(PlayerStateMachine.IdleState);
-    }
-
-    private void Start()
-    {
     }
 
     private void Update()

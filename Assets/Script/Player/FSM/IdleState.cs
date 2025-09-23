@@ -12,7 +12,12 @@ public class IdleState : PlayerBaseState
     
     public override void Update()
     {
-        //Debug.Log("Idle Update");   
+        Vector3 move = stateMachine.Player.Mover.GetMoveDirection();
+
+        if (move.sqrMagnitude > 0.01f)
+        {
+            stateMachine.ChangeState(new MoveState(stateMachine));
+        }
     }
 
     public override void Exit()
