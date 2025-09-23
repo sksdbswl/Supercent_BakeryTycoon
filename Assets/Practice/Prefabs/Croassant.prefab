@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3079897477633646847}
   - component: {fileID: 1585016186989136511}
   - component: {fileID: 4563164664559035657}
+  - component: {fileID: 162601517316191124}
   m_Layer: 8
   m_Name: Croassant
   m_TagString: Untagged
@@ -117,3 +118,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.41569227, y: 0.4413492, z: 1.0544723}
   m_Center: {x: 0.011097401, y: 0.21967995, z: -0.0039429665}
+--- !u!114 &162601517316191124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7814139412610811324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273afc0cb0e43cf967c2afb56f4d439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

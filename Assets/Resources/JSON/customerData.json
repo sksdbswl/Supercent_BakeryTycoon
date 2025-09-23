@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "customerName": "Customer",
+      "desiredBread": "Croissant",
+      "desiredBreadId": 0,
+      "quantity": 1,
+      "wantsToEatIn": true
+    },
+    {
+      "customerName": "Customer",
+      "desiredBread": "Croissant",
+      "desiredBreadId": 0,
+      "quantity": 1,
+      "wantsToEatIn": true
+    }
+  ]
+}

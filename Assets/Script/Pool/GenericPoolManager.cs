@@ -1,18 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenericPoolManager : MonoBehaviour
+public class GenericPoolManager : Singleton<GenericPoolManager>
 {
-    public static GenericPoolManager Instance { get; private set; }
-
     // 프리팹을 키로, 해당 풀을 값으로 저장
     private Dictionary<GameObject, GenericObjectPool<GameObject>> pools 
         = new Dictionary<GameObject, GenericObjectPool<GameObject>>();
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
     }
 
     // 풀 생성
@@ -48,6 +44,13 @@ public class GenericPoolManager : MonoBehaviour
         GameObject obj = pools[prefab].Get();
         obj.transform.SetPositionAndRotation(position, rotation);
         if(parent != null) obj.transform.SetParent(parent);
+        
+        var pooled = obj.GetComponent<PooledObject>();
+        if (pooled != null && pooled.OriginPrefab == null)
+        {
+            pooled.Initialize(prefab);
+        }
+        
         return obj;
     }
 
@@ -60,7 +63,13 @@ public class GenericPoolManager : MonoBehaviour
             Destroy(obj);
             return;
         }
-
+        
+        var pooled = obj.GetComponent<PooledObject>();
+        if (pooled != null && pooled.OriginPrefab == null)
+        {
+            pooled.ResetObject();
+        }
+        
         pools[prefab].Release(obj);
     }
 }

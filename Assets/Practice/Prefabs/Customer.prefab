@@ -331,6 +331,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4541141870242516323}
   - component: {fileID: 971556608106169826}
+  - component: {fileID: 4683845668441004420}
+  - component: {fileID: 4190248872221203705}
   m_Layer: 10
   m_Name: Customer
   m_TagString: Untagged
@@ -365,7 +367,7 @@ Animator:
   m_GameObject: {fileID: 3769144362882373593}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4c56c274740f4439a924d007c445a64c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -375,6 +377,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4683845668441004420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3769144362882373593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af853c8cf4344135aa1a1732073a0fff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  customerData: {fileID: 0}
+--- !u!114 &4190248872221203705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3769144362882373593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273afc0cb0e43cf967c2afb56f4d439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3898563997361661198
 GameObject:
   m_ObjectHideFlags: 0
