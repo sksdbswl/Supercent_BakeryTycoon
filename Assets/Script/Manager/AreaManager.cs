@@ -26,4 +26,14 @@ public class AreaManager :  Singleton<AreaManager>
         }
         return null; // 없으면 대기
     }
+    
+    public int CountActiveCustomers(List<NavPoint> points)
+    {
+        int count = 0;
+        foreach (var point in points)
+        {
+            if (point.IsOccupied) count++;
+        }
+        return count;
+    }
 }
