@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class Player : MonoBehaviour
     public Animator animator { get; private set; }
     public PlayerMover Mover { get; private set; } 
     public int Money { get; set; }
+    public Stack<GameObject> Bread { get; set; } = new Stack<GameObject>();
     
     private void Awake()
     {

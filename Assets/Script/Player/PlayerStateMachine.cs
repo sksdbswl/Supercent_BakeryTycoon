@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class PlayerStateMachine : StateMachine
 {
     /// <summary>
@@ -31,4 +33,18 @@ public class PlayerStateMachine : StateMachine
         RestockState = new RestockState(this);
         PaymentState = new PaymentState(this);
     }
+    
+    // public new void Update()
+    // {
+    //     Vector3 move = Player.Mover.GetMoveDirection();
+    //     if (move.sqrMagnitude > 0.01f)
+    //     {
+    //         if (!(currentState is MoveState))
+    //         {
+    //             ChangeState(MoveState);
+    //         }
+    //     }
+    //
+    //     currentState?.Update();
+    // }
 }
