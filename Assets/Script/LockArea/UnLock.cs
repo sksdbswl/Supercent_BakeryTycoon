@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -36,7 +37,10 @@ public class UnLock : MonoBehaviour
         // 비용 적용
         if (costText != null)
             costText.text = cost.ToString();
+    }
 
+    private void Start()
+    {
         // UnlockType에 맞는 전략을 선택
         unlockAction = UnlockActionFactory.Create(unlockType);
     }
@@ -59,14 +63,6 @@ public class UnLock : MonoBehaviour
             Debug.Log("자산이 부족합니다!");
             return;
         }
-        
-        // OpenArea 활성화 & 애니메이션
-        // if(OpneArea != null)
-        // {
-        //     OpneArea.SetActive(true);
-        //     Animator anim = OpneArea.GetComponent<Animator>();
-        //     if(anim != null) anim.SetTrigger("Open");
-        // }
         
         Unlock(player);
         

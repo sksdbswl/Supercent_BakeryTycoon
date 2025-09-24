@@ -6,6 +6,9 @@ public class GameManager : Singleton<GameManager>
 {
     public CameraController mainCamera;
     
+    [Header("Particle System Settings")]
+    public ParticleSystem openParticlePrefab;
+    
     /// <summary>
     /// 손님 종류 및 스폰
     /// </summary>
@@ -16,5 +19,6 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         mainCamera.GetComponent<CameraController>();
+        UnlockActionFactory.OpenParticle = openParticlePrefab;
     }
 }
