@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class CustomerSpawnerManager : MonoBehaviour
+public class CustomerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject customerPrefab; 
     [SerializeField] private Transform spawnParent;     
@@ -60,7 +60,7 @@ public class CustomerSpawnerManager : MonoBehaviour
                 int spawnCount = Random.Range(1, 4);
                 spawnCount = Mathf.Min(spawnCount, availableSlots);
 
-                Debug.Log($"spawnCount:: {spawnCount}");
+                //Debug.Log($"spawnCount:: {spawnCount}");
                 
                 for (int i = 0; i < spawnCount; i++)
                 {

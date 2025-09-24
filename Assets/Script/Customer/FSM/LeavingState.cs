@@ -6,7 +6,7 @@ public class LeavingState : CustomerBaseState
     
     public override void Enter()
     {
-        Transform exitPoint = GameManager.Instance.CustomerSpawnerManager.spawnPosition;
+        Transform exitPoint = GameManager.Instance.customerSpawner.spawnPosition;
         stateMachine.Customer.navAgent.SetDestination(exitPoint.position);
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
     }
@@ -15,7 +15,7 @@ public class LeavingState : CustomerBaseState
     {
         float distance = Vector3.Distance(
             stateMachine.Customer.transform.position,
-            GameManager.Instance.CustomerSpawnerManager.spawnPosition.position
+            GameManager.Instance.customerSpawner.spawnPosition.position
         );
 
         if (distance < 0.2f) // 도착 판정 임계값

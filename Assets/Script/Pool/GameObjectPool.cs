@@ -11,8 +11,8 @@ public class GameObjectPool : MonoBehaviour
     private void Start()
     {
         // 빵 풀 생성
-        GenericPoolManager.Instance.CreatePool(croassantPrefab, 20, croassantParent);
+        //GenericPoolManager.Instance.CreatePool(croassantPrefab, 20, croassantParent);
         // 손님 풀 생성
-        GenericPoolManager.Instance.CreatePool(customerPrefab, 20, customerParent);
+        //GenericPoolManager.Instance.CreatePool(customerPrefab, 20, customerParent);
     }
 }

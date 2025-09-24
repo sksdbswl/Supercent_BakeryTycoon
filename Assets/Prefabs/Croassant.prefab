@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7438458711388741382}
   - component: {fileID: 3079897477633646847}
   - component: {fileID: 1585016186989136511}
-  - component: {fileID: 4563164664559035657}
   - component: {fileID: 162601517316191124}
+  - component: {fileID: 9206694803171236337}
   m_Layer: 8
   m_Name: Croassant
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7814139412610811324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -105,19 +105,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &4563164664559035657
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7814139412610811324}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.41569227, y: 0.4413492, z: 1.0544723}
-  m_Center: {x: 0.011097401, y: 0.21967995, z: -0.0039429665}
 --- !u!114 &162601517316191124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,3 +117,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1273afc0cb0e43cf967c2afb56f4d439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &9206694803171236337
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7814139412610811324}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7966970277800153331, guid: 1949ec903206a6644b27b16f80ea6521, type: 3}

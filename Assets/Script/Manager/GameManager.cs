@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -13,7 +14,7 @@ public class GameManager : Singleton<GameManager>
     /// 손님 종류 및 스폰
     /// </summary>
     [SerializeField] public CustomerTable CustomerTable;
-    [SerializeField] public CustomerSpawnerManager CustomerSpawnerManager;
+    [FormerlySerializedAs("CustomerSpawnerManager")] [SerializeField] public CustomerSpawner customerSpawner;
     
     protected override void Awake()
     {
