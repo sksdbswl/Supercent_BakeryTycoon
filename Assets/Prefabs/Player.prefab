@@ -880,7 +880,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76d91c37bea415bbfebacc1408c63aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BreadTransform: {fileID: 4224082509960626663}
+  characterController: {fileID: 0}
+  <BreadTransform>k__BackingField: {fileID: 4224082509960626663}
 --- !u!65 &6898330440055108763
 BoxCollider:
   m_ObjectHideFlags: 0
