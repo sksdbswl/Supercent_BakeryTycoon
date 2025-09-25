@@ -4,20 +4,21 @@ using UnityEngine;
 public class BreadSpawner : MonoBehaviour
 {
     [Header("Spawner Settings")]
+    [SerializeField] private Oven oven; 
     [SerializeField] private GameObject breadPrefab;
     [SerializeField] private Transform spawnParent;
     [SerializeField] private Transform spawnPoint;        
     [SerializeField] private float createInterval = 5f;
-
-    private BakeryUnit BakeryUnit;
+    
+    //private BakeryUnit BakeryUnit;
     
     private int MaxBread = 10;
     public int Bread = 0;
 
-    private void Awake()
-    {
-        BakeryUnit = GetComponent<BakeryUnit>();
-    }
+    // private void Awake()
+    // {
+    //     BakeryUnit = GetComponent<BakeryUnit>();
+    // }
     
     private void Start()
     {
@@ -40,14 +41,19 @@ public class BreadSpawner : MonoBehaviour
                     bread.SetActive(true);
 
                     Rigidbody rb = bread.GetComponent<Rigidbody>();
+                    var product = bread.GetComponent<Product>();
+                    
                     if (rb != null)
                     {
                         rb.velocity = Vector3.zero;
                         rb.AddForce(-Vector3.forward * 6f, ForceMode.Impulse);
                     }
-
-                    BakeryUnit.breadList.Push(bread);
-                    Bread++;
+                    
+                    if (product != null)
+                    {
+                        oven.Bake(product);
+                        Bread++;
+                    }
                 }
             }
 

@@ -206,7 +206,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8895707668107628794}
   - component: {fileID: 8895707668107628795}
-  - component: {fileID: 486513458}
+  - component: {fileID: 8895707667645434828}
   m_Layer: 0
   m_Name: ShowCase
   m_TagString: Untagged
@@ -244,7 +244,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.5, y: 6, z: 3.3}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &486513458
+--- !u!114 &8895707667645434828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,10 +253,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8895707668107628773}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6cd0dad78214a4bb5bd5363e897397c, type: 3}
+  m_Script: {fileID: 11500000, guid: 59219326f10b43bb878febc1a4363a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 1
 --- !u!1 &8895707668468813162
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +331,7 @@ GameObject:
   - component: {fileID: 8895707668791202426}
   - component: {fileID: 8895707668791202427}
   - component: {fileID: 8895707668791202424}
-  - component: {fileID: 1270684083}
+  - component: {fileID: 1119824141}
   m_Layer: 0
   m_Name: Oven
   m_TagString: Untagged
@@ -370,6 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646049451eaf24b4bbfa52fcf42031c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oven: {fileID: 1119824141}
   breadPrefab: {fileID: 7814139412610811324, guid: 9fe9c8e530a08434aae618f0fb5d76f4, type: 3}
   spawnParent: {fileID: 0}
   spawnPoint: {fileID: 8895707668741338613}
@@ -388,7 +388,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 5, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1270684083
+--- !u!114 &1119824141
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -397,10 +397,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8895707668791202405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6cd0dad78214a4bb5bd5363e897397c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f7b4c5bc70c44a5ba5bd3b5f5122a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 0
+  bakingTime: 3
 --- !u!1001 &8895707668468065131
 PrefabInstance:
   m_ObjectHideFlags: 0

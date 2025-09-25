@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1585016186989136511}
   - component: {fileID: 162601517316191124}
   - component: {fileID: 9206694803171236337}
+  - component: {fileID: -8428685396384173533}
   m_Layer: 8
   m_Name: Croassant
   m_TagString: Untagged
@@ -131,3 +132,15 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 7966970277800153331, guid: 1949ec903206a6644b27b16f80ea6521, type: 3}
+--- !u!114 &-8428685396384173533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7814139412610811324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e151b4318c4b5a9a4392f2ae04fa90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
