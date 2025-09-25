@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Customer_Croassant_2
   m_EditorClassIdentifier: 
   customerName: Croassant
-  desiredBread: {fileID: 0}
+  desiredBread: {fileID: 11400000, guid: daa626f2ee29f45a788d14e92383939a, type: 2}
   desiredBreadId: 0
   quantity: 2
+  pickedUpCount: 0
   wantsToEatIn: 0

@@ -111,11 +111,16 @@ public class Player : MonoBehaviour, IProductTarget
                 
                 if (PickedUpBreads.Count == 0)
                 {
+                    Debug.Log("쇼케이스 사용중지");
+                    // 빵이 없으면 쇼케이스 사용중 아님
+                    showcase.SetBusy(false);
+                    
                     yield return term;
                     continue;
                 }
 
                 var bread = PickedUpBreads.Pop();
+                // 빵이 있으면 쇼케이스 사용중 => 손님 사용불가
                 showcase.Exhibition(bread);
                 bread.MoveTo(this, Product.GoalType.Showcase);
             }

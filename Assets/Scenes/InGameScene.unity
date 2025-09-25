@@ -3965,7 +3965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864857561c2e4ce4901b7f193a9d4545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customerPrefab: {fileID: 3769144362882373593, guid: 7d7589d2636d44e64a0446841792863e, type: 3}
+  customerPrefab: {fileID: 3769144362882373593, guid: 4dbce6cd6aeca456abcb59c6d4b6eaca, type: 3}
   spawnParent: {fileID: 1826704801}
   spawnPosition: {fileID: 950413083}
   checkInterval: 10

@@ -26,9 +26,16 @@ public class Customer : MonoBehaviour, IProductTarget
     
     public void InitCustomer()
     {
-        customerData = GameManager.Instance.CustomerTable.GetRandomCustomer();
+        var template = GameManager.Instance.CustomerTable.GetRandomCustomer();
+        customerData = ScriptableObject.CreateInstance<CustomerData>();
+    
+        customerData.customerName = template.customerName;
+        customerData.desiredBread = template.desiredBread;
+        customerData.desiredBreadId = template.desiredBreadId;
+        customerData.quantity = template.quantity;
+        customerData.pickedUpCount = 0;  // 초기화
+        customerData.wantsToEatIn = template.wantsToEatIn;
     }
-
     private void Update()
     {
         CustomerStateMachine.Update();

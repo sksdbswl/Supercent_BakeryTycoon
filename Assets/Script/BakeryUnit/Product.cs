@@ -34,14 +34,14 @@ public class Product : MonoBehaviour
                 StartCoroutine(MoveToTargetBezier(target));
                 break;
 
-            case GoalType.Customer:
-                // 쇼케이스 -> 손님
-                StartCoroutine(MoveToTargetBezier(target));
-                break;
-
             case GoalType.Showcase:
                 // 플레이어 -> 쇼케이스
                 StartCoroutine(MoveToShowcaseBezier(target));
+                break;
+            
+            case GoalType.Customer:
+                // 쇼케이스 -> 손님
+                StartCoroutine(MoveToTargetBezier(target));
                 break;
         }
     }
@@ -49,6 +49,8 @@ public class Product : MonoBehaviour
     // Player / Customer 공용 Bezier 이동
     private IEnumerator MoveToTargetBezier(IProductTarget target)
     {
+        Debug.Log($"빵 이동처리 해줘 !");
+        
         target.PickedUpBreads.Push(this);
         
         int count = target.PickedUpBreads.Count;

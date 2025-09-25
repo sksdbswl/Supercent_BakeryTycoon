@@ -8,6 +8,8 @@ public class Showcase : ProductContainer
     public List<Transform> CustomerPositions;
     public List<NavPoint> CustomerPoints = new List<NavPoint>();
     
+    public bool IsBusy { get; private set; }
+    
     private void Awake()
     {
         CustomerPoints.Clear();
@@ -33,6 +35,12 @@ public class Showcase : ProductContainer
     public void Exhibition(Product product)
     {
         Debug.Log("쇼케이스에 빵 넣어 :: Exhibition");
+        SetBusy(true);
         AddProduct(product);
+    }
+    
+    public void SetBusy(bool busy)
+    {
+        IsBusy = busy;
     }
 }

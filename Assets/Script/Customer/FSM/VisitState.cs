@@ -43,10 +43,20 @@ public class VisitState : CustomerBaseState
         {
             IsArrived = true;
             // 쇼케이스에서 빵 가져오기
+            //TODO::조건
+            //쇼케이스에 빵이 있음.
+            // 플레이어가 쇼케이스에 빵을 진열하고 있지 않음
+            
             if (IsArrived)
             {
                 IsArrived = false;
-                //PickUpBread();
+                //Debug.Log($"진열된 빵의 수량 :: {targetShowcase.Products.Count}");
+                
+                // 쇼케이스가 사용 중이면 대기
+                if (targetShowcase.IsBusy) return;
+
+                // 쇼케이스 사용 시작
+                PickUpBread();
             }
         }
     }
@@ -70,15 +80,40 @@ public class VisitState : CustomerBaseState
 
     public void PickUpBread()
     {
-        for (int i = 0; i < stateMachine.Customer.customerData.quantity; i++)
+        int need = stateMachine.Customer.customerData.quantity;
+        int already = stateMachine.Customer.customerData.pickedUpCount;
+
+        Debug.Log($"손님 빵 픽업 시도 :: 총 {need}개 필요, 이미 {already}개 픽업함");
+
+        for (int i = already; i < need; i++)
         {
-            Product bread = targetShowcase.GetProduct();
-            if (bread != null)
+            if (targetShowcase.IsBusy)
             {
-                // Debug.Log("빵 픽업 완료: " + bread.name);
-                // stateMachine.Customer.PickedUpBreads.Push(bread);
-                // 쇼케이스에 있는 빵 수량 제거
+                Debug.Log("쇼케이스 사용 중 → 픽업 중단");
+                break;
             }
+
+            Product bread = targetShowcase.GetProduct();
+            if (bread == null)
+            {
+                //Debug.Log("쇼케이스 빵이 부족함 → 픽업 중단");
+                break;
+            }
+
+            // 빵 가져가기
+            //stateMachine.Customer.PickedUpBreads.Push(bread);
+            stateMachine.Customer.customerData.pickedUpCount++;
+
+            bread.MoveTo(stateMachine.Customer, Product.GoalType.Customer);
+
+            //Debug.Log($"빵 픽업 성공! 현재까지 {stateMachine.Customer.customerData.pickedUpCount}/{need}");
+        }
+    
+        if (stateMachine.Customer.customerData.pickedUpCount >= need)
+        {
+            //Debug.Log("손님이 필요한 빵을 모두 픽업 완료!");
+            // ExitState로 전환 등 다음 행동 지정
+            // stateMachine.ChangeState(new ExitState(stateMachine));
         }
     }
 }
