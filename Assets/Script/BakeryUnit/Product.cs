@@ -22,36 +22,35 @@ public class Product : MonoBehaviour
         {
             case GoalType.Player:
             {
-                // 1️⃣ 마지막 빵 위치 계산
                 Vector3 lastBreadPos = target.position + new Vector3(0f, 0.5f * player.PickUpBread, 0f);
 
-                // 2️⃣ 점프 시작 위치를 마지막 빵보다 앞쪽으로 오프셋
-                float forwardOffset = 0.3f; // 앞쪽으로 0.3m
-                Vector3 jumpStartPos = lastBreadPos - target.forward * forwardOffset; 
-                transform.position = jumpStartPos;
-                //transform.rotation = player.transform.rotation * Quaternion.Euler(0f, -90f, 0f);
+                // float forwardOffset = 0.3f; 
+                // Vector3 jumpStartPos = lastBreadPos - target.forward * forwardOffset;
+                // transform.position = jumpStartPos;
                 
-                // 3️⃣ 포물선 이동 (목표 위치는 마지막 빵 위치)
+                // 2️⃣ 점프 시작 위치: x축 방향 offset
+                float sideOffset = -0.8f; 
+                Vector3 jumpStartPos = lastBreadPos - target.right * sideOffset;
+                transform.position = jumpStartPos;
+
+
+                transform.rotation = player.transform.rotation * Quaternion.Euler(0f, -90f, 0f);
+
                 transform.DOJump(lastBreadPos, jumpPower, jumpNum, moveDuration)
                     .SetEase(Ease.OutQuad)
                     .OnComplete(() =>
                     {
-                        // Rigidbody 끄기
                         var rg = gameObject.GetComponent<Rigidbody>();
                         if (rg != null) rg.isKinematic = true;
 
-                        // 4️⃣ 부모 설정 및 방향
                         transform.SetParent(target);
-                        transform.forward = player.transform.forward;
 
-                        // 5️⃣ 최종 쌓기 위치
                         transform.localPosition = new Vector3(0f, 0.5f * player.PickUpBread, 0f);
                         transform.localRotation = Quaternion.identity;
-                        
-                        // 6️⃣ 플레이어가 들고 있는 빵 수 증가
+
                         player.PickUpBread++;
                     });
-                }
+            }
                 break;
 
              // transform.DOJump(target.position, jumpPower, jumpNum, moveDuration)
