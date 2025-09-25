@@ -3,11 +3,18 @@ using UnityEngine;
 
 public class Showcase : ProductContainer
 {
-    public Stack<Product> Products { get; }
+    public Transform BreadPos;
+    //public Stack<Product> Products { get; }
 
-    public Product GetProduct()
+    // public Product GetProduct()
+    // {
+    //     if (Products.Count == 0) return null;
+    //     return Products.Pop();
+    // } 
+    
+    public void Exhibition(Product product)
     {
-        if (Products.Count == 0) return null;
-        return Products.Pop();
-    } 
+        AddProduct(product);
+        Debug.Log("Showcase 빵 배치!");
+    }
 }

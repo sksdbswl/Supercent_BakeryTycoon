@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
-    
     public PlayerStateMachine PlayerStateMachine { get; private set; }
     public Animator animator { get; private set; }
     public PlayerMover Mover { get; private set; } 
@@ -17,7 +15,8 @@ public class Player : MonoBehaviour
     public int Money { get; set; }
     
     public Transform BreadTransform;
-    public int PickUpBread { get; set; }
+    public Stack<Product> PickedUpBreads { get; private set; } = new Stack<Product>();
+    //public int PickUpBread { get; set; }
         
     private bool isClosedContainer = false;
     public IProductContainer Container;
@@ -90,24 +89,37 @@ public class Player : MonoBehaviour
         
         while (isClosedContainer)
         {
-            var product = Container.GetProduct();
-            
-            Debug.Log($"구워진 빵 없음 !");
-            
-            if (product == null)
-            {
-                yield return term;
-                continue;
-            }
-            
             if (Container is Oven)
             {
-                Debug.Log("Oven에 위치, 빵을 가지고 오자");
+                var product = Container.GetProduct();
+                
+                if (product == null)
+                {
+                    //Debug.Log($"구워진 빵 또는 진열된 빵이 없음 !");
+                    yield return term;
+                    continue;
+                }
+                
+                //Debug.Log("Oven에 위치, 빵을 가지고 오자");
                 product.MoveTo(this, BreadTransform, Product.GoalType.Player);
             }
             else if (Container is Showcase)
             {
-                Debug.Log("Showcase 위치,빵을 진열 하자");
+                if (PickedUpBreads.Count == 0)
+                {
+                    //Debug.Log("플레이어가 들고 있는 빵 없음!");
+                    yield return term;
+                    continue;
+                }
+
+                var bread = PickedUpBreads.Pop();
+                var showcase = Container as Showcase;
+
+                // Showcase 스택에 추가
+                showcase.Exhibition(bread);
+
+                //Debug.Log("Player → Showcase, 빵 진열");
+                bread.MoveTo(this, showcase.transform, Product.GoalType.Showcase);
             }
 
             yield return term; 

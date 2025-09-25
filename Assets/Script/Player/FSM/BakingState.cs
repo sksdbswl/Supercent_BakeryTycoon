@@ -14,7 +14,7 @@ public class BakingState : PlayerBaseState
 
     public override void Update()
     {
-        Debug.Log($"BakingState:: {stateMachine.Player.PickUpBread}");   
+        Debug.Log($"BakingState:: {stateMachine.Player.PickedUpBreads.Count}");   
         
         // 최대 소지량 도달 시 상태 전환
         // if (stateMachine.Player.Bread >= 10)

@@ -6,7 +6,7 @@ public class IdleState : PlayerBaseState
 
     public override void Enter()
     {
-      Debug.Log("Idle Enter");   
+      //Debug.Log("Idle Enter");   
       stateMachine.Player.animator.SetTrigger(PlayerAnimationController.Idle);
     }
     
@@ -22,6 +22,6 @@ public class IdleState : PlayerBaseState
 
     public override void Exit()
     {
-        Debug.Log("Idle Exit");   
+        //Debug.Log("Idle Exit");   
     }
 }

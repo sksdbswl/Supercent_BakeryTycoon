@@ -10,15 +10,8 @@ public class BreadSpawner : MonoBehaviour
     [SerializeField] private Transform spawnPoint;        
     [SerializeField] private float createInterval = 5f;
     
-    //private BakeryUnit BakeryUnit;
-    
     private int MaxBread = 10;
     public int Bread = 0;
-
-    // private void Awake()
-    // {
-    //     BakeryUnit = GetComponent<BakeryUnit>();
-    // }
     
     private void Start()
     {
