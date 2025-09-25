@@ -5,14 +5,6 @@ using UnityEngine;
 public class Oven : ProductContainer
 {
     [SerializeField] private float bakingTime = 3f;
-
-    // public Product GetProduct()
-    // {
-    //     Debug.Log("빵 겟또");
-    //     
-    //     if (Products.Count == 0) return null;
-    //     return Products.Pop();
-    // } 
     
     public void Bake(Product product)
     {

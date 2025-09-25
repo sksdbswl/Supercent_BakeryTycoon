@@ -13,12 +13,19 @@ public class Product : MonoBehaviour
     [Header("Move Settings")]
     [SerializeField] private float moveDuration = 0.3f;
     [SerializeField] private float curveHeight = 2f;
+    private BreadSpawner originSpawner;
 
+    public void Init(BreadSpawner spawner)
+    {
+        originSpawner = spawner;
+    }
+    
     public void MoveTo(Player player, Transform target, GoalType goalType)
     {
         switch (goalType)
         {
             case GoalType.Player:
+                originSpawner.PickupBread();
                 StartCoroutine(MoveToPlayerBezier(player, target));
                 break;
 
@@ -81,7 +88,7 @@ public class Product : MonoBehaviour
         int colInRow = count % perRow;
 
         float xStep = 0.2f;
-        float yStep = 1f;
+        float yStep = 0.2f;
         float zStep = 0.8f;
 
         Vector3 startPos = player.PickedUpBreads.Count > 0
@@ -95,7 +102,7 @@ public class Product : MonoBehaviour
 
         // 제어점 2개
         Vector3 control1 = (startPos + endPos) / 2f + Vector3.up * curveHeight;
-        Vector3 control2 = control1; // 단순화: 같은 위치 사용 (원한다면 다르게 줄 수도 있음)
+        Vector3 control2 = control1; 
 
         float elapsed = 0f;
         while (elapsed < moveDuration)

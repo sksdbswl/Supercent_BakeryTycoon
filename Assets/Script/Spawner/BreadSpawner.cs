@@ -44,6 +44,7 @@ public class BreadSpawner : MonoBehaviour
                     
                     if (product != null)
                     {
+                        product.Init(this);
                         oven.Bake(product);
                         Bread++;
                     }

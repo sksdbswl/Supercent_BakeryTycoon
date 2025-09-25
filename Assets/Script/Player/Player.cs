@@ -20,11 +20,14 @@ public class Player : MonoBehaviour
     private bool isClosedContainer = false;
     public IProductContainer Container;
     
+    public CharacterController characterController;
+    
     private void Awake()
     {
         // 초기 플레이어 설정
         animator = GetComponentInChildren<Animator>();
-        Mover = GetComponent<PlayerMover>(); 
+        Mover = GetComponent<PlayerMover>();
+        characterController = GetComponent<CharacterController>();
         
         // 초기 플레이어 생성 및 FSM 시작 선언
         PlayerStateMachine = new PlayerStateMachine(this);
@@ -37,7 +40,15 @@ public class Player : MonoBehaviour
     private void Update()
     {
         PlayerStateMachine.Update();
+        
+        if (transform.position.y > 0)
+        {
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            // pos.y = hit.point.y + characterController.height / 2f; 
+            // transform.position = pos;
+        }
     }
+    
     
     public void AddMoney(int amount)
     {
