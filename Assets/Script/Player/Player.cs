@@ -81,6 +81,11 @@ public class Player : MonoBehaviour, IProductTarget
 
         if (container == Container)
         {
+            if (container is Showcase showcase)
+            {
+                showcase.SetBusy(false);
+            }
+
             Container = null;
             isClosedContainer = false; 
         }
