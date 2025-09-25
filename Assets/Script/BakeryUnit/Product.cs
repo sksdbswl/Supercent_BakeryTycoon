@@ -86,31 +86,36 @@ public class Product : MonoBehaviour
     // player -> Showcase 이동
     public IEnumerator MoveToShowcaseBezier(IProductTarget target)
     {
-        //TODO:: 쇼케이스 위치로 생성 
-        
-        int count = originShowcase.Products.Count;
-        int perRow = 10;
-        int perLayer = 20;
-        int rowsPerLayer = 2;
+        int count = originShowcase.Products.Count - 1 ;
 
-        int layer = count / perLayer;
-        int rowInLayer = (count % perLayer) / perRow;
-        int colInRow = count % perRow;
+        // 배치 규칙
+        int perRow = 5;   // 가로 2
+        int perCol = 2;   // 세로 5
+        int perLayer = perRow * perCol; // 한 층에 10개
 
-        float xStep = 0.2f;
-        float yStep = 1f;
-        float zStep = 0.8f;
+        // 현재 인덱스에 따라 위치 계산
+        int layer = count / perLayer;               // 몇 번째 층인지
+        int rowInLayer = (count % perLayer) / perRow; // 세로 줄
+        int colInRow = count % perRow;              // 가로 칸
+
+        // 스텝 크기
+        float xStep = 0.4f;
+        float yStep = 0.3f;
+        float zStep = 0.7f;
 
         Vector3 startPos = transform.position;
         Vector3 endPos = originShowcase.transform.position +
-                         new Vector3(colInRow * xStep - (perRow - 1) * xStep / 2f,
+                         new Vector3(
+                             colInRow * xStep - (perRow - 1) * xStep / 2f,
                              layer * yStep,
-                             rowInLayer * zStep - (rowsPerLayer - 1) * zStep / 2f);
+                             rowInLayer * zStep - (perCol - 1) * zStep / 2f
+                         );
 
-        // 제어점 2개
+        // 제어점 (단순히 중간 + 위로 curveHeight 올림)
         Vector3 control1 = (startPos + endPos) / 2f + Vector3.up * curveHeight;
         Vector3 control2 = control1; 
 
+        // 곡선 이동
         float elapsed = 0f;
         while (elapsed < moveDuration)
         {
@@ -120,85 +125,14 @@ public class Product : MonoBehaviour
             yield return null;
         }
 
-        transform.position = endPos;
-        
-        // var rb = GetComponent<Rigidbody>();
-        // if (rb != null) rb.isKinematic = true;
-        //
-        // Vector3 endPos = originShowcase.transform.position 
-        //                  + new Vector3(colInRow * xStep - (perRow - 1) * xStep / 2f, 
-        //                      layer * yStep, 
-        //                      rowInLayer * zStep - (rowsPerLayer - 1) * zStep / 2f);
-        //
-        // Vector3 controlPoint = (startPos + endPos) / 2f + Vector3.up * curveHeight;
-        //
-        // Vector3[] path = { startPos, controlPoint, endPos };
-        //
-        // transform.DOPath(path, moveDuration, PathType.CatmullRom)
-        //     .SetEase(Ease.OutQuad)
-        //     .OnComplete(() =>
-        //     {
-        //         var rb = GetComponent<Rigidbody>();
-        //         if (rb != null) rb.isKinematic = true;
-        //
-        //         transform.SetParent(originShowcase.BreadPos);
-        //         transform.localPosition = new Vector3(
-        //             colInRow * xStep - (perRow - 1) * xStep / 2f,
-        //             layer * yStep,
-        //             rowInLayer * zStep - (rowsPerLayer - 1) * zStep / 2f);
-        //         transform.localRotation = Quaternion.identity;
-        //     });
-        // transform.SetParent(originShowcase.BreadPos);
-        // transform.localPosition = new Vector3(
-        //     colInRow * xStep - (perRow - 1) * xStep / 2f,
-        //     layer * yStep,
-        //     rowInLayer * zStep - (rowsPerLayer - 1) * zStep / 2f);
-        // transform.localRotation = Quaternion.identity;
-    
-        // if (originShowcase == null)
-        // {
-        //     Debug.LogError("MoveToShowcaseBezier: originShowcase is null!");
-        //     yield break;
-        // }
-        //
-        // Vector3 startPos = transform.position;
-        // int count = originShowcase.Products.Count;
-        //
-        // int perRow = 2;
-        // int perColumn = 5;
-        //
-        // int row = count % perRow;
-        // int column = (count / perRow) % perColumn;
-        // int layer = count / (perRow * perColumn);
-        //
-        // Vector3 localTargetPos = new Vector3(
-        //     row * xStep - (perRow - 1) * xStep / 2f,
-        //     layer * yStep,
-        //     column * zStep - (perColumn - 1) * zStep / 2f
-        // );
-        //
-        // Vector3 endPos = originShowcase.BreadPos.position + localTargetPos;
-        //
-        // Vector3 control1 = startPos + Vector3.up * curveHeight;
-        // Vector3 control2 = endPos + Vector3.up * curveHeight;
-        //
-        // float elapsed = 0f;
-        // while (elapsed < moveDuration)
-        // {
-        //     float t = elapsed / moveDuration;
-        //     transform.position = Bezier.Cubic(startPos, control1, control2, endPos, t);
-        //     elapsed += Time.deltaTime;
-        //     yield return null;
-        // }
-        //
-        // transform.position = endPos;
-        //
-        // transform.SetParent(originShowcase.BreadPos);
-        // transform.localPosition = localTargetPos;
-        // transform.localRotation = Quaternion.identity;
-        //
-        // originShowcase.Exhibition(this);
-        // yield return null;
+        // 부모 변경 + 로컬 정렬
+        transform.SetParent(originShowcase.BreadPos);
+        transform.localPosition = new Vector3(
+            colInRow * xStep - (perRow - 1) * xStep / 2f,
+            layer * yStep,
+            rowInLayer * zStep - (perCol - 1) * zStep / 2f
+        );
+        transform.localRotation = Quaternion.identity;
     }
 
 }
