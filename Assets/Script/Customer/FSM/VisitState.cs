@@ -23,8 +23,17 @@ public class VisitState:CustomerBaseState
         if (!stateMachine.Customer.navAgent.pathPending && 
             stateMachine.Customer.navAgent.remainingDistance <= 0.1f)
         {
-            stateMachine.ChangeState(stateMachine.BakeWaitingState);
-            stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
+            Debug.Log("쇼케이스앞에 도착함");
+            
+            //TODO:: 빵픽업
+            // if (showcase.HasBread)
+            // {
+            //     Product bread = showcase.GetProduct();
+            //     // 먹기 or 애니메이션 실행
+            // }
+            
+            // stateMachine.ChangeState(stateMachine.BakeWaitingState);
+            // stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
         }
     }
 

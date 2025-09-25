@@ -44,8 +44,6 @@ public class Player : MonoBehaviour
         if (transform.position.y > 0)
         {
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-            // pos.y = hit.point.y + characterController.height / 2f; 
-            // transform.position = pos;
         }
     }
     

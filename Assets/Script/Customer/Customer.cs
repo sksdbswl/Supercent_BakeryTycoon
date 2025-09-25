@@ -9,6 +9,7 @@ public class Customer : MonoBehaviour
     public PooledObject PooledObject { get; set; }
     // SO 데이터
     public CustomerData customerData; 
+    public Transform BreadTransform;
     
     private void Awake()
     {
