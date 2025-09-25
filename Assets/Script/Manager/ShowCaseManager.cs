@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaManager : Singleton<AreaManager>
+public class ShowCaseManager : Singleton<ShowCaseManager>
 {
     public List<Showcase> Showcases = new List<Showcase>();
 

@@ -69,9 +69,44 @@ public class Player : MonoBehaviour, IProductTarget
 
         Container = container;
         isClosedContainer = true;
-        
-        // 중복 실행 방지
+
         if (isClosedContainer) StartCoroutine(GetProductsCoroutine());
+    }
+
+    private IEnumerator GetProductsCoroutine()
+    {
+        var term = new WaitForSeconds(0.5f);
+
+        while (isClosedContainer)
+        {
+            switch (Container)
+            {
+                case Oven oven:
+                    var product = oven.GetProduct();
+                    if (product != null)
+                        product.MoveTo(this, Product.GoalType.Player);
+                    break;
+
+                case Showcase showcase:
+                    if (PickedUpBreads.Count == 0)
+                    {
+                        Debug.Log("쇼케이스 사용중지");
+                        showcase.SetBusy(false);
+                        break;
+                    }
+
+                    var bread = PickedUpBreads.Pop();
+                    showcase.Exhibition(bread);
+                    bread.MoveTo(this, Product.GoalType.Showcase);
+                    break;
+
+                default:
+                    Debug.LogWarning($"알 수 없는 IProductContainer 타입: {Container.GetType()}");
+                    break;
+            }
+
+            yield return term;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -88,49 +123,6 @@ public class Player : MonoBehaviour, IProductTarget
 
             Container = null;
             isClosedContainer = false; 
-        }
-    }
-
-    private IEnumerator GetProductsCoroutine()
-    {
-        var term = new WaitForSeconds(0.5f);
-        while (isClosedContainer)
-        {
-            if (Container is Oven)
-            {
-                var product = Container.GetProduct();
-                
-                if (product == null)
-                {
-                    yield return term;
-                    continue;
-                }
-                
-                product.MoveTo(this, Product.GoalType.Player);
-            }
-            else if (Container is Showcase)
-            {
-                var showcase = Container as Showcase;
-
-                Debug.Log(showcase);
-                
-                if (PickedUpBreads.Count == 0)
-                {
-                    Debug.Log("쇼케이스 사용중지");
-                    // 빵이 없으면 쇼케이스 사용중 아님
-                    showcase.SetBusy(false);
-                    
-                    yield return term;
-                    continue;
-                }
-
-                var bread = PickedUpBreads.Pop();
-                // 빵이 있으면 쇼케이스 사용중 => 손님 사용불가
-                showcase.Exhibition(bread);
-                bread.MoveTo(this, Product.GoalType.Showcase);
-            }
-
-            yield return term; 
         }
     }
 }

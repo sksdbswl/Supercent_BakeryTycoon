@@ -13,7 +13,7 @@ public class VisitState : CustomerBaseState
     public override void Enter()
     {
         // 랜덤 쇼케이스 선택
-        targetShowcase = AreaManager.Instance.GetRandomShowcase();
+        targetShowcase = ShowCaseManager.Instance.GetRandomShowcase();
         if (targetShowcase == null)
         {
             Debug.LogWarning("쇼케이스 없음!");

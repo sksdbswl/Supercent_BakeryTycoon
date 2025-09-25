@@ -17,7 +17,7 @@ public class CustomerSpawner : MonoBehaviour
     {
         while (true)
         {
-            foreach (var showcase in AreaManager.Instance.Showcases)
+            foreach (var showcase in ShowCaseManager.Instance.Showcases)
             {
                 // 쇼케이스별 현재 대기 인원
                 int activeCount = CountActiveCustomers(showcase);
