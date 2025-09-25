@@ -1,5 +1,4 @@
-using System;
-using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class Product : MonoBehaviour
@@ -10,33 +9,30 @@ public class Product : MonoBehaviour
         Customer,
         Showcase,
     }
-    
+
     [Header("Move Settings")]
     [SerializeField] private float moveDuration = 0.3f;
-    [SerializeField] private float curveHeight = 2f; // 배지어 제어점 높이
+    [SerializeField] private float curveHeight = 2f;
 
     public void MoveTo(Player player, Transform target, GoalType goalType)
     {
         switch (goalType)
         {
             case GoalType.Player:
-                MoveToPlayer(player, target);
+                StartCoroutine(MoveToPlayerBezier(player, target));
                 break;
 
             case GoalType.Customer:
-                // 손님에게 이동 구현
+                // 손님에게 이동 구현 예정
                 break;
 
             case GoalType.Showcase:
-                MoveToShowcase(player, target);
+                StartCoroutine(MoveToShowcaseBezier(player, target));
                 break;
-
-            default:
-                throw new ArgumentOutOfRangeException(nameof(goalType), goalType, null);
         }
     }
 
-    private void MoveToPlayer(Player player, Transform target)
+    private IEnumerator MoveToPlayerBezier(Player player, Transform target)
     {
         player.PickedUpBreads.Push(this);
 
@@ -48,25 +44,29 @@ public class Product : MonoBehaviour
         transform.position = startPos;
         transform.rotation = player.transform.rotation * Quaternion.Euler(0f, -90f, 0f);
 
-        // 제어점: 시작점과 끝점 사이 높이를 올려서 곡선 생성
-        Vector3 controlPoint = (startPos + endPos) / 2f + Vector3.up * curveHeight;
+        // 제어점 2개 (중간에서 위로)
+        Vector3 control1 = startPos + Vector3.up * curveHeight;
+        Vector3 control2 = endPos + Vector3.up * curveHeight;
 
-        Vector3[] path = { startPos, controlPoint, endPos };
+        float elapsed = 0f;
+        while (elapsed < moveDuration)
+        {
+            float t = elapsed / moveDuration;
+            transform.position = Bezier.Cubic(startPos, control1, control2, endPos, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
 
-        transform.DOPath(path, moveDuration, PathType.CatmullRom)
-            .SetEase(Ease.OutQuad)
-            .OnComplete(() =>
-            {
-                var rb = GetComponent<Rigidbody>();
-                if (rb != null) rb.isKinematic = true;
+        transform.position = endPos;
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null) rb.isKinematic = true;
 
-                transform.SetParent(target);
-                transform.localPosition = new Vector3(0f, 0.5f * pickedUpBreads, 0f);
-                transform.localRotation = Quaternion.identity;
-            });
+        transform.SetParent(target);
+        transform.localPosition = new Vector3(0f, 0.5f * pickedUpBreads, 0f);
+        transform.localRotation = Quaternion.identity;
     }
 
-    private void MoveToShowcase(Player player, Transform target)
+    private IEnumerator MoveToShowcaseBezier(Player player, Transform target)
     {
         var showcase = target.GetComponent<Showcase>();
         showcase.AddProduct(this);
@@ -88,30 +88,33 @@ public class Product : MonoBehaviour
             ? player.PickedUpBreads.Peek().transform.position + target.right * -0.2f
             : player.BreadTransform.position;
 
-        transform.position = startPos;
+        Vector3 endPos = showcase.transform.position +
+                         new Vector3(colInRow * xStep - (perRow - 1) * xStep / 2f,
+                                     layer * yStep,
+                                     rowInLayer * zStep - (rowsPerLayer - 1) * zStep / 2f);
 
-        Vector3 endPos = showcase.transform.position 
-                         + new Vector3(colInRow * xStep - (perRow - 1) * xStep / 2f, 
-                             layer * yStep, 
-                             rowInLayer * zStep - (rowsPerLayer - 1) * zStep / 2f);
+        // 제어점 2개
+        Vector3 control1 = (startPos + endPos) / 2f + Vector3.up * curveHeight;
+        Vector3 control2 = control1; // 단순화: 같은 위치 사용 (원한다면 다르게 줄 수도 있음)
 
-        Vector3 controlPoint = (startPos + endPos) / 2f + Vector3.up * curveHeight;
+        float elapsed = 0f;
+        while (elapsed < moveDuration)
+        {
+            float t = elapsed / moveDuration;
+            transform.position = Bezier.Cubic(startPos, control1, control2, endPos, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
 
-        Vector3[] path = { startPos, controlPoint, endPos };
+        transform.position = endPos;
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null) rb.isKinematic = true;
 
-        transform.DOPath(path, moveDuration, PathType.CatmullRom)
-            .SetEase(Ease.OutQuad)
-            .OnComplete(() =>
-            {
-                var rb = GetComponent<Rigidbody>();
-                if (rb != null) rb.isKinematic = true;
-
-                transform.SetParent(showcase.BreadPos);
-                transform.localPosition = new Vector3(
-                    colInRow * xStep - (perRow - 1) * xStep / 2f,
-                    layer * yStep,
-                    rowInLayer * zStep - (rowsPerLayer - 1) * zStep / 2f);
-                transform.localRotation = Quaternion.identity;
-            });
+        transform.SetParent(showcase.BreadPos);
+        transform.localPosition = new Vector3(
+            colInRow * xStep - (perRow - 1) * xStep / 2f,
+            layer * yStep,
+            rowInLayer * zStep - (rowsPerLayer - 1) * zStep / 2f);
+        transform.localRotation = Quaternion.identity;
     }
 }
