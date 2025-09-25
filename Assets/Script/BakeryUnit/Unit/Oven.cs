@@ -9,6 +9,5 @@ public class Oven : ProductContainer
     public void Bake(Product product)
     {
         AddProduct(product);
-        //Debug.Log("빵 구워짐!");
     }
 }

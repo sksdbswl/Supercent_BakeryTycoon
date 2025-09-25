@@ -99,7 +99,10 @@ public class Player : MonoBehaviour, IProductTarget
                     showcase.Exhibition(bread);
                     bread.MoveTo(this, Product.GoalType.Showcase);
                     break;
-
+                
+                case Cashier cashier:
+                    //1. 앞에 손님이 있는지 ? 
+                
                 default:
                     Debug.LogWarning($"알 수 없는 IProductContainer 타입: {Container.GetType()}");
                     break;

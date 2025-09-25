@@ -24,7 +24,6 @@ public class Showcase : ProductContainer
     
     public void Exhibition(Product product)
     {
-        Debug.Log("쇼케이스에 빵 넣어 :: Exhibition");
         SetBusy(true);
         AddProduct(product);
     }

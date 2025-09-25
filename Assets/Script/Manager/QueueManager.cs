@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class QueueManager : Singleton<QueueManager>
@@ -8,9 +9,9 @@ public class QueueManager : Singleton<QueueManager>
     public List<NavPoint> DiningPoints = new List<NavPoint>();
     public List<NavPoint> EntryPoints = new List<NavPoint>();
 
-    private Queue<Customer> cashierQueue = new Queue<Customer>();
-    private Queue<Customer> diningQueue = new Queue<Customer>();
-    private Queue<Customer> entryQueue = new Queue<Customer>();
+    public Queue<Customer> cashierQueue = new Queue<Customer>();
+    public Queue<Customer> diningQueue = new Queue<Customer>();
+    public Queue<Customer> entryQueue = new Queue<Customer>();
 
     #region 요청
 
@@ -59,6 +60,11 @@ public class QueueManager : Singleton<QueueManager>
                 nextCustomer.OnPointAssigned(freePoint);
             }
         }
+    }
+    private NavPoint RequestPoint(List<NavPoint> points)
+    {
+        // 항상 앞쪽부터 순회해서 비어 있는 포인트 반환
+        return points.FirstOrDefault(p => !p.IsOccupied);
     }
 
     #endregion
