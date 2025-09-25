@@ -41,5 +41,8 @@ public class Customer : MonoBehaviour, IProductTarget
         CustomerStateMachine.Update();
     }
 
-
+    public void OnPointAssigned(NavPoint point)
+    {
+        navAgent.SetDestination(point.transform.position);
+    }
 }

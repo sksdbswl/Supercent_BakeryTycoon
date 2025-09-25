@@ -4,20 +4,10 @@ using UnityEngine;
 public class Showcase : ProductContainer
 {
     public Transform BreadPos;
-    [Header("손님 대기 포인트들")]
-    public List<Transform> CustomerPositions;
+    [Header("손님 대기 포인트")]
     public List<NavPoint> CustomerPoints = new List<NavPoint>();
     
     public bool IsBusy { get; private set; }
-    
-    private void Awake()
-    {
-        CustomerPoints.Clear();
-        foreach (var pos in CustomerPositions)
-        {
-            CustomerPoints.Add(new NavPoint { Point = pos, IsOccupied = false });
-        }
-    }
     
     public NavPoint GetFreePoint()
     {

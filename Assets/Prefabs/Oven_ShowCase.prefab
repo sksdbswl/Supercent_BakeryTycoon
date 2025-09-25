@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 60344646}
+  - component: {fileID: 1655384145}
   m_Layer: 0
   m_Name: point
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 1383182971}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1655384145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60344645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a89740aed644cdb835b36487a0da9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsOccupied: 0
 --- !u!1 &356105791
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,6 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 754119220}
+  - component: {fileID: 1318152203}
   m_Layer: 0
   m_Name: point
   m_TagString: Untagged
@@ -93,6 +108,19 @@ Transform:
   m_Father: {fileID: 1383182971}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1318152203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754119219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a89740aed644cdb835b36487a0da9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsOccupied: 0
 --- !u!1 &1026385723
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1026385724}
+  - component: {fileID: 1000482151}
   m_Layer: 0
   m_Name: point
   m_TagString: Untagged
@@ -124,6 +153,19 @@ Transform:
   m_Father: {fileID: 1383182971}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1000482151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026385723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a89740aed644cdb835b36487a0da9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsOccupied: 0
 --- !u!1 &1383182970
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,6 +211,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1415621408}
+  - component: {fileID: 1542657642}
   m_Layer: 0
   m_Name: point
   m_TagString: Untagged
@@ -191,6 +234,19 @@ Transform:
   m_Father: {fileID: 1383182971}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1542657642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415621407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a89740aed644cdb835b36487a0da9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsOccupied: 0
 --- !u!1 &1431988330
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1431988331}
+  - component: {fileID: 1216918840}
   m_Layer: 0
   m_Name: point
   m_TagString: Untagged
@@ -222,6 +279,19 @@ Transform:
   m_Father: {fileID: 1383182971}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1216918840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431988330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a89740aed644cdb835b36487a0da9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsOccupied: 0
 --- !u!1 &3052120985413791275
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,13 +551,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BreadPos: {fileID: 356105792}
-  CustomerPositions:
-  - {fileID: 60344646}
-  - {fileID: 1431988331}
-  - {fileID: 754119220}
-  - {fileID: 1415621408}
-  - {fileID: 1026385724}
-  CustomerPoints: []
+  CustomerPoints:
+  - {fileID: 1655384145}
+  - {fileID: 1216918840}
+  - {fileID: 1318152203}
+  - {fileID: 1542657642}
+  - {fileID: 1000482151}
 --- !u!1 &8895707668468813162
 GameObject:
   m_ObjectHideFlags: 0

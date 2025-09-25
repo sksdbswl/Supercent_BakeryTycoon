@@ -14,7 +14,7 @@ public class CheckOutState:CustomerBaseState
         
         if (targetPoint != null)
         {
-            stateMachine.Customer.navAgent.SetDestination(targetPoint.Point.position);
+            stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
             stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
         }
         

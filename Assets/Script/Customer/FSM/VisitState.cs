@@ -30,7 +30,7 @@ public class VisitState : CustomerBaseState
         }
 
         // 이동
-        stateMachine.Customer.navAgent.SetDestination(targetPoint.Point.position);
+        stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
     }
 
@@ -75,7 +75,7 @@ public class VisitState : CustomerBaseState
         targetShowcase = showcase;
 
         if (targetPoint != null)
-            stateMachine.Customer.navAgent.SetDestination(targetPoint.Point.position);
+            stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
     }
 
     public void PickUpBread()
