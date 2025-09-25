@@ -4212,6 +4212,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4224082509960626663, guid: 49a5c79a17e8a490b9f32d2d19afee9a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224082509960626663, guid: 49a5c79a17e8a490b9f32d2d19afee9a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224082509960626663, guid: 49a5c79a17e8a490b9f32d2d19afee9a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 4224082510765426696, guid: 49a5c79a17e8a490b9f32d2d19afee9a, type: 3}
       propertyPath: joystick
       value: 

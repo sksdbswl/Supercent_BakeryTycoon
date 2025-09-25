@@ -29,7 +29,8 @@ public class Product : MonoBehaviour
                 float forwardOffset = 0.3f; // 앞쪽으로 0.3m
                 Vector3 jumpStartPos = lastBreadPos - target.forward * forwardOffset; 
                 transform.position = jumpStartPos;
-
+                //transform.rotation = player.transform.rotation * Quaternion.Euler(0f, -90f, 0f);
+                
                 // 3️⃣ 포물선 이동 (목표 위치는 마지막 빵 위치)
                 transform.DOJump(lastBreadPos, jumpPower, jumpNum, moveDuration)
                     .SetEase(Ease.OutQuad)
@@ -46,11 +47,11 @@ public class Product : MonoBehaviour
                         // 5️⃣ 최종 쌓기 위치
                         transform.localPosition = new Vector3(0f, 0.5f * player.PickUpBread, 0f);
                         transform.localRotation = Quaternion.identity;
-
+                        
                         // 6️⃣ 플레이어가 들고 있는 빵 수 증가
                         player.PickUpBread++;
                     });
-            }
+                }
                 break;
 
              // transform.DOJump(target.position, jumpPower, jumpNum, moveDuration)
