@@ -5,7 +5,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IProductTarget
 {
     public PlayerStateMachine PlayerStateMachine { get; private set; }
     public Animator animator { get; private set; }
@@ -14,13 +14,13 @@ public class Player : MonoBehaviour
     public event Action<int> OnMoneyChanged;
     public int Money { get; set; }
     
-    public Transform BreadTransform;
-    public Stack<Product> PickedUpBreads { get; private set; } = new Stack<Product>();
-        
     private bool isClosedContainer = false;
     public IProductContainer Container;
     
     public CharacterController characterController;
+    
+    [field:SerializeField] public Transform BreadTransform { get; set; }
+    public Stack<Product> PickedUpBreads { get; set; } = new Stack<Product>();
     
     private void Awake()
     {
@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
         }
     }
     
-    
     public void AddMoney(int amount)
     {
         Money += amount;
@@ -69,8 +68,8 @@ public class Player : MonoBehaviour
         if (container == null) return;
 
         Container = container;
-        isClosedContainer = true; 
-
+        isClosedContainer = true;
+        
         // 중복 실행 방지
         if (isClosedContainer) StartCoroutine(GetProductsCoroutine());
     }
@@ -90,7 +89,6 @@ public class Player : MonoBehaviour
     private IEnumerator GetProductsCoroutine()
     {
         var term = new WaitForSeconds(0.5f);
-        
         while (isClosedContainer)
         {
             if (Container is Oven)
@@ -103,10 +101,14 @@ public class Player : MonoBehaviour
                     continue;
                 }
                 
-                product.MoveTo(this, BreadTransform, Product.GoalType.Player);
+                product.MoveTo(this, Product.GoalType.Player);
             }
             else if (Container is Showcase)
             {
+                var showcase = Container as Showcase;
+
+                Debug.Log(showcase);
+                
                 if (PickedUpBreads.Count == 0)
                 {
                     yield return term;
@@ -114,10 +116,8 @@ public class Player : MonoBehaviour
                 }
 
                 var bread = PickedUpBreads.Pop();
-                var showcase = Container as Showcase;
-
                 showcase.Exhibition(bread);
-                bread.MoveTo(this, showcase.transform, Product.GoalType.Showcase);
+                bread.MoveTo(this, Product.GoalType.Showcase);
             }
 
             yield return term; 

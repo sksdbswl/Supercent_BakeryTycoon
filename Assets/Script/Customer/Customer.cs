@@ -1,7 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Customer : MonoBehaviour
+public class Customer : MonoBehaviour, IProductTarget
 {
     public CustomerStateMachine CustomerStateMachine { get; private set; }
     public Animator animator;
@@ -9,7 +10,9 @@ public class Customer : MonoBehaviour
     public PooledObject PooledObject { get; set; }
     // SO 데이터
     public CustomerData customerData; 
-    public Transform BreadTransform;
+    
+    [field:SerializeField] public Transform BreadTransform { get; set; }
+    public Stack<Product> PickedUpBreads { get; set; } = new Stack<Product>();
     
     private void Awake()
     {
@@ -30,4 +33,6 @@ public class Customer : MonoBehaviour
     {
         CustomerStateMachine.Update();
     }
+
+
 }

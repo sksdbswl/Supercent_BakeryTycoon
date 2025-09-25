@@ -10,7 +10,7 @@ public class CheckOutState:CustomerBaseState
     
     public override void Enter()
     {
-        targetPoint = AreaManager.Instance.GetFreePoint(AreaManager.Instance.CheckoutPoints);
+        //targetPoint = AreaManager.Instance.GetFreePoint(AreaManager.Instance.CheckoutPoints);
         
         if (targetPoint != null)
         {

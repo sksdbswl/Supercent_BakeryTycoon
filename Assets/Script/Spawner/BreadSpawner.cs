@@ -9,6 +9,7 @@ public class BreadSpawner : MonoBehaviour
     [SerializeField] private Transform spawnParent;
     [SerializeField] private Transform spawnPoint;        
     [SerializeField] private float createInterval = 5f;
+    [SerializeField] private Showcase showcase;
     
     private int MaxBread = 10;
     public int Bread = 0;
@@ -44,7 +45,7 @@ public class BreadSpawner : MonoBehaviour
                     
                     if (product != null)
                     {
-                        product.Init(this);
+                        product.Init(this, showcase);
                         oven.Bake(product);
                         Bread++;
                     }

@@ -1,45 +1,84 @@
 using UnityEngine;
-using Vector3 = System.Numerics.Vector3;
+using UnityEngine.AI;
 
-public class VisitState:CustomerBaseState
+public class VisitState : CustomerBaseState
 {
+    private Showcase targetShowcase;
     private NavPoint targetPoint;
 
-    public VisitState(CustomerStateMachine stateMachine) : base(stateMachine) {}
+    public VisitState(CustomerStateMachine stateMachine) : base(stateMachine) { }
 
+    private bool IsArrived = false;
+    
     public override void Enter()
     {
-        targetPoint = AreaManager.Instance.GetFreePoint(AreaManager.Instance.BreadPoints);
-        
-        if (targetPoint != null)
+        // 랜덤 쇼케이스 선택
+        targetShowcase = AreaManager.Instance.GetRandomShowcase();
+        if (targetShowcase == null)
         {
-            stateMachine.Customer.navAgent.SetDestination(targetPoint.Point.position);
-            stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
+            Debug.LogWarning("쇼케이스 없음!");
+            return;
         }
+
+        targetPoint = targetShowcase.GetFreePoint();
+
+        // 쇼케이스에서 빈 자리 가져오기
+        if (targetPoint == null)
+        {
+            Debug.Log("쇼케이스 자리가 없음, 대기 또는 다른 행동");
+            return;
+        }
+
+        // 이동
+        stateMachine.Customer.navAgent.SetDestination(targetPoint.Point.position);
+        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
     }
 
     public override void Update()
     {
-        if (!stateMachine.Customer.navAgent.pathPending && 
+        if (targetPoint == null || targetShowcase == null) return;
+
+        if (!stateMachine.Customer.navAgent.pathPending &&
             stateMachine.Customer.navAgent.remainingDistance <= 0.1f)
         {
-            Debug.Log("쇼케이스앞에 도착함");
-            
-            //TODO:: 빵픽업
-            // if (showcase.HasBread)
-            // {
-            //     Product bread = showcase.GetProduct();
-            //     // 먹기 or 애니메이션 실행
-            // }
-            
-            // stateMachine.ChangeState(stateMachine.BakeWaitingState);
-            // stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
+            IsArrived = true;
+            // 쇼케이스에서 빵 가져오기
+            if (IsArrived)
+            {
+                IsArrived = false;
+                //PickUpBread();
+            }
         }
     }
 
     public override void Exit()
     {
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
-        targetPoint.IsOccupied = false;
+
+        // 자리 반환
+        if (targetPoint != null)
+            targetPoint.IsOccupied = false;
+    }
+    
+    public void SetTargetShowcase(Showcase showcase)
+    {
+        targetShowcase = showcase;
+
+        if (targetPoint != null)
+            stateMachine.Customer.navAgent.SetDestination(targetPoint.Point.position);
+    }
+
+    public void PickUpBread()
+    {
+        for (int i = 0; i < stateMachine.Customer.customerData.quantity; i++)
+        {
+            Product bread = targetShowcase.GetProduct();
+            if (bread != null)
+            {
+                // Debug.Log("빵 픽업 완료: " + bread.name);
+                // stateMachine.Customer.PickedUpBreads.Push(bread);
+                // 쇼케이스에 있는 빵 수량 제거
+            }
+        }
     }
 }
