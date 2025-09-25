@@ -4115,10 +4115,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 356105792, guid: 199417f4e569e4d47a589af850b6b838, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 8895707668468813162, guid: 199417f4e569e4d47a589af850b6b838, type: 3}
       propertyPath: m_Name
       value: Oven/ShowCase

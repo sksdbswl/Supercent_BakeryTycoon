@@ -134,6 +134,5 @@ public class Product : MonoBehaviour
         );
         transform.localRotation = Quaternion.identity;
     }
-
 }
 
