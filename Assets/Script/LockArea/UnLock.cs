@@ -74,7 +74,7 @@ public class UnLock : MonoBehaviour
 
     private void Unlock(Player player)
     {
-        player.Money -= cost;
+        player.SpendMoney(cost);
         isUnlocked = true;
     }
 }
