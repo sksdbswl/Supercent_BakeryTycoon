@@ -15,6 +15,5 @@ public class Showcase : ProductContainer
     public void Exhibition(Product product)
     {
         AddProduct(product);
-        Debug.Log("Showcase 빵 배치!");
     }
 }

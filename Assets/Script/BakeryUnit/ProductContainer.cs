@@ -7,8 +7,6 @@ public abstract class ProductContainer : MonoBehaviour, IProductContainer
 
     public virtual Product GetProduct()
     {
-        Debug.Log($"ProductContainer GetProduct::{Products.Count}");
-        
         return Products.Count > 0 ? Products.Pop() : null;
     }
 
