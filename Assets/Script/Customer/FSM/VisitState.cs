@@ -101,19 +101,14 @@ public class VisitState : CustomerBaseState
             }
 
             // 빵 가져가기
-            //stateMachine.Customer.PickedUpBreads.Push(bread);
             stateMachine.Customer.customerData.pickedUpCount++;
-
             bread.MoveTo(stateMachine.Customer, Product.GoalType.Customer);
-
-            //Debug.Log($"빵 픽업 성공! 현재까지 {stateMachine.Customer.customerData.pickedUpCount}/{need}");
         }
     
         if (stateMachine.Customer.customerData.pickedUpCount >= need)
         {
             //Debug.Log("손님이 필요한 빵을 모두 픽업 완료!");
-            // ExitState로 전환 등 다음 행동 지정
-            // stateMachine.ChangeState(new ExitState(stateMachine));
+            stateMachine.ChangeState(stateMachine.OrderWaitingState);
         }
     }
 }
