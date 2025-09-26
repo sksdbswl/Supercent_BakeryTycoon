@@ -1,63 +1,63 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class OrderWaitingState:CustomerBaseState
+public class OrderWaitingState : CustomerBaseState
 {
     private NavPoint targetPoint;
-    private bool OrderType;
-    
+    private bool wantsToEatIn;
+    private QueueManager.QueueType myQueueType;
+
     public OrderWaitingState(CustomerStateMachine stateMachine) : base(stateMachine) { }
-    
+
     public override void Enter()
     {
-        OrderType = stateMachine.Customer.customerData.wantsToEatIn;
-        
-        if(OrderType)
-        {
-            //나 밥먹고 갈테야
-            targetPoint = QueueManager.Instance.RequestDiningPoint(stateMachine.Customer);
-        }
-        else
-        {
-            //나 포장하고 계산해줘
-            targetPoint = QueueManager.Instance.RequestCashierPoint(stateMachine.Customer);
-        }
-        
-        stateMachine.Customer.StartCoroutine(CheckoutRoutine());
-        stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
+        wantsToEatIn = stateMachine.Customer.customerData.wantsToEatIn;
+        myQueueType = wantsToEatIn ? QueueManager.QueueType.Dining : QueueManager.QueueType.Cashier;
+
+        // 대기 루틴 시작
+        stateMachine.Customer.StartCoroutine(WaitForQueuePoint());
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
     }
-    
+
     public override void Update()
     {
         if (!stateMachine.Customer.ArriveCheck()) return;
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
     }
-    
-    private IEnumerator CheckoutRoutine()
+
+    private IEnumerator WaitForQueuePoint()
     {
-        while (true)
+        // 포인트 확보될 때까지 반복
+        while (targetPoint == null)
         {
-            // 맨 앞 자리인지 확인
-            bool check = QueueManager.Instance.CheckMyTurn(stateMachine.Customer);
-            
-            if (check && !OrderType)
-            {
+            targetPoint = wantsToEatIn
+                ? QueueManager.Instance.RequestDiningPoint(stateMachine.Customer)
+                : QueueManager.Instance.RequestCashierPoint(stateMachine.Customer);
+
+            if (targetPoint == null)
                 yield return new WaitForSeconds(0.5f);
-                stateMachine.ChangeState(stateMachine.BuyState); 
-                yield break;
-            }
-            
-            if (check && OrderType)
-            {
-                yield return new WaitForSeconds(0.5f);
-                Debug.Log("내가 밥먹을 차례야");
-                stateMachine.ChangeState(stateMachine.EatState); 
-                yield break;
-            }
-            
-            yield return null; 
+        }
+
+        // 포인트 확보 후 이동
+        stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
+
+        // 맨 앞 자리 될 때까지 대기
+        while (!QueueManager.Instance.CheckMyTurn(stateMachine.Customer, myQueueType))
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        // 상태 전환
+        if (wantsToEatIn)
+        {
+            Debug.Log("내가 밥먹을 차례야");
+            stateMachine.ChangeState(stateMachine.EatState);
+        }
+        else
+        {
+            stateMachine.ChangeState(stateMachine.BuyState);
         }
     }
 }

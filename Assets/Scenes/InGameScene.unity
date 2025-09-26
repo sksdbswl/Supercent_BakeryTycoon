@@ -4760,6 +4760,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1119824141, guid: 199417f4e569e4d47a589af850b6b838, type: 3}
+      propertyPath: bakingTime
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8895707668468813162, guid: 199417f4e569e4d47a589af850b6b838, type: 3}
       propertyPath: m_Name
       value: Oven/ShowCase
@@ -4812,6 +4816,10 @@ PrefabInstance:
       propertyPath: spawnParent
       value: 
       objectReference: {fileID: 1191478035}
+    - target: {fileID: 8895707668791202427, guid: 199417f4e569e4d47a589af850b6b838, type: 3}
+      propertyPath: createInterval
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 199417f4e569e4d47a589af850b6b838, type: 3}
 --- !u!114 &8895707667645434828 stripped

@@ -9,9 +9,9 @@ public class QueueManager : Singleton<QueueManager>
     public List<NavPoint> DiningPoints = new List<NavPoint>();
     public List<NavPoint> EntryPoints = new List<NavPoint>();
 
-    private Queue<Customer> cashierQueue = new Queue<Customer>();
-    private Queue<Customer> diningQueue = new Queue<Customer>();
-    private Queue<Customer> entryQueue = new Queue<Customer>();
+    public Queue<Customer> cashierQueue = new Queue<Customer>();
+    public Queue<Customer> diningQueue = new Queue<Customer>();
+    public Queue<Customer> entryQueue = new Queue<Customer>();
 
     #region Request Points
 
@@ -75,10 +75,26 @@ public class QueueManager : Singleton<QueueManager>
         }
     }
     
-    public bool CheckMyTurn(Customer customer)
+    public enum QueueType
     {
-        if (cashierQueue.Count == 0) return false;
-        return cashierQueue.Peek() == customer;
+        Cashier,
+        Dining,
+        Entry
+    }
+
+    public bool CheckMyTurn(Customer customer, QueueType type)
+    {
+        Queue<Customer> targetQueue = type switch
+        {
+            QueueType.Cashier => cashierQueue,
+            QueueType.Dining => diningQueue,
+            QueueType.Entry => entryQueue,
+            _ => null
+        };
+
+        if (targetQueue == null || targetQueue.Count == 0) return false;
+
+        return targetQueue.Peek() == customer;
     }
 
     #endregion

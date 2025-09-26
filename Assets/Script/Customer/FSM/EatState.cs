@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EatState:CustomerBaseState
+public class EatState : CustomerBaseState
 {
     public EatState(CustomerStateMachine stateMachine) : base(stateMachine) { }
     

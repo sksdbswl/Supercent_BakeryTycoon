@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IProductTarget
@@ -73,6 +74,7 @@ public class Player : MonoBehaviour, IProductTarget
         if (isClosedContainer) StartCoroutine(GetProductsCoroutine());
     }
 
+    public bool isWorking = false;
     private IEnumerator GetProductsCoroutine()
     {
         var term = new WaitForSeconds(0.5f);
@@ -90,7 +92,6 @@ public class Player : MonoBehaviour, IProductTarget
                 case Showcase showcase:
                     if (PickedUpBreads.Count == 0)
                     {
-                        //Debug.Log("쇼케이스 사용중지");
                         showcase.SetBusy(false);
                         break;
                     }
@@ -100,14 +101,16 @@ public class Player : MonoBehaviour, IProductTarget
                     bread.MoveTo(this, Product.GoalType.Showcase);
                     break;
                 
-                // case Cashier cashier:
-                //     if (cashier.cashierQueue.Count == 0)
-                //     {
-                //         Debug.Log("손님이 없습니다.");
-                //         break;
-                //     }
+                case Cashier cashier:
+                    // 계산대 앞 손님 가져오기
+                    // var customer = cashier.GetCurrentCustomer();
+                    //
+                    // if (customer != null && !isWorking)
+                    // {
+                    //     customer.StartCoroutine(customer.CustomerStateMachine.BuyState.FinishAfterDelay(this));
+                    // }
                     
-                
+                    break;
                 default:
                     Debug.LogWarning($"알 수 없는 IProductContainer 타입: {Container.GetType()}");
                     break;
