@@ -8,37 +8,57 @@ public class OpenUnlockAction : IUnlockAction
     {
         this.particle = particle;
     }
-    
-    public void Execute(Player player, UnlockContext context)
+
+    // UnlockTarget 배열로 수정
+    public void Execute(Player player, UnlockTarget[] targets)
     {
         Debug.Log("새로운 자리가 열렸습니다!");
-        
-        if (context.Target != null)
+
+        foreach (var target in targets)
         {
-            if(context.NoneTarget != null) context.NoneTarget.SetActive(false);
-            
-            Transform particlePos = context.Target.transform.Find("ParticlePos");
+            if (target == null) continue;
 
-            if (particlePos != null)
-            {
-                ParticleSystem p = GameObject.Instantiate(
-                    particle, 
-                    particlePos.position, 
-                    particlePos.rotation, 
-                    particlePos
-                );
+            // 비활성화할 오브젝트 처리
+            if (target.Deactivate != null)
+                target.Deactivate.SetActive(false);
 
-                p.Play();
-            }
-            else
+            // 파티클 재생
+            if (particle != null && target.Activate != null)
             {
-                Debug.LogWarning("None particlePos");
+                Transform particlePos = target.Activate.transform.Find("ParticlePos");
+                if (particlePos != null)
+                {
+                    ParticleSystem p = GameObject.Instantiate(
+                        particle,
+                        particlePos.position,
+                        particlePos.rotation,
+                        particlePos
+                    );
+                    p.Play();
+                }
+                else
+                {
+                    Debug.LogWarning("None particlePos on " + target.Activate.name);
+                }
             }
-            
-            context.Target.SetActive(true);
-            Animator anim = context.Target.GetComponent<Animator>();
-            if(anim != null) anim.SetTrigger("Open");
+
+            // 활성화 + 애니메이터 처리
+            if (target.Activate != null)
+            {
+                target.Activate.SetActive(true);
+                Animator anim = target.Activate.GetComponent<Animator>();
+                if (anim != null)
+                    anim.SetTrigger("Open");
+            }
+
+            target.CurrentUnlock.gameObject.SetActive(false);
+
+            // 다음 해금 지역 초기화 (잠금 해제 가능 상태)
+            if (target.NextUnlock != null)
+            {
+                target.NextUnlock.SetUnlockedState(false);
+                target.NextUnlock.gameObject.SetActive(true);
+            }
         }
     }
 }
-
