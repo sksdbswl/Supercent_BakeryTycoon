@@ -8,7 +8,6 @@ public class BuyState:CustomerBaseState
 
     public override void Enter()
     {
-        Debug.Log("내가 계산할 차례야");
         stateMachine.Customer.StartCoroutine(FinishAfterDelay());
     }
 

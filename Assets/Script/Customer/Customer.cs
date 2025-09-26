@@ -56,7 +56,6 @@ public class Customer : MonoBehaviour, IProductTarget
         Debug.Log("재리 재배치");
         navAgent.SetDestination(point.transform.position);
     }
-
     
     public bool ArriveCheck()
     {
@@ -67,11 +66,5 @@ public class Customer : MonoBehaviour, IProductTarget
         }
 
         return false;
-    }
-    
-    // 차례가 된 손님 상태 변경
-    public void Sequence()
-    {
-        CustomerStateMachine.ChangeState(CustomerStateMachine.BuyState);
     }
 }
