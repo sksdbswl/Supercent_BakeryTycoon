@@ -10,9 +10,18 @@ public class Customer : MonoBehaviour, IProductTarget
     public PooledObject PooledObject { get; set; }
     // SO 데이터
     public CustomerData customerData; 
-    
     [field:SerializeField] public Transform BreadTransform { get; set; }
     public Stack<Product> PickedUpBreads { get; set; } = new Stack<Product>();
+    public NavPoint currentPoint;
+    
+    private void OnEnable()
+    {
+        InitCustomer();              
+        PickedUpBreads.Clear();       
+        currentPoint = null;          
+        navAgent.ResetPath();        
+        CustomerStateMachine = new CustomerStateMachine(this);
+    }
     
     private void Awake()
     {
@@ -41,6 +50,7 @@ public class Customer : MonoBehaviour, IProductTarget
         CustomerStateMachine.Update();
     }
 
+    // 위치 변경
     public void OnPointAssigned(NavPoint point)
     {
         navAgent.SetDestination(point.transform.position);
@@ -55,5 +65,11 @@ public class Customer : MonoBehaviour, IProductTarget
         }
 
         return false;
+    }
+    
+    // 차례가 된 손님 상태 변경
+    public void StartBuy()
+    {
+        CustomerStateMachine.ChangeState(CustomerStateMachine.BuyState);
     }
 }

@@ -15,33 +15,21 @@ public class OrderWaitingState:CustomerBaseState
         {
             //나 밥먹고 갈테야
             targetPoint = QueueManager.Instance.RequestDiningPoint(stateMachine.Customer);
-        
-            if (targetPoint != null)
-            {
-                stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
-                stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
-            }
         }
         else
         {
             //나 포장하고 계산해줘
             targetPoint = QueueManager.Instance.RequestCashierPoint(stateMachine.Customer);
-        
-            if (targetPoint != null)
-            {
-                stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
-                stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
-            }
         }
+        
+        stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
+        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
     }
 
     public override void Update()
     {
         if (!stateMachine.Customer.ArriveCheck()) return;
         
-        // 계산대 줄에 도착
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
-        if (OrderType) stateMachine.ChangeState(stateMachine.EatState);
-        else stateMachine.ChangeState(stateMachine.BuyState);
     }
 }

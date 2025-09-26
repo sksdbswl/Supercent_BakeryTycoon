@@ -18,8 +18,11 @@ public class Product : MonoBehaviour
     private BreadSpawner originSpawner;
     private Showcase originShowcase;
     
+    public PooledObject PooledObject { get; set; }
+    
     public void Init(BreadSpawner spawner, Showcase showcase)
     {
+        PooledObject =GetComponent<PooledObject>();
         originSpawner = spawner;
         originShowcase = showcase;
     }

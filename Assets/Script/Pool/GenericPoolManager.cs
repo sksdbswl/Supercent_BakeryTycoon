@@ -6,11 +6,7 @@ public class GenericPoolManager : Singleton<GenericPoolManager>
     // 프리팹을 키로, 해당 풀을 값으로 저장
     private Dictionary<GameObject, GenericObjectPool<GameObject>> pools 
         = new Dictionary<GameObject, GenericObjectPool<GameObject>>();
-
-    private void Awake()
-    {
-    }
-
+    
     // 풀 생성
     public void CreatePool(GameObject prefab, int initialSize, Transform parent = null)
     {

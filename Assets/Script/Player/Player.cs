@@ -90,7 +90,7 @@ public class Player : MonoBehaviour, IProductTarget
                 case Showcase showcase:
                     if (PickedUpBreads.Count == 0)
                     {
-                        Debug.Log("쇼케이스 사용중지");
+                        //Debug.Log("쇼케이스 사용중지");
                         showcase.SetBusy(false);
                         break;
                     }

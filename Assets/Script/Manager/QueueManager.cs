@@ -15,7 +15,7 @@ public class QueueManager : Singleton<QueueManager>
 
     #region 요청
 
-    public NavPoint RequestCashierPoint(Customer customer) => RequestPoint(CashierPoints, cashierQueue, customer);
+    //public NavPoint RequestCashierPoint(Customer customer) => RequestPoint(CashierPoints, cashierQueue, customer);
     public NavPoint RequestDiningPoint(Customer customer) => RequestPoint(DiningPoints, diningQueue, customer);
     public NavPoint RequestEntryPoint(Customer customer) => RequestPoint(EntryPoints, entryQueue, customer);
 
@@ -36,12 +36,14 @@ public class QueueManager : Singleton<QueueManager>
 
         return null;
     }
+    
+    
 
     #endregion
 
     #region 해제
 
-    public void ReleaseCashierPoint(NavPoint point) => ReleasePoint(point, CashierPoints, cashierQueue);
+    //public void ReleaseCashierPoint(NavPoint point) => ReleasePoint(point, CashierPoints, cashierQueue);
     public void ReleaseDiningPoint(NavPoint point) => ReleasePoint(point, DiningPoints, diningQueue);
     public void ReleaseEntryPoint(NavPoint point) => ReleasePoint(point, EntryPoints, entryQueue);
 
@@ -68,4 +70,82 @@ public class QueueManager : Singleton<QueueManager>
     }
 
     #endregion
+
+    
+    public NavPoint RequestCashierPoint(Customer customer)
+    {
+        foreach (var p in CashierPoints)
+        {
+            if (!p.IsOccupied)
+            {
+                p.IsOccupied = true;
+                // 맨 앞 포인트면 바로 계산 시작
+                if (p == CashierPoints[0])
+                    customer.StartBuy();
+                
+                return p;
+            }
+        }
+
+        // 비어있는 포인트 없으면 큐에 등록
+        if (!cashierQueue.Contains(customer))
+            cashierQueue.Enqueue(customer);
+
+        return null;
+    }
+
+    public void ReleaseCashierPoint(NavPoint point)
+    {
+        if (point == null) return;
+
+        point.IsOccupied = false;
+
+        // 대기 중인 손님이 있으면 빈 포인트부터 채움
+        Queue<Customer> tempQueue = new Queue<Customer>();
+
+        while (cashierQueue.Count > 0)
+        {
+            Customer nextCustomer = cashierQueue.Dequeue();
+            NavPoint freePoint = QueueManager.Instance.RequestPoint(CashierPoints); // 빈 포인트 확인
+
+            if (freePoint != null)
+            {
+                freePoint.IsOccupied = true;
+                nextCustomer.OnPointAssigned(freePoint); // 이동 시작
+            }
+            else
+            {
+                // 빈 포인트 없으면 임시 큐에 넣어 다시 대기
+                tempQueue.Enqueue(nextCustomer);
+            }
+        }
+
+        // 다시 대기열 복원
+        while (tempQueue.Count > 0)
+            cashierQueue.Enqueue(tempQueue.Dequeue());
+    }
+    
+    // public void ReleaseCashierPoint(NavPoint point)
+    // {
+    //     if (point == null) return;
+    //
+    //     point.IsOccupied = false;
+    //
+    //     if (cashierQueue.Count > 0)
+    //     {
+    //         Customer nextCustomer = cashierQueue.Dequeue();
+    //         nextCustomer.OnPointAssigned(point); // 이동 후 도착 시 StartBuy 호출
+    //     }
+    // }
+    
+    public bool IsFrontOfCashierQueue(Customer customer)
+    {
+        return cashierQueue.Count > 0 && cashierQueue.Peek() == customer;
+    }
+    
+    // 차례가 된 손님 상태 변경
+    // public void StartBuy(Customer customer)
+    // {
+    //     customer.CustomerStateMachine.ChangeState(customer.CustomerStateMachine.BuyState);
+    // }
 }
