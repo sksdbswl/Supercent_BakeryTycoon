@@ -45,4 +45,15 @@ public class Customer : MonoBehaviour, IProductTarget
     {
         navAgent.SetDestination(point.transform.position);
     }
+
+    public bool ArriveCheck()
+    {
+        if (!navAgent.pathPending &&
+            navAgent.remainingDistance <= 0.1f)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

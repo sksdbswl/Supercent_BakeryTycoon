@@ -100,8 +100,13 @@ public class Player : MonoBehaviour, IProductTarget
                     bread.MoveTo(this, Product.GoalType.Showcase);
                     break;
                 
-                case Cashier cashier:
-                    //1. 앞에 손님이 있는지 ? 
+                // case Cashier cashier:
+                //     if (cashier.cashierQueue.Count == 0)
+                //     {
+                //         Debug.Log("손님이 없습니다.");
+                //         break;
+                //     }
+                    
                 
                 default:
                     Debug.LogWarning($"알 수 없는 IProductContainer 타입: {Container.GetType()}");

@@ -1,12 +1,17 @@
+using UnityEngine;
+
 public class OrderWaitingState:CustomerBaseState
 {
     private NavPoint targetPoint;
+    private bool OrderType;
     
     public OrderWaitingState(CustomerStateMachine stateMachine) : base(stateMachine) { }
     
     public override void Enter()
     {
-        if (stateMachine.Customer.customerData.wantsToEatIn)
+        OrderType = stateMachine.Customer.customerData.wantsToEatIn;
+        
+        if(OrderType)
         {
             //나 밥먹고 갈테야
             targetPoint = QueueManager.Instance.RequestDiningPoint(stateMachine.Customer);
@@ -28,6 +33,15 @@ public class OrderWaitingState:CustomerBaseState
                 stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
             }
         }
+    }
+
+    public override void Update()
+    {
+        if (!stateMachine.Customer.ArriveCheck()) return;
         
+        // 계산대 줄에 도착
+        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
+        if (OrderType) stateMachine.ChangeState(stateMachine.EatState);
+        else stateMachine.ChangeState(stateMachine.BuyState);
     }
 }

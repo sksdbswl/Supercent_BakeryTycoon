@@ -11,19 +11,18 @@ public class CustomerStateMachine : StateMachine
     
     public Customer Customer { get; }
     public VisitState VisitState { get; }
-    public BakeWaitingState BakeWaitingState { get; }
     public OrderWaitingState OrderWaitingState { get; }
     public BuyState BuyState { get; }
+    public EatState EatState { get; }
     public CheckOutState CheckOutState { get; } // 식사 또는 포장
     public LeavingState LeavingState { get; }
     
     public CustomerStateMachine(Customer customer)
     {
-        
         Customer = customer;
 
         VisitState = new VisitState(this);
-        BakeWaitingState = new BakeWaitingState(this);
+        EatState = new EatState(this);
         OrderWaitingState = new OrderWaitingState(this);
         BuyState = new BuyState(this);
         CheckOutState = new CheckOutState(this);

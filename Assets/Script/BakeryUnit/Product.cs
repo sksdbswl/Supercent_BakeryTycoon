@@ -9,6 +9,7 @@ public class Product : MonoBehaviour
         Player,
         Customer,
         Showcase,
+        Box
     }
 
     [Header("Move Settings")]
@@ -23,34 +24,68 @@ public class Product : MonoBehaviour
         originShowcase = showcase;
     }
 
-    // Player/Customer/Showcase 통합 이동
+    // Player/Customer/Showcase/Box 통합 이동
     public void MoveTo(IProductTarget target, GoalType goalType)
     {
         switch (goalType)
         {
             case GoalType.Player:
-                // 오븐에서 -> 플레이어
+                // 오븐에서 -> 플레이어 ( product -> IProductTarget )
                 originSpawner.PickupBread();
                 StartCoroutine(MoveToTargetBezier(target));
                 break;
 
             case GoalType.Showcase:
-                // 플레이어 -> 쇼케이스
-                StartCoroutine(MoveToShowcaseBezier(target));
+                // 플레이어 -> 쇼케이스 ( product -> showcase )
+                StartCoroutine(MoveToShowcaseBezier());
                 break;
             
             case GoalType.Customer:
-                // 쇼케이스 -> 손님
+                // 쇼케이스 -> 손님 ( showcase -> product )
                 StartCoroutine(MoveToTargetBezier(target));
+                break;
+            
+            case GoalType.Box:
+                // 손님 -> Box ( product -> product )
+                StartCoroutine(MoveToBoxBezier(target));
                 break;
         }
     }
+    
+    private IEnumerator MoveToBoxBezier(IProductTarget target)
+    {
+        // 손님의 빵 (this) -> 박스로 이동
+        //target.PickedUpBreads.Push(this);
+        
+        int count = target.PickedUpBreads.Count;
+        
+        Vector3 startPos = transform.position;
+        Vector3 endPos = target.BreadTransform.position + new Vector3(0f, 0.5f * count, 0f);
 
-    // Player / Customer 공용 Bezier 이동
+        Vector3 control1 = startPos + Vector3.up * curveHeight;
+        Vector3 control2 = endPos + Vector3.up * curveHeight;
+
+        float elapsed = 0f;
+        while (elapsed < moveDuration)
+        {
+            float t = elapsed / moveDuration;
+            transform.position = Bezier.Cubic(startPos, control1, control2, endPos, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = endPos;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null) rb.isKinematic = true;
+
+        transform.SetParent(target.BreadTransform);
+        transform.localPosition = new Vector3(0f, 0.5f * count, 0f);
+        transform.localRotation = Quaternion.identity;
+    }
+
+    // 오븐,쇼케이스 -> Player / Customer 픽업지점 :: 공용 Bezier 이동
     private IEnumerator MoveToTargetBezier(IProductTarget target)
     {
-        Debug.Log($"빵 이동처리 해줘 !");
-        
         target.PickedUpBreads.Push(this);
         
         int count = target.PickedUpBreads.Count;
@@ -86,7 +121,7 @@ public class Product : MonoBehaviour
     public float zStep = 0.5f;  // 세로 간격
     
     // player -> Showcase 이동
-    public IEnumerator MoveToShowcaseBezier(IProductTarget target)
+    public IEnumerator MoveToShowcaseBezier()
     {
         int count = originShowcase.Products.Count - 1 ;
 
@@ -134,6 +169,7 @@ public class Product : MonoBehaviour
             layer * yStep,
             rowInLayer * zStep - (perCol - 1) * zStep / 2f
         );
+        
         transform.localRotation = Quaternion.identity;
     }
 }
