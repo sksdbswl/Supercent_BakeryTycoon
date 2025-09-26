@@ -8,6 +8,8 @@ public abstract class StateMachine
     
     public void ChangeState(IState newState)
     {
+        if (currentState == newState) return;
+        
         // 기존 상태가 있으면 Exit 후 전환
         currentState?.Exit();
         currentState = newState;
