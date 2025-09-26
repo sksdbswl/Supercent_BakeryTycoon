@@ -106,12 +106,14 @@ public class Player : MonoBehaviour, IProductTarget
                     if (Customer == null)
                     { 
                         var currentCustomer = cashier.GetCurrentCustomer();
-                        
                         if (currentCustomer != null)
                         {
                             Customer = currentCustomer;
+                            GameObject paperBox = cashier.SpawnPaperBox();
+                            Customer.currentPaperBox = paperBox;
+
                             Customer.StartCoroutine(Customer.CustomerStateMachine.BuyState
-                                .FinishAfterDelay(this));
+                                .FinishAfterDelay(this, paperBox));
                         }
                     }
 

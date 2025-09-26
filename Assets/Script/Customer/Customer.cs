@@ -13,12 +13,14 @@ public class Customer : MonoBehaviour, IProductTarget
     [field:SerializeField] public Transform BreadTransform { get; set; }
     public Stack<Product> PickedUpBreads { get; set; } = new Stack<Product>();
     public NavPoint currentPoint;
+    public GameObject currentPaperBox { get; set; }
     
     private void OnEnable()
     {
         InitCustomer();              
         PickedUpBreads.Clear();       
-        currentPoint = null;          
+        currentPoint = null;
+        currentPaperBox = null;
         navAgent.ResetPath();        
         CustomerStateMachine = new CustomerStateMachine(this);
     }

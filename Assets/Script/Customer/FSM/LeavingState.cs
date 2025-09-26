@@ -11,7 +11,7 @@ public class LeavingState : CustomerBaseState
         Debug.Log("감사합니다:)");
 
         var customer = stateMachine.Customer;
-   
+        
         // 출발점으로 이동
         customer.navAgent.SetDestination(GameManager.Instance.customerSpawner.spawnPosition.position);
         customer.animator.SetTrigger(CustomerAnimationController.Move);
@@ -28,5 +28,9 @@ public class LeavingState : CustomerBaseState
         
         // 도착 후 풀로 반환
         GenericPoolManager.Instance.Release(customer.PooledObject.OriginPrefab, customer.PooledObject.gameObject);
+        if (customer.currentPaperBox != null)
+        {
+            GenericPoolManager.Instance.Release(customer.currentPaperBox,customer.currentPaperBox.gameObject);
+        }
     }
 }

@@ -13,14 +13,15 @@ public class Cashier : ProductContainer
     public Queue<Customer> cashierQueue => QueueManager.Instance.cashierQueue;
 
     // 오브젝트 풀링된 PaperBox 생성
-    public void SpawnPaperBox()
+    public GameObject SpawnPaperBox()
     {
         GameObject box = GenericPoolManager.Instance.Get(paperBoxPrefab, spawnParent.position,Quaternion.identity,spawnParent);
         box.transform.position = PaperBoxPosition.position;
         box.transform.rotation = PaperBoxPosition.rotation;
     
-        // Tween으로 살짝 점프 후 자리 고정
         box.transform.DOLocalMoveY(0.2f, 0.3f).SetLoops(2, LoopType.Yoyo);
+
+        return box;
     }
 
     public Customer GetCurrentCustomer()
