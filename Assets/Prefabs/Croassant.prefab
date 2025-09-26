@@ -144,3 +144,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e151b4318c4b5a9a4392f2ae04fa90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveDuration: 0.1
+  curveHeight: 2
+  rotate: 180
+  xStep: 0.5
+  yStep: 0.3
+  zStep: 0.5

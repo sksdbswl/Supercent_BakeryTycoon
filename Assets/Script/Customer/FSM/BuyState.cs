@@ -9,36 +9,19 @@ public class BuyState:CustomerBaseState
     public override void Enter()
     {
         Debug.Log("내가 계산할 차례야");
+        stateMachine.Customer.StartCoroutine(FinishAfterDelay());
     }
 
     private IEnumerator FinishAfterDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         //TODO:: 포장 및 결제 애니메이션 처리
         FinishBuying();
     }
 
-    public override void Update()
-    {
-        if (stateMachine.Customer.ArriveCheck())
-        {
-            stateMachine.Customer.StartCoroutine(FinishAfterDelay());
-        }
-    }
-    
-    public bool OnBuyPointAssigned(NavPoint point)
-    {
-        Debug.Log(QueueManager.Instance.CashierPoints[0]);
-        Debug.Log(point);
-        
-        // 만약 내가 "맨 앞 계산대 자리"라면 
-        if (!QueueManager.Instance.CashierPoints[0] == point) return false;
-        return true;
-    }
-
     public void FinishBuying()
     {
-        // 1️⃣ 손님이 들고 있는 빵 풀로 반환
+        // 손님이 들고 있는 빵 풀로 반환
         while (stateMachine.Customer.PickedUpBreads.Count > 0)
         {
             Product bread = stateMachine.Customer.PickedUpBreads.Pop();

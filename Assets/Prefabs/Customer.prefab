@@ -426,6 +426,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   customerData: {fileID: 0}
   <BreadTransform>k__BackingField: {fileID: 6451494761378690832}
+  currentPoint: {fileID: 0}
 --- !u!114 &4190248872221203705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,7 +460,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!1 &3898563997361661198
 GameObject:
   m_ObjectHideFlags: 0

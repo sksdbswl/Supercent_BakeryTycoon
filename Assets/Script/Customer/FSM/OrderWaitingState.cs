@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class OrderWaitingState:CustomerBaseState
@@ -22,14 +24,40 @@ public class OrderWaitingState:CustomerBaseState
             targetPoint = QueueManager.Instance.RequestCashierPoint(stateMachine.Customer);
         }
         
+        stateMachine.Customer.StartCoroutine(CheckoutRoutine());
         stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
     }
-
+    
     public override void Update()
     {
         if (!stateMachine.Customer.ArriveCheck()) return;
-        
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
+    }
+    
+    private IEnumerator CheckoutRoutine()
+    {
+        while (true)
+        {
+            // 맨 앞 자리인지 확인
+            bool check = QueueManager.Instance.CheckMyTurn(stateMachine.Customer);
+            
+            if (check && !OrderType)
+            {
+                yield return new WaitForSeconds(0.5f);
+                stateMachine.ChangeState(stateMachine.BuyState); 
+                yield break;
+            }
+            
+            if (check && OrderType)
+            {
+                yield return new WaitForSeconds(0.5f);
+                Debug.Log("내가 밥먹을 차례야");
+                stateMachine.ChangeState(stateMachine.EatState); 
+                yield break;
+            }
+            
+            yield return null; 
+        }
     }
 }

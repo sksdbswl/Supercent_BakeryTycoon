@@ -10,7 +10,7 @@ public class Cashier : ProductContainer
     [SerializeField] private Transform spawnParent; 
     
     // 손님 대기 관리용
-    public Queue<Customer> cashierQueue => QueueManager.Instance.cashierQueue;
+    //public Queue<Customer> cashierQueue => QueueManager.Instance.cashierQueue;
 
     // 오브젝트 풀링된 PaperBox 생성
     // public void SpawnPaperBox()

@@ -53,9 +53,11 @@ public class Customer : MonoBehaviour, IProductTarget
     // 위치 변경
     public void OnPointAssigned(NavPoint point)
     {
+        Debug.Log("재리 재배치");
         navAgent.SetDestination(point.transform.position);
     }
 
+    
     public bool ArriveCheck()
     {
         if (!navAgent.pathPending &&
@@ -68,7 +70,7 @@ public class Customer : MonoBehaviour, IProductTarget
     }
     
     // 차례가 된 손님 상태 변경
-    public void StartBuy()
+    public void Sequence()
     {
         CustomerStateMachine.ChangeState(CustomerStateMachine.BuyState);
     }

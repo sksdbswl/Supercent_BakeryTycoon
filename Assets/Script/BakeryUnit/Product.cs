@@ -13,7 +13,7 @@ public class Product : MonoBehaviour
     }
 
     [Header("Move Settings")]
-    [SerializeField] private float moveDuration = 0.3f;
+    [SerializeField] private float moveDuration = 0.1f;
     [SerializeField] private float curveHeight = 2f;
     private BreadSpawner originSpawner;
     private Showcase originShowcase;
