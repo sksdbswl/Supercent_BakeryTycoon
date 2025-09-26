@@ -47,13 +47,14 @@ public class EatState : CustomerBaseState
             yield return null;
         }
         
+        QueueManager.Instance.ReleaseDiningPoint(stateMachine.Customer.currentPoint);
+        stateMachine.Customer.currentPoint = null;
+        
         Debug.Log("밥먹으러 도착");
         
         //상태 전환
         yield return new WaitForSeconds(5f);
         
-        QueueManager.Instance.ReleaseDiningPoint(stateMachine.Customer.currentPoint);
-        stateMachine.Customer.currentPoint = null;
         
         table.SetOccupied(false);
         stateMachine.ChangeState(stateMachine.LeavingState);
