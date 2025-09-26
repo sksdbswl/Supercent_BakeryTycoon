@@ -52,7 +52,7 @@ public class UnLock : MonoBehaviour
             costText.text = cost.ToString();
 
         GameManager.Instance.Register(this);
-        isOccupied = true;
+        isOccupied = false;
     }
 
     private void Start()
