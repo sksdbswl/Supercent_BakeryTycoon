@@ -13,32 +13,35 @@ public class EatState : CustomerBaseState
     private IEnumerator TrySitCoroutine()
     {
         UnLock table = null;
-
+        
+        //TODO:: 대기열 줄에 도착할때까지 대기 기능 추가 
+        
         // 사용 가능한 자리가 생길 때까지 대기
-        while (table == null)
+        while (true)
         {
             var availableTables = GameManager.Instance.GetOpenTables();
 
             if (availableTables.Count > 0)
             {
                 // 랜덤으로 자리 선택
-                table = availableTables[UnityEngine.Random.Range(0, availableTables.Count)];
-                table.SetOccupied(true); // 점유
+                table = availableTables[Random.Range(0, availableTables.Count)];
+                table.SetOccupied(true); 
                 break;
             }
 
             Debug.Log("앉을 자리가 없음, 대기 중...");
-            yield return new WaitForSeconds(0.5f); // 0.5초마다 확인
+            
+            yield return new WaitForSeconds(0.5f); 
         }
 
         // 자리로 이동
         stateMachine.Customer.MoveToEat(table.SeatPosition);
 
         // 자리 도착 후 식사
-        yield return stateMachine.Customer.StartCoroutine(EattingWaitting(table));
+        yield return stateMachine.Customer.StartCoroutine(EattingWaiting(table));
     }
 
-    private IEnumerator EattingWaitting(UnLock table)
+    private IEnumerator EattingWaiting(UnLock table)
     {
         Debug.Log("밥먹으러 가는 중");
 
