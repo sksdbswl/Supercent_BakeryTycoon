@@ -9,20 +9,20 @@ public class BuyState:CustomerBaseState
     public override void Enter()
     {
         Debug.Log("계산해주세요~");
-        stateMachine.Customer.StartCoroutine(FinishAfterDelay());
+        //stateMachine.Customer.StartCoroutine(FinishAfterDelay());
     }
 
-    public IEnumerator FinishAfterDelay()
+    public IEnumerator FinishAfterDelay(Player player)
     {
         //player.isWorking = true;
         
         PackingBread();
         yield return new WaitForSeconds(5f);
         //TODO:: 포장 및 결제 애니메이션 처리
-        FinishBuying();
+        FinishBuying(player);
     }
 
-    public void FinishBuying()
+    public void FinishBuying(Player player)
     {
         // 손님이 들고 있는 빵 풀로 반환
         while (stateMachine.Customer.PickedUpBreads.Count > 0)
@@ -37,6 +37,7 @@ public class BuyState:CustomerBaseState
         
         // LeavingState 전환
         stateMachine.ChangeState(stateMachine.LeavingState);
+        player.Customer = null;
     }
     
     

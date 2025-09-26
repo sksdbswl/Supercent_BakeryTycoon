@@ -10,26 +10,26 @@ public class Player : MonoBehaviour, IProductTarget
 {
     public PlayerStateMachine PlayerStateMachine { get; private set; }
     public Animator animator { get; private set; }
-    public PlayerMover Mover { get; private set; } 
-    
+    public PlayerMover Mover { get; private set; }
+
     public event Action<int> OnMoneyChanged;
     public int Money { get; set; }
-    
+
     private bool isClosedContainer = false;
     public IProductContainer Container;
-    
+
     public CharacterController characterController;
-    
-    [field:SerializeField] public Transform BreadTransform { get; set; }
+
+    [field: SerializeField] public Transform BreadTransform { get; set; }
     public Stack<Product> PickedUpBreads { get; set; } = new Stack<Product>();
-    
+
     private void Awake()
     {
         // 초기 플레이어 설정
         animator = GetComponentInChildren<Animator>();
         Mover = GetComponent<PlayerMover>();
         characterController = GetComponent<CharacterController>();
-        
+
         // 초기 플레이어 생성 및 FSM 시작 선언
         PlayerStateMachine = new PlayerStateMachine(this);
         PlayerStateMachine.ChangeState(PlayerStateMachine.IdleState);
@@ -41,13 +41,13 @@ public class Player : MonoBehaviour, IProductTarget
     private void Update()
     {
         PlayerStateMachine.Update();
-        
+
         if (transform.position.y > 0)
         {
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         }
     }
-    
+
     public void AddMoney(int amount)
     {
         Money += amount;
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour, IProductTarget
             OnMoneyChanged?.Invoke(Money);
         }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         var container = other.GetComponent<IProductContainer>();
@@ -74,7 +74,8 @@ public class Player : MonoBehaviour, IProductTarget
         if (isClosedContainer) StartCoroutine(GetProductsCoroutine());
     }
 
-    public bool isWorking = false;
+    public Customer Customer { get; set; }
+
     private IEnumerator GetProductsCoroutine()
     {
         var term = new WaitForSeconds(0.5f);
@@ -100,16 +101,20 @@ public class Player : MonoBehaviour, IProductTarget
                     showcase.Exhibition(bread);
                     bread.MoveTo(this, Product.GoalType.Showcase);
                     break;
-                
+
                 case Cashier cashier:
-                    // 계산대 앞 손님 가져오기
-                    // var customer = cashier.GetCurrentCustomer();
-                    //
-                    // if (customer != null && !isWorking)
-                    // {
-                    //     customer.StartCoroutine(customer.CustomerStateMachine.BuyState.FinishAfterDelay(this));
-                    // }
-                    
+                    if (Customer == null)
+                    { 
+                        var currentCustomer = cashier.GetCurrentCustomer();
+                        
+                        if (currentCustomer != null)
+                        {
+                            Customer = currentCustomer;
+                            Customer.StartCoroutine(Customer.CustomerStateMachine.BuyState
+                                .FinishAfterDelay(this));
+                        }
+                    }
+
                     break;
                 default:
                     Debug.LogWarning($"알 수 없는 IProductContainer 타입: {Container.GetType()}");
@@ -133,7 +138,7 @@ public class Player : MonoBehaviour, IProductTarget
             }
 
             Container = null;
-            isClosedContainer = false; 
+            isClosedContainer = false;
         }
     }
 }

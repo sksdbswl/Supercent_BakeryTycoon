@@ -42,7 +42,7 @@ public class Customer : MonoBehaviour, IProductTarget
         customerData.desiredBread = template.desiredBread;
         customerData.desiredBreadId = template.desiredBreadId;
         customerData.quantity = template.quantity;
-        customerData.pickedUpCount = 0;  // 초기화
+        customerData.pickedUpCount = 0;
         customerData.wantsToEatIn = template.wantsToEatIn;
     }
     private void Update()
@@ -50,10 +50,8 @@ public class Customer : MonoBehaviour, IProductTarget
         CustomerStateMachine.Update();
     }
 
-    // 위치 변경
     public void OnPointAssigned(NavPoint point)
     {
-        Debug.Log("재리 재배치");
         navAgent.SetDestination(point.transform.position);
     }
     
