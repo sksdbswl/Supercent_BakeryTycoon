@@ -9,7 +9,6 @@ public class BuyState:CustomerBaseState
     public override void Enter()
     {
         Debug.Log("계산해주세요~");
-        //stateMachine.Customer.StartCoroutine(FinishAfterDelay());
     }
 
     public IEnumerator FinishAfterDelay(Player player, GameObject paperBox)
