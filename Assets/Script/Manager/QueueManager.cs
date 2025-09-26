@@ -68,6 +68,7 @@ public class QueueManager : Singleton<QueueManager>
         {
             if(index >= points.Count -1) return;
             
+            customer.currentPoint = points[index];
             customer.OnPointAssigned(points[index]);
             index++;
         }
