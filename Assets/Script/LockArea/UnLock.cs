@@ -22,9 +22,8 @@ public class UnLock : MonoBehaviour
     public GameObject OpneArea;
     public GameObject CloseArea;
     
-    private bool isUnlocked = false;
+    public bool isUnlocked = false;
     private IUnlockAction unlockAction;
-    
 
     private void Awake()
     {
@@ -37,6 +36,9 @@ public class UnLock : MonoBehaviour
         // 비용 적용
         if (costText != null)
             costText.text = cost.ToString();
+        
+        GameManager.Instance.Register(this);
+        isOccupied = true;
     }
 
     private void Start()
@@ -70,6 +72,10 @@ public class UnLock : MonoBehaviour
         unlockAction.Execute(player, context);
     }
 
+    
+    /// <summary>
+    /// set settings
+    /// </summary>
     private bool CanUnlock(Player player) => player.Money >= cost;
 
     private void Unlock(Player player)
@@ -77,4 +83,16 @@ public class UnLock : MonoBehaviour
         player.SpendMoney(cost);
         isUnlocked = true;
     }
+    
+    [Header("Seat Settings")]
+    public Transform SeatPosition;
+    private bool isOccupied = false;
+
+    public bool CanSit() => !isOccupied;
+
+    public void SetOccupied(bool occupied)
+    {
+        isOccupied = occupied;
+    }
+
 }

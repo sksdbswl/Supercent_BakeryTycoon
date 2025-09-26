@@ -67,4 +67,10 @@ public class Customer : MonoBehaviour, IProductTarget
 
         return false;
     }
+
+    public void MoveToEat(Transform target)
+    {
+        // 대기 루틴 시작
+        navAgent.SetDestination(target.transform.position);
+    }
 }
