@@ -19,12 +19,18 @@ public class Product : MonoBehaviour
     private Showcase originShowcase;
     
     public PooledObject PooledObject { get; set; }
+    private MeshCollider meshCollider;
     
     public void Init(BreadSpawner spawner, Showcase showcase)
     {
         PooledObject =GetComponent<PooledObject>();
         originSpawner = spawner;
         originShowcase = showcase;
+    }
+
+    private void Awake()
+    {
+        meshCollider = GetComponent<MeshCollider>();
     }
 
     // Player/Customer/Showcase/Box 통합 이동
@@ -40,6 +46,7 @@ public class Product : MonoBehaviour
 
             case GoalType.Showcase:
                 // 플레이어 -> 쇼케이스 ( product -> showcase )
+                meshCollider.isTrigger = true;
                 StartCoroutine(MoveToShowcaseBezier());
                 break;
             
@@ -58,8 +65,6 @@ public class Product : MonoBehaviour
     private IEnumerator MoveToBoxBezier(IProductTarget target)
     {
         // 손님의 빵 (this) -> 박스로 이동
-        //target.PickedUpBreads.Push(this);
-        
         int count = target.PickedUpBreads.Count;
         
         Vector3 startPos = transform.position;

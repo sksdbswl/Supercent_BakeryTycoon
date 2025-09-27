@@ -19,7 +19,7 @@ public class EatState : CustomerBaseState
         while (true)
         {
             var availableTables = GameManager.Instance.GetOpenTables();
-
+           
             if (availableTables.Count > 0)
             {
                 // 랜덤으로 자리 선택
@@ -53,7 +53,8 @@ public class EatState : CustomerBaseState
         yield return new WaitForSeconds(12f);
         
         stateMachine.Customer.Payment(GameManager.PaymentType.Dining);
-        table.SetOccupied(false);
+        table.Seat.Dirty();
+
         stateMachine.ChangeState(stateMachine.LeavingState);
     }
 

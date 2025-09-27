@@ -31,7 +31,8 @@ public class UnLock : MonoBehaviour
     [Header("Unlock Targets")]
     public UnlockTarget[] Targets;
 
-    [Header("Seat Settings")]
+    [Header("Seat Settings")] 
+    public Seat Seat;
     public Transform SeatPosition;
     private bool isOccupied = false;
 
