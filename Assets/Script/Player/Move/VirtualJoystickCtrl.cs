@@ -6,12 +6,13 @@ public class VirtualJoystickCtrl : MonoBehaviour
     [Header("JoyController")]
     [SerializeField] private RectTransform JoysticBackground;
     [SerializeField] private RectTransform JoysticHandle;
+    [SerializeField] private RectTransform ExtraIndicator; // 실제 입력 위치 표시용
     [Space]
-    [SerializeField] private float handleSpeed = 10f; // 기본값 설정
+    [SerializeField] private float handleSpeed = 10f;
 
-    private float moveRange;      // 조이스틱 이동 범위
-    private Vector3 startPos;     // 조이스틱 시작 위치
-    private Vector2 moveInput;    // 정규화된 입력값 ( -1 ~ 1 범위 )
+    private float moveRange;
+    private Vector3 startPos;
+    private Vector2 moveInput;
 
     public Vector2 MoveInput => moveInput;
 
@@ -31,34 +32,43 @@ public class VirtualJoystickCtrl : MonoBehaviour
     {
         startPos = Input.mousePosition;
         JoysticBackground.gameObject.SetActive(true);
+        // JoysticHandle.gameObject.SetActive(true);
+
+        if (ExtraIndicator != null)
+            ExtraIndicator.gameObject.SetActive(true);
 
         JoysticBackground.position = startPos;
         JoysticHandle.position = startPos;
+        if (ExtraIndicator != null) ExtraIndicator.position = startPos;
 
         moveRange = JoysticBackground.sizeDelta.x * 0.3f;
     }
 
     private void DragStick()
     {
-        Vector2 direction = (Vector2)Input.mousePosition - (Vector2)startPos;
+        Vector2 rawDirection = (Vector2)Input.mousePosition - (Vector2)startPos;
+        Vector2 clampedDirection = Vector2.ClampMagnitude(rawDirection, moveRange);
 
-        // 최대 moveRange까지만 이동
-        direction = Vector2.ClampMagnitude(direction, moveRange);
-
-        // 핸들 위치 보간 이동
         JoysticHandle.position = Vector3.Lerp(
             JoysticHandle.position,
-            startPos + (Vector3)direction,
+            startPos + (Vector3)clampedDirection * 2f,
             Time.deltaTime * handleSpeed
         );
 
-        // MoveInput은 정규화된 값 (-1 ~ 1)
-        moveInput = direction / moveRange;
+        if (ExtraIndicator != null)
+            ExtraIndicator.position = Input.mousePosition;
+
+        moveInput = clampedDirection / moveRange;
     }
 
     private void EndStick()
     {
         JoysticBackground.gameObject.SetActive(false);
+        // JoysticHandle.gameObject.SetActive(false);
+
+        if (ExtraIndicator != null)
+            ExtraIndicator.gameObject.SetActive(false);
+
         moveInput = Vector2.zero;
     }
 }
