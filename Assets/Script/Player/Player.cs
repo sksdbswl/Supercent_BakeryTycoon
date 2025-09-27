@@ -82,9 +82,15 @@ public class Player : MonoBehaviour, IProductTarget
             switch (Container)
             {
                 case Oven oven:
-                    var product = oven.GetProduct();
-                    if (product != null)
-                        product.MoveTo(this, Product.GoalType.Player);
+                    //var product = oven.GetProduct();
+
+                    if (oven.BakedCheck())
+                    {
+                        var queueBread = oven.breadQueue.Dequeue();
+                        queueBread.MoveTo(this, Product.GoalType.Player);
+                        oven.GetProduct();
+                    }
+                       
                     break;
 
                 case Showcase showcase:
