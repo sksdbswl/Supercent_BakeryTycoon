@@ -32,7 +32,6 @@ public class VirtualJoystickCtrl : MonoBehaviour
     {
         startPos = Input.mousePosition;
         JoysticBackground.gameObject.SetActive(true);
-        // JoysticHandle.gameObject.SetActive(true);
 
         if (ExtraIndicator != null)
             ExtraIndicator.gameObject.SetActive(true);
@@ -64,7 +63,6 @@ public class VirtualJoystickCtrl : MonoBehaviour
     private void EndStick()
     {
         JoysticBackground.gameObject.SetActive(false);
-        // JoysticHandle.gameObject.SetActive(false);
 
         if (ExtraIndicator != null)
             ExtraIndicator.gameObject.SetActive(false);

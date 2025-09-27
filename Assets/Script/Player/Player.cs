@@ -116,7 +116,6 @@ public class Player : MonoBehaviour, IProductTarget
 
                     break;
                 default:
-                    Debug.LogWarning($"알 수 없는 IProductContainer 타입: {Container.GetType()}");
                     break;
             }
 
