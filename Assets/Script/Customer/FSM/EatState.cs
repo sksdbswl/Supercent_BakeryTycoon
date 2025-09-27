@@ -7,14 +7,13 @@ public class EatState : CustomerBaseState
     
     public override void Enter()
     {
+        stateMachine.Customer.CustomerUI.OnSprite(stateMachine.Customer.CustomerUI.Eat);
         stateMachine.Customer.StartCoroutine(TrySitCoroutine());
     }
 
     private IEnumerator TrySitCoroutine()
     {
         UnLock table = null;
-        
-        //TODO:: 대기열 줄에 도착할때까지 대기 기능 추가 
         
         // 사용 가능한 자리가 생길 때까지 대기
         while (true)
@@ -56,8 +55,7 @@ public class EatState : CustomerBaseState
         Debug.Log("밥먹으러 도착");
         
         //상태 전환
-        yield return new WaitForSeconds(5f);
-        
+        yield return new WaitForSeconds(15f);
         
         table.SetOccupied(false);
         stateMachine.ChangeState(stateMachine.LeavingState);

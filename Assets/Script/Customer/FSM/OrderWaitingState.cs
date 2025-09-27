@@ -14,6 +14,8 @@ public class OrderWaitingState : CustomerBaseState
         wantsToEatIn = stateMachine.Customer.customerData.wantsToEatIn;
         myQueueType = wantsToEatIn ? QueueManager.QueueType.Dining : QueueManager.QueueType.Cashier;
 
+        stateMachine.Customer.CustomerUI.OnSprite(stateMachine.Customer.CustomerUI.Cashier);
+        
         // 대기 루틴 시작
         stateMachine.Customer.StartCoroutine(WaitForQueuePoint());
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);

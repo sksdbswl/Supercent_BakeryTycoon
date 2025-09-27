@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +10,7 @@ public class VisitState : CustomerBaseState
     public VisitState(CustomerStateMachine stateMachine) : base(stateMachine) { }
 
     private bool IsArrived = false;
+    private bool isPickUp = false;
     
     public override void Enter()
     {
@@ -36,14 +38,16 @@ public class VisitState : CustomerBaseState
 
     public override void Update()
     {
-        if (targetPoint == null || targetShowcase == null) return;
+        if (targetPoint == null || targetShowcase == null || isPickUp) return;
 
         if (!stateMachine.Customer.ArriveCheck()) return;
+        stateMachine.Customer.CustomerUI.SetBreadCount(stateMachine.Customer.customerData.quantity);
+        stateMachine.Customer.CustomerUI.OnSprite(stateMachine.Customer.CustomerUI.Want);
+        
         IsArrived = true;
         if (!IsArrived) return;
         IsArrived = false;
         if (targetShowcase.IsBusy) return;
-
         // 쇼케이스 사용 시작
         PickUpBread();
     }
@@ -67,33 +71,46 @@ public class VisitState : CustomerBaseState
 
     public void PickUpBread()
     {
-        int need = stateMachine.Customer.customerData.quantity;
-        int already = stateMachine.Customer.customerData.pickedUpCount;
+        isPickUp = true;
+        stateMachine.Customer.StartCoroutine(PickUpBreadCoroutine());
+    }
 
-        for (int i = already; i < need; i++)
+    private IEnumerator PickUpBreadCoroutine()
+    {
+        int need = stateMachine.Customer.customerData.quantity;
+        int pickup = stateMachine.Customer.customerData.pickedUpCount;
+        
+        while (pickup < need)
         {
             if (targetShowcase.IsBusy)
             {
-                Debug.Log("쇼케이스 사용 중 → 픽업 중단");
-                break;
+                Debug.Log("쇼케이스 사용 중 → 잠깐 대기");
+                yield return new WaitForSeconds(0.5f);
+                continue; 
             }
 
             Product bread = targetShowcase.GetProduct();
             if (bread == null)
             {
-                //Debug.Log("쇼케이스 빵이 부족함 → 픽업 중단");
-                break;
+                Debug.Log("쇼케이스 빵 부족 → 기다리는 중");
+                yield return new WaitForSeconds(0.5f);
+                continue; 
             }
 
             // 빵 가져가기
-            stateMachine.Customer.customerData.pickedUpCount++;
+            pickup++;
+            stateMachine.Customer.CustomerUI.SetBreadCount(
+                need - pickup
+            );
+
             bread.MoveTo(stateMachine.Customer, Product.GoalType.Customer);
+
+            // 하나 가져간 후 텀 두기
+            yield return new WaitForSeconds(0.5f);
         }
-    
-        if (stateMachine.Customer.customerData.pickedUpCount >= need)
-        {
-            //Debug.Log("손님이 필요한 빵을 모두 픽업 완료!");
-            stateMachine.ChangeState(stateMachine.OrderWaitingState);
-        }
+
+        // 다 모았으면 다음 상태로
+        stateMachine.ChangeState(stateMachine.OrderWaitingState);
+        isPickUp = false;
     }
 }

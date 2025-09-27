@@ -8,12 +8,12 @@ public class Customer : MonoBehaviour, IProductTarget
     public Animator animator;
     public NavMeshAgent navAgent { get; private set; }
     public PooledObject PooledObject { get; set; }
-    // SO 데이터
     public CustomerData customerData; 
     [field:SerializeField] public Transform BreadTransform { get; set; }
     public Stack<Product> PickedUpBreads { get; set; } = new Stack<Product>();
     public NavPoint currentPoint;
     public GameObject currentPaperBox { get; set; }
+    public CustomerUI CustomerUI { get; set; }
     
     private void OnEnable()
     {
@@ -30,8 +30,8 @@ public class Customer : MonoBehaviour, IProductTarget
         animator = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
         PooledObject =GetComponent<PooledObject>();
+        CustomerUI = GetComponent<CustomerUI>();
         CustomerStateMachine = new CustomerStateMachine(this);
-        
         InitCustomer();
     }
     
