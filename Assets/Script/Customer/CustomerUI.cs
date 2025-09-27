@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class CustomerUI : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class CustomerUI : MonoBehaviour
 
     public GameObject Cashier;  
     public GameObject Eat;   
-    public GameObject Like; 
+    public ParticleSystem Like; 
     
     private Camera mainCamera;
 
@@ -55,6 +56,7 @@ public class CustomerUI : MonoBehaviour
     public void OnLike()
     {
         Balloon.SetActive(false);
-        Like.SetActive(true);
+        Like.gameObject.SetActive(true);
+        Like.Play();
     }
 }

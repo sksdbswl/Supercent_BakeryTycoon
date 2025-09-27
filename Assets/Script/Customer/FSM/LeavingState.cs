@@ -9,7 +9,7 @@ public class LeavingState : CustomerBaseState
     public override void Enter()
     {
         Debug.Log("감사합니다:)");
-
+        stateMachine.Customer.CustomerUI.OnLike();
         var customer = stateMachine.Customer;
         
         // 출발점으로 이동
