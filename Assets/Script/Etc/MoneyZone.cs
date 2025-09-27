@@ -11,7 +11,8 @@ public class MoneyZone : MonoBehaviour
 
     private Stack<GameObject> moneyStack = new Stack<GameObject>();
 
-    public float spacing = 0.5f;    // x,z 간격
+    public float Xspacing = 0.8f;    // x간격
+    public float Yspacing = 0.5f;    // y간격
     public float height = 0.2f;     // 층 높이
     public int maxPerLayer = 9;     // 3x3 = 9개
     public float collectDelay = 0.1f; // 흡수 간격
@@ -27,9 +28,11 @@ public class MoneyZone : MonoBehaviour
             int row = slot / 3;
             int col = slot % 3;
 
-            Vector3 offset = new Vector3(col * spacing, layer * height, -row * spacing);
+            Vector3 offset = new Vector3(col * Xspacing, layer * height, -row * Yspacing);
             
             GameObject money = GenericPoolManager.Instance.Get(moneyPrefab, zonePoint.position + offset, Quaternion.identity, zonePoint);
+            
+            money.transform.Rotate(0, 90f, 0);
             money.SetActive(true);
             
             moneyStack.Push(money);

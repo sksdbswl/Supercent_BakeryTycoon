@@ -4014,7 +4014,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690953715}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.18, y: 0, z: -0.18}
+  m_LocalPosition: {x: -0.8, y: 0, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4035,11 +4035,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zonePoint: {fileID: 1690953716}
   moneyPrefab: {fileID: 1021405347015165638, guid: c877f9850865541ecb983e31834ed3b5, type: 3}
-  spacing: 0.5
+  Xspacing: 0.8
+  Yspacing: 0.5
   height: 0.2
   maxPerLayer: 9
   collectDelay: 0.1
-  bezierDuration: 0.5
 --- !u!65 &1690953718
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4052,7 +4052,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.5, y: 3, z: 2.5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.8, y: -0.21, z: -0.5}
 --- !u!1001 &1719983248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4914,6 +4914,7 @@ MonoBehaviour:
   customerSpawner: {fileID: 2121770335}
   cashierZone: {fileID: 1690953717}
   diningZone: {fileID: 0}
+  bezierDuration: 0.5
 --- !u!4 &2121770334
 Transform:
   m_ObjectHideFlags: 0
