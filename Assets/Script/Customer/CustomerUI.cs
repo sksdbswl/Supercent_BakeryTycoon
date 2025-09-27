@@ -52,6 +52,7 @@ public class CustomerUI : MonoBehaviour
         Want.SetActive(false);
         Cashier.SetActive(false);
         Eat.SetActive(false);
+        Like.gameObject.SetActive(false);
         
         obj.SetActive(true);
     }

@@ -53,8 +53,6 @@ public class CustomerSpawner : MonoBehaviour
         // VisitState에서 이동할 쇼케이스 지정
         var visitState = customer.CustomerStateMachine.VisitState;
         visitState.SetTargetShowcase(targetShowcase);
-
-        //customer.CustomerStateMachine.ChangeState(visitState);
     }
 
     private int CountActiveCustomers(Showcase showcase)

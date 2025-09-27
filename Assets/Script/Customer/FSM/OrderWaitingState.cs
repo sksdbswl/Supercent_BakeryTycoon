@@ -13,18 +13,18 @@ public class OrderWaitingState : CustomerBaseState
     {
         wantsToEatIn = stateMachine.Customer.customerData.wantsToEatIn;
         myQueueType = wantsToEatIn ? QueueManager.QueueType.Dining : QueueManager.QueueType.Cashier;
-
+        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackMove);
+        
         stateMachine.Customer.CustomerUI.OnSprite(stateMachine.Customer.CustomerUI.Cashier);
         
         // 대기 루틴 시작
         stateMachine.Customer.StartCoroutine(WaitForQueuePoint());
-        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
     }
 
     public override void Update()
     {
         if (!stateMachine.Customer.ArriveCheck()) return;
-        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
+        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackIdle);
     }
 
     private IEnumerator WaitForQueuePoint()

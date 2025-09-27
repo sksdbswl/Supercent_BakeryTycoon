@@ -54,7 +54,8 @@ public class Customer : MonoBehaviour, IProductTarget
         customerData.quantity = template.quantity;
         customerData.pickedUpCount = 0;
         customerData.wantsToEatIn = template.wantsToEatIn;
-        
+        animator.SetTrigger(CustomerAnimationController.Move);
+
         StartCoroutine(CheckStartPositionCoroutine());
     }
     
@@ -87,6 +88,7 @@ public class Customer : MonoBehaviour, IProductTarget
         if (!navAgent.pathPending &&
             navAgent.remainingDistance <= 0.1f)
         {
+            animator.SetTrigger(CustomerAnimationController.Idle);
             return true;
         }
 

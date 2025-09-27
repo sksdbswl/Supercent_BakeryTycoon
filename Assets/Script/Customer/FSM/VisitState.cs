@@ -33,7 +33,6 @@ public class VisitState : CustomerBaseState
 
         // 이동
         stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
-        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
     }
 
     public override void Update()
@@ -45,17 +44,17 @@ public class VisitState : CustomerBaseState
         stateMachine.Customer.CustomerUI.OnSprite(stateMachine.Customer.CustomerUI.Want);
         
         IsArrived = true;
+        
         if (!IsArrived) return;
         IsArrived = false;
         if (targetShowcase.IsBusy) return;
+        
         // 쇼케이스 사용 시작
         PickUpBread();
     }
 
     public override void Exit()
     {
-        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
-
         // 자리 반환
         if (targetPoint != null)
             targetPoint.IsOccupied = false;
@@ -72,6 +71,7 @@ public class VisitState : CustomerBaseState
     public void PickUpBread()
     {
         isPickUp = true;
+        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackIdle);
         stateMachine.Customer.StartCoroutine(PickUpBreadCoroutine());
     }
 
