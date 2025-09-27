@@ -24,8 +24,15 @@ public class CustomerUI : MonoBehaviour
 
     void LateUpdate()
     {
+        // 항상 카메라를 향하도록
         Balloon.transform.forward = mainCamera.transform.forward;
         Like.transform.forward = mainCamera.transform.forward;
+
+        // 거리 보정
+        float distance = Vector3.Distance(mainCamera.transform.position, transform.position);
+        float scaleFactor = distance * 0.1f;
+        Balloon.transform.localScale = Vector3.one * scaleFactor;
+        Like.transform.localScale = Vector3.one * scaleFactor;
     }
 
     /// <summary>

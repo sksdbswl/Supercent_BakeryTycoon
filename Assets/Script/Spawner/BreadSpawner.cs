@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BreadSpawner : MonoBehaviour
@@ -7,10 +8,13 @@ public class BreadSpawner : MonoBehaviour
     [SerializeField] private Oven oven; 
     [SerializeField] private GameObject breadPrefab;
     [SerializeField] private Transform spawnParent;
-    [SerializeField] private Transform spawnPoint;        
-    [SerializeField] private float createInterval = 5f;
+    [SerializeField] private Transform spawnPoint;  
+    [SerializeField] private Transform movePoint;
+    [SerializeField] private float createInterval = 5f; // 스폰 후 다음 스폰까지 간격
+    [SerializeField] private float forceDelay = 1f;     // 튀어나오기까지 대기 시간
     [SerializeField] private Showcase showcase;
-    
+    [SerializeField] private float forcePower = 5.5f;
+
     private int MaxBread = 10;
     public int Bread = 0;
     
@@ -25,7 +29,6 @@ public class BreadSpawner : MonoBehaviour
         {
             if (Bread < MaxBread)
             {
-                // 풀에서 오브젝트 가져오기
                 GameObject bread = GenericPoolManager.Instance.Get(breadPrefab, spawnPoint.position, Quaternion.identity, spawnParent);
                 
                 if (bread != null)
@@ -37,21 +40,29 @@ public class BreadSpawner : MonoBehaviour
                     Rigidbody rb = bread.GetComponent<Rigidbody>();
                     var product = bread.GetComponent<Product>();
                     
-                    if (rb != null)
-                    {
-                        rb.velocity = Vector3.zero;
-                        rb.AddForce(-Vector3.forward * 6f, ForceMode.Impulse);
-                    }
-                    
                     if (product != null)
                     {
                         product.Init(this, showcase);
                         oven.Bake(product);
                         Bread++;
                     }
+                    
+                    product.transform.position = Vector3.Lerp(
+                        product.transform.position,
+                        movePoint.position,
+                        Time.deltaTime * 0.5f
+                    );
+                    
+                    if (rb != null)
+                    {
+                        rb.velocity = Vector3.zero;
+                        yield return new WaitForSeconds(forceDelay);
+                        rb.AddForce(-Vector3.forward * forcePower, ForceMode.Impulse);
+                    }
                 }
             }
 
+            // 스폰 간격
             yield return new WaitForSeconds(createInterval);
         }
     }
