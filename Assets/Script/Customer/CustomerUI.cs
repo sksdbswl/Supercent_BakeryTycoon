@@ -49,7 +49,6 @@ public class CustomerUI : MonoBehaviour
         obj.SetActive(true);
     }
     
-    
     /// <summary>
     /// 행동 종료 -> Like
     /// </summary>

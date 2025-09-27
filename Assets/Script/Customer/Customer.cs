@@ -73,4 +73,17 @@ public class Customer : MonoBehaviour, IProductTarget
         // 대기 루틴 시작
         navAgent.SetDestination(target.transform.position);
     }
+    
+    public void Payment(GameManager.PaymentType type)
+    {
+        int BreadCount = PickedUpBreads.Count;
+        int totalCost = 0;
+        
+        for (int i = 0; i < BreadCount; i++)
+        {
+            totalCost += customerData.desiredBread.price;
+        }
+        
+        GameManager.Instance.SpawnMoney(type, totalCost);
+    }
 }

@@ -45,12 +45,14 @@ public class EatState : CustomerBaseState
             yield return null;
         }
         
+        stateMachine.Customer.CustomerUI.Balloon.SetActive(false);
         QueueManager.Instance.ReleaseDiningPoint(stateMachine.Customer.currentPoint);
         stateMachine.Customer.currentPoint = null;
         
         //상태 전환
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(12f);
         
+        stateMachine.Customer.Payment(GameManager.PaymentType.Dining);
         table.SetOccupied(false);
         stateMachine.ChangeState(stateMachine.LeavingState);
     }
