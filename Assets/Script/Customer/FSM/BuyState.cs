@@ -8,7 +8,7 @@ public class BuyState:CustomerBaseState
 
     public override void Enter()
     {
-        Debug.Log("계산해주세요~");
+        //Debug.Log("계산해주세요~");
     }
 
     public IEnumerator FinishAfterDelay(Player player, GameObject paperBox)

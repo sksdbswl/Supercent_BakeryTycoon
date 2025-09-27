@@ -11,20 +11,15 @@ public class OrderWaitingState : CustomerBaseState
 
     public override void Enter()
     {
+        stateMachine.Customer.isPickingAnimationPlayed = false;
         wantsToEatIn = stateMachine.Customer.customerData.wantsToEatIn;
         myQueueType = wantsToEatIn ? QueueManager.QueueType.Dining : QueueManager.QueueType.Cashier;
-        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackMove);
         
+        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackMove);
         stateMachine.Customer.CustomerUI.OnSprite(stateMachine.Customer.CustomerUI.Cashier);
         
         // 대기 루틴 시작
         stateMachine.Customer.StartCoroutine(WaitForQueuePoint());
-    }
-
-    public override void Update()
-    {
-        if (!stateMachine.Customer.ArriveCheck()) return;
-        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackIdle);
     }
 
     private IEnumerator WaitForQueuePoint()
@@ -42,7 +37,7 @@ public class OrderWaitingState : CustomerBaseState
 
         // 포인트 확보 후 이동
         stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
-
+        
         // 맨 앞 자리 될 때까지 대기
         while (!QueueManager.Instance.CheckMyTurn(stateMachine.Customer, myQueueType))
         {
@@ -50,11 +45,10 @@ public class OrderWaitingState : CustomerBaseState
         }
 
         yield return new WaitForSeconds(0.5f);
-
+        
         // 상태 전환
         if (wantsToEatIn)
         {
-            Debug.Log("내가 밥먹을 차례야");
             stateMachine.ChangeState(stateMachine.EatState);
         }
         else

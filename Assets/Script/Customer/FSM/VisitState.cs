@@ -42,9 +42,9 @@ public class VisitState : CustomerBaseState
         if (!stateMachine.Customer.ArriveCheck()) return;
         stateMachine.Customer.CustomerUI.SetBreadCount(stateMachine.Customer.customerData.quantity);
         stateMachine.Customer.CustomerUI.OnSprite(stateMachine.Customer.CustomerUI.Want);
-        
+        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
+
         IsArrived = true;
-        
         if (!IsArrived) return;
         IsArrived = false;
         if (targetShowcase.IsBusy) return;
@@ -71,9 +71,9 @@ public class VisitState : CustomerBaseState
     public void PickUpBread()
     {
         isPickUp = true;
-        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackIdle);
         stateMachine.Customer.StartCoroutine(PickUpBreadCoroutine());
     }
+    
 
     private IEnumerator PickUpBreadCoroutine()
     {
@@ -95,6 +95,13 @@ public class VisitState : CustomerBaseState
                 continue; 
             }
 
+            // 빵 가져가기 전에 애니메이션 한 번만 실행
+            if (!stateMachine.Customer.isPickingAnimationPlayed)
+            {
+                stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackIdle); 
+                stateMachine.Customer.isPickingAnimationPlayed = true;
+            }
+            
             // 빵 가져가기
             pickup++;
             stateMachine.Customer.CustomerUI.SetBreadCount(

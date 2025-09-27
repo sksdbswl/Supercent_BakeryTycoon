@@ -17,6 +17,7 @@ public class Customer : MonoBehaviour, IProductTarget
     public GameObject currentPaperBox { get; set; }
     public CustomerUI CustomerUI { get; set; }
     public Transform startPos;
+    public bool isPickingAnimationPlayed = false;
     
     private void OnEnable()
     {
@@ -35,7 +36,6 @@ public class Customer : MonoBehaviour, IProductTarget
         PooledObject =GetComponent<PooledObject>();
         CustomerUI = GetComponent<CustomerUI>();
         CustomerStateMachine = new CustomerStateMachine(this);
-        
     }
 
     private void Start()
@@ -54,8 +54,9 @@ public class Customer : MonoBehaviour, IProductTarget
         customerData.quantity = template.quantity;
         customerData.pickedUpCount = 0;
         customerData.wantsToEatIn = template.wantsToEatIn;
+        isPickingAnimationPlayed = false;
+        
         animator.SetTrigger(CustomerAnimationController.Move);
-
         StartCoroutine(CheckStartPositionCoroutine());
     }
     
@@ -85,13 +86,19 @@ public class Customer : MonoBehaviour, IProductTarget
     
     public bool ArriveCheck()
     {
-        if (!navAgent.pathPending &&
-            navAgent.remainingDistance <= 0.1f)
+        if (!navAgent.pathPending && navAgent.remainingDistance <= navAgent.stoppingDistance)
         {
-            animator.SetTrigger(CustomerAnimationController.Idle);
-            return true;
+            // 속도가 거의 0일 때만 도착으로 간주 (선택 사항)
+            if (!navAgent.hasPath || navAgent.velocity.sqrMagnitude < 0.01f)
+                return true;
         }
-
+        
+        // if (!navAgent.pathPending &&
+        //     navAgent.remainingDistance <= 0.1f)
+        // {
+        //     return true;
+        // }
+        
         return false;
     }
 
