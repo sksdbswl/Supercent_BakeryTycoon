@@ -30,7 +30,7 @@ public class LeavingState : CustomerBaseState
         GenericPoolManager.Instance.Release(customer.PooledObject.OriginPrefab, customer.PooledObject.gameObject);
         if (customer.currentPaperBox != null)
         {
-            GenericPoolManager.Instance.Release(customer.currentPaperBox,customer.currentPaperBox.gameObject);
+            GenericPoolManager.Instance.Release(customer.currentPaperBox, customer.currentPaperBox.gameObject);
         }
     }
 }

@@ -84,7 +84,6 @@ public class VisitState : CustomerBaseState
         {
             if (targetShowcase.IsBusy)
             {
-                Debug.Log("쇼케이스 사용 중 → 잠깐 대기");
                 yield return new WaitForSeconds(0.5f);
                 continue; 
             }
@@ -92,7 +91,6 @@ public class VisitState : CustomerBaseState
             Product bread = targetShowcase.GetProduct();
             if (bread == null)
             {
-                Debug.Log("쇼케이스 빵 부족 → 기다리는 중");
                 yield return new WaitForSeconds(0.5f);
                 continue; 
             }
@@ -105,11 +103,9 @@ public class VisitState : CustomerBaseState
 
             bread.MoveTo(stateMachine.Customer, Product.GoalType.Customer);
 
-            // 하나 가져간 후 텀 두기
             yield return new WaitForSeconds(0.5f);
         }
 
-        // 다 모았으면 다음 상태로
         stateMachine.ChangeState(stateMachine.OrderWaitingState);
         isPickUp = false;
     }

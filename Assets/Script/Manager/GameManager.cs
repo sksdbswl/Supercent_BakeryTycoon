@@ -34,19 +34,6 @@ public class GameManager : Singleton<GameManager>
         if (!unlocks.Contains(unlock))
             unlocks.Add(unlock);
     }
-
-    // public bool IsUnlocked(GameObject targetArea)
-    // {
-    //     var unlock = unlocks.Find(u => u.OpneArea == targetArea);
-    //     return unlock != null && unlock.isUnlocked;
-    // }
-    //
-    // public void UnlockArea(Player player, GameObject targetArea)
-    // {
-    //     var unlock = unlocks.Find(u => u.OpneArea == targetArea);
-    //     if (unlock != null)
-    //         unlock.TryUnlock(player);
-    // }
     
     /// <summary>
     /// 사용할 수 있는 의자 확인
@@ -54,5 +41,49 @@ public class GameManager : Singleton<GameManager>
     public List<UnLock> GetOpenTables()
     {
         return unlocks.FindAll(u => u.unlockType == UnlockType.Open && u.isUnlocked && u.CanSit());
+    }
+    
+    
+    /// <summary>
+    /// 돈 생성 지역 관리
+    /// </summary>
+    public enum PaymentType { Cashier, Dining }
+    public MoneyZone cashierZone;
+    public MoneyZone diningZone;
+
+    public void SpawnMoney(PaymentType type, int amount)
+    {
+        MoneyZone zone = type == PaymentType.Cashier ? cashierZone : diningZone;
+        zone.SpawnMoney(amount);
+    }
+    
+    /// <summary>
+    /// 기본 배지어 무브 처리
+    /// </summary>
+    public float bezierDuration = 0.5f;
+    public IEnumerator MoveTo(GameObject obj, Transform player)
+    {
+        Vector3 start = obj.transform.position;
+
+        Vector3 control1 = start + Vector3.up * Random.Range(0.5f, 1.0f);
+        Vector3 control2 = (start + player.position) * 0.5f + Vector3.up * Random.Range(0.3f, 0.7f);
+        Vector3 end = player.position;
+
+        float elapsed = 0f;
+
+        while (elapsed < bezierDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / bezierDuration);
+
+            Vector3 pos = Bezier.Cubic(start, control1, control2, end, t);
+            obj.transform.position = pos;
+
+            yield return null;
+        }
+
+        var origin = obj.GetComponent<PooledObject>();
+        
+        GenericPoolManager.Instance.Release(origin.OriginPrefab, origin.gameObject);
     }
 }

@@ -28,8 +28,6 @@ public class EatState : CustomerBaseState
                 break;
             }
 
-            Debug.Log("앉을 자리가 없음, 대기 중...");
-            
             yield return new WaitForSeconds(0.5f); 
         }
 
@@ -42,8 +40,6 @@ public class EatState : CustomerBaseState
 
     private IEnumerator EattingWaiting(UnLock table)
     {
-        Debug.Log("밥먹으러 가는 중");
-
         while (stateMachine.Customer.transform.position == table.SeatPosition.position)
         {
             yield return null;
@@ -51,8 +47,6 @@ public class EatState : CustomerBaseState
         
         QueueManager.Instance.ReleaseDiningPoint(stateMachine.Customer.currentPoint);
         stateMachine.Customer.currentPoint = null;
-        
-        Debug.Log("밥먹으러 도착");
         
         //상태 전환
         yield return new WaitForSeconds(15f);

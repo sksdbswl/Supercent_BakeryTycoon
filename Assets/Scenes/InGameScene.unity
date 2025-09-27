@@ -376,6 +376,7 @@ Transform:
   - {fileID: 1191478035}
   - {fileID: 1826704801}
   - {fileID: 164810916}
+  - {fileID: 1991970131}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3878,7 +3879,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1634820384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.45, y: 0, z: -1.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3886,68 +3887,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1659558125
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1690953716}
-    m_Modifications:
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.19
-      objectReference: {fileID: 0}
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.18000007
-      objectReference: {fileID: 0}
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1021405347015165638, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-      propertyPath: m_Name
-      value: Money
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
---- !u!4 &1659558126 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 389300152054471804, guid: da216f1f776aa4cc384a914e3c97fc56, type: 3}
-  m_PrefabInstance: {fileID: 1659558125}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1672322499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4058,8 +3997,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1690953716}
+  - component: {fileID: 1690953717}
+  - component: {fileID: 1690953718}
   m_Layer: 0
-  m_Name: Zone
+  m_Name: Cashier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4073,14 +4014,45 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690953715}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.44, y: 0, z: -0.89}
+  m_LocalPosition: {x: -0.18, y: 0, z: -0.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1659558126}
+  m_Children: []
   m_Father: {fileID: 1634820385}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1690953717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690953715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56401b3072b341c5802f225f5c42467b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zonePoint: {fileID: 1690953716}
+  moneyPrefab: {fileID: 1021405347015165638, guid: c877f9850865541ecb983e31834ed3b5, type: 3}
+  spacing: 0.5
+  height: 0.2
+  maxPerLayer: 9
+  collectDelay: 0.1
+  bezierDuration: 0.5
+--- !u!65 &1690953718
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690953715}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.5, y: 3, z: 2.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1719983248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4588,6 +4560,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsOccupied: 0
+--- !u!1 &1991970130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1991970131}
+  m_Layer: 0
+  m_Name: Money
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1991970131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991970130}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 151776473}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2004016422
 GameObject:
   m_ObjectHideFlags: 0
@@ -4909,6 +4912,8 @@ MonoBehaviour:
   openParticlePrefab: {fileID: 8076463902404956292, guid: 2a5be0b568a4c774ba0fc24c35291f86, type: 3}
   CustomerTable: {fileID: 11400000, guid: beb253578a8bd4ea9819170501935338, type: 2}
   customerSpawner: {fileID: 2121770335}
+  cashierZone: {fileID: 1690953717}
+  diningZone: {fileID: 0}
 --- !u!4 &2121770334
 Transform:
   m_ObjectHideFlags: 0

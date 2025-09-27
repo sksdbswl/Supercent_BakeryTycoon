@@ -17,12 +17,14 @@ public class BuyState:CustomerBaseState
         yield return PackingBread(player, paperBox);
 
         // 2. 결제 처리 대기 (애니메이션 포함)
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
-        // 3. 결제 완료 후 상태 전환
+        // 3. 지불
+        Payment();
+        
+        // 4. 결제 완료 후 상태 전환
         FinishBuying(player);
     }
-    
 
     public void FinishBuying(Player player)
     {
@@ -73,5 +75,16 @@ public class BuyState:CustomerBaseState
         box.transform.localPosition = Vector3.zero;
     }
 
-
+    private void Payment()
+    {
+        int BreadCount = stateMachine.Customer.PickedUpBreads.Count;
+        int totalCost = 0;
+        
+        for (int i = 0; i < BreadCount; i++)
+        {
+            totalCost += stateMachine.Customer.customerData.desiredBread.price;
+        }
+        
+        GameManager.Instance.SpawnMoney(GameManager.PaymentType.Cashier, totalCost);
+    }
 }
