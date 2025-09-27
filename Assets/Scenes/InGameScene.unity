@@ -5475,6 +5475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 963194229}
+  MoneyZone: {fileID: 444639434}
   openParticlePrefab: {fileID: 8076463902404956292, guid: 2a5be0b568a4c774ba0fc24c35291f86, type: 3}
   CustomerTable: {fileID: 11400000, guid: beb253578a8bd4ea9819170501935338, type: 2}
   customerSpawner: {fileID: 2121770335}

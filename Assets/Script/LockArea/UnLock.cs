@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -81,14 +82,10 @@ public class UnLock : MonoBehaviour
             return;
         }
 
-        Unlock(player); // 현재 Unlock 처리
-
-        if (Targets != null && Targets.Length > 0)
-        {
-            // UnlockType 전략 실행
-            unlockAction.Execute(player, Targets);
-        }
+        // 비용 지불 연출 시작 → Unlock은 내부에서 실행됨
+        StartCoroutine(PlayPayEffect(player)); 
     }
+
 
     private bool CanUnlock(Player player) => player.Money >= cost;
 
@@ -113,5 +110,28 @@ public class UnLock : MonoBehaviour
         isUnlocked = state;
         if (LockIcon != null)
             LockIcon.SetActive(!state);
+    }
+    
+    // 비용 지불 연출
+    private IEnumerator PlayPayEffect(Player player)
+    {
+        for (int i = 0; i < cost; i++)
+        {
+            GameObject money = GenericPoolManager.Instance.Get(
+                GameManager.Instance.MoneyZone.moneyPrefab, 
+                player.BreadTransform.position, 
+                Quaternion.identity, 
+                GameManager.Instance.MoneyZone.zonePoint);
+
+            yield return StartCoroutine(GameManager.Instance.MoveTo(money, gameObject.transform,0.05f));
+        }
+
+        // 모든 돈 연출이 끝난 뒤에 해금 처리
+        Unlock(player);
+
+        if (Targets != null && Targets.Length > 0)
+        {
+            unlockAction.Execute(player, Targets);
+        }
     }
 }

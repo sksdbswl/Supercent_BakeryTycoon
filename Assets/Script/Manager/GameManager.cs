@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 public class GameManager : Singleton<GameManager>
 {
     public CameraController mainCamera;
+    public MoneyZone MoneyZone;
     
     [Header("Particle System Settings")]
     public ParticleSystem openParticlePrefab;
@@ -60,14 +61,13 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// 기본 배지어 무브 처리
     /// </summary>
-    public float bezierDuration = 0.5f;
-    public IEnumerator MoveTo(GameObject obj, Transform player)
+    public IEnumerator MoveTo(GameObject obj, Transform endObj, float bezierDuration)
     {
         Vector3 start = obj.transform.position;
 
         Vector3 control1 = start + Vector3.up * Random.Range(0.5f, 1.0f);
-        Vector3 control2 = (start + player.position) * 0.5f + Vector3.up * Random.Range(0.3f, 0.7f);
-        Vector3 end = player.position;
+        Vector3 control2 = (start + endObj.position) * 0.5f + Vector3.up * Random.Range(0.3f, 0.7f);
+        Vector3 end = endObj.position;
 
         float elapsed = 0f;
 
