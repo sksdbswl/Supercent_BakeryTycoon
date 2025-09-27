@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,15 +16,16 @@ public class Customer : MonoBehaviour, IProductTarget
     public NavPoint currentPoint;
     public GameObject currentPaperBox { get; set; }
     public CustomerUI CustomerUI { get; set; }
+    public Transform startPos;
     
     private void OnEnable()
     {
-        InitCustomer();              
         PickedUpBreads.Clear();       
         currentPoint = null;
         currentPaperBox = null;
         navAgent.ResetPath();        
         CustomerStateMachine = new CustomerStateMachine(this);
+        InitCustomer();              
     }
     
     private void Awake()
@@ -32,9 +35,14 @@ public class Customer : MonoBehaviour, IProductTarget
         PooledObject =GetComponent<PooledObject>();
         CustomerUI = GetComponent<CustomerUI>();
         CustomerStateMachine = new CustomerStateMachine(this);
+        
+    }
+
+    private void Start()
+    {
         InitCustomer();
     }
-    
+
     public void InitCustomer()
     {
         var template = GameManager.Instance.CustomerTable.GetRandomCustomer();
@@ -46,7 +54,24 @@ public class Customer : MonoBehaviour, IProductTarget
         customerData.quantity = template.quantity;
         customerData.pickedUpCount = 0;
         customerData.wantsToEatIn = template.wantsToEatIn;
+        
+        StartCoroutine(CheckStartPositionCoroutine());
     }
+    
+    private IEnumerator CheckStartPositionCoroutine()
+    {
+        if (startPos == null)
+            yield break;
+
+        while (Vector3.Distance(transform.position, startPos.position) > 0.1f)
+        {
+            navAgent.SetDestination(startPos.position);
+            yield return null; 
+        }
+
+        CustomerStateMachine.ChangeState(CustomerStateMachine.VisitState);
+    }
+    
     private void Update()
     {
         CustomerStateMachine.Update();

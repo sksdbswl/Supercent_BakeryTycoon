@@ -7,7 +7,8 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private Transform spawnParent;     
     [SerializeField] public Transform spawnPosition;
     [SerializeField] private float checkInterval = 10f;  // 체크 간격
-
+    [SerializeField] private Transform startPos;
+    
     private void Start()
     {
         StartCoroutine(SpawnRoutine());
@@ -47,12 +48,13 @@ public class CustomerSpawner : MonoBehaviour
 
         Customer customer = obj.GetComponent<Customer>();
         customer.navAgent.Warp(spawnPosition.position);
-
+        customer.startPos = startPos;
+        
         // VisitState에서 이동할 쇼케이스 지정
         var visitState = customer.CustomerStateMachine.VisitState;
         visitState.SetTargetShowcase(targetShowcase);
 
-        customer.CustomerStateMachine.ChangeState(visitState);
+        //customer.CustomerStateMachine.ChangeState(visitState);
     }
 
     private int CountActiveCustomers(Showcase showcase)

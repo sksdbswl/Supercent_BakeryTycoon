@@ -14,7 +14,6 @@ public class CustomerStateMachine : StateMachine
     public OrderWaitingState OrderWaitingState { get; }
     public BuyState BuyState { get; }
     public EatState EatState { get; }
-    public CheckOutState CheckOutState { get; } // 식사 또는 포장
     public LeavingState LeavingState { get; }
     
     public CustomerStateMachine(Customer customer)
@@ -25,7 +24,6 @@ public class CustomerStateMachine : StateMachine
         EatState = new EatState(this);
         OrderWaitingState = new OrderWaitingState(this);
         BuyState = new BuyState(this);
-        CheckOutState = new CheckOutState(this);
         LeavingState = new LeavingState(this);
     }
 }
