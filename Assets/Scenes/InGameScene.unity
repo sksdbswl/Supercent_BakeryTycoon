@@ -303,9 +303,8 @@ GameObject:
   - component: {fileID: 107760206}
   - component: {fileID: 107760209}
   - component: {fileID: 107760208}
-  - component: {fileID: 107760210}
   m_Layer: 5
-  m_Name: Joystic
+  m_Name: JoyBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,13 +317,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107760205}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 992792526}
-  m_Father: {fileID: 1326478133}
+  m_Father: {fileID: 379951442}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -370,22 +369,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107760205}
   m_CullTransparentMesh: 1
---- !u!114 &107760210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107760205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c201fb8527449c8b99ac7bb717ce6ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  joystickBackground: {fileID: 107760206}
-  joystickHandle: {fileID: 992792526}
-  moveRange: 50
-  MoveInput: {x: 0, y: 0}
 --- !u!1 &151776470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,6 +996,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378260431}
   m_CullTransparentMesh: 1
+--- !u!1 &379951441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 379951442}
+  - component: {fileID: 379951443}
+  m_Layer: 5
+  m_Name: JoysticContent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &379951442
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379951441}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 107760206}
+  m_Father: {fileID: 1326478133}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &379951443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379951441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c201fb8527449c8b99ac7bb717ce6ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JoysticBackground: {fileID: 107760206}
+  JoysticHandle: {fileID: 992792526}
+  handleSpeed: 3
 --- !u!1 &392249227
 GameObject:
   m_ObjectHideFlags: 0
@@ -2034,7 +2070,7 @@ GameObject:
   m_Component:
   - component: {fileID: 851767671}
   m_Layer: 5
-  m_Name: Asset
+  m_Name: Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2055,7 +2091,7 @@ RectTransform:
   - {fileID: 378260432}
   - {fileID: 546738411}
   m_Father: {fileID: 1326478133}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -2191,6 +2227,7 @@ MonoBehaviour:
   cheir: {fileID: 816830684}
   table: {fileID: 2081464287}
   trash: {fileID: 659066100}
+  isCleared: 1
 --- !u!65 &878572826
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2596,7 +2633,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992792525}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -2702,6 +2739,7 @@ MonoBehaviour:
   cheir: {fileID: 1501949585}
   table: {fileID: 1247090964}
   trash: {fileID: 69657971}
+  isCleared: 1
 --- !u!65 &1001305244
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3217,7 +3255,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1152131722}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -3829,8 +3867,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 107760206}
   - {fileID: 851767671}
+  - {fileID: 379951442}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5577,7 +5615,11 @@ PrefabInstance:
     - target: {fileID: 4224082510765426696, guid: 49a5c79a17e8a490b9f32d2d19afee9a, type: 3}
       propertyPath: joystick
       value: 
-      objectReference: {fileID: 107760210}
+      objectReference: {fileID: 379951443}
+    - target: {fileID: 4224082510765426696, guid: 49a5c79a17e8a490b9f32d2d19afee9a, type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7288300110257645427, guid: 49a5c79a17e8a490b9f32d2d19afee9a, type: 3}
       propertyPath: m_Name
       value: Player

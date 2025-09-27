@@ -46,7 +46,6 @@ public class Product : MonoBehaviour
 
             case GoalType.Showcase:
                 // 플레이어 -> 쇼케이스 ( product -> showcase )
-                meshCollider.isTrigger = true;
                 StartCoroutine(MoveToShowcaseBezier());
                 break;
             
@@ -179,6 +178,7 @@ public class Product : MonoBehaviour
         );
         
         transform.localRotation = Quaternion.identity;
+        meshCollider.isTrigger = true;
     }
 }
 

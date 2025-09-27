@@ -30,6 +30,7 @@ public class PlayerMover : MonoBehaviour
     // 키보드/게임패드 이동
     public void OnMove(InputAction.CallbackContext context)
     {
+        Debug.Log("움직이는 중");
         moveInput = context.ReadValue<Vector2>();
     }
 

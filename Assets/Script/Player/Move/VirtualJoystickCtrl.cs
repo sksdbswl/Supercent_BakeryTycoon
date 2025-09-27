@@ -1,33 +1,64 @@
+using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
-public class VirtualJoystickCtrl : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
+public class VirtualJoystickCtrl : MonoBehaviour
 {
-    public RectTransform joystickBackground;
-    public RectTransform joystickHandle;
-    public float moveRange = 50f;
+    [Header("JoyController")]
+    [SerializeField] private RectTransform JoysticBackground;
+    [SerializeField] private RectTransform JoysticHandle;
+    [Space]
+    [SerializeField] private float handleSpeed = 10f; // 기본값 설정
 
-    [HideInInspector]
-    public Vector2 MoveInput;
+    private float moveRange;      // 조이스틱 이동 범위
+    private Vector3 startPos;     // 조이스틱 시작 위치
+    private Vector2 moveInput;    // 정규화된 입력값 ( -1 ~ 1 범위 )
 
-    private Vector2 joystickCenter;
+    public Vector2 MoveInput => moveInput;
 
-    private void Start() => joystickCenter = joystickBackground.position;
-
-    public void OnPointerDown(PointerEventData eventData) => OnDrag(eventData);
-
-    public void OnDrag(PointerEventData eventData)
+    private void Update()
     {
-        Vector2 direction = eventData.position - joystickCenter;
-        direction = Vector2.ClampMagnitude(direction, moveRange);
-        joystickHandle.position = joystickCenter + direction;
-        MoveInput = direction / moveRange;
+        if (Input.GetMouseButtonDown(0))
+            StartStick();
+
+        if (Input.GetMouseButton(0))
+            DragStick();
+
+        if (Input.GetMouseButtonUp(0))
+            EndStick();
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    private void StartStick()
     {
-        joystickHandle.position = joystickCenter;
-        MoveInput = Vector2.zero;
+        startPos = Input.mousePosition;
+        JoysticBackground.gameObject.SetActive(true);
+
+        JoysticBackground.position = startPos;
+        JoysticHandle.position = startPos;
+
+        moveRange = JoysticBackground.sizeDelta.x * 0.3f;
+    }
+
+    private void DragStick()
+    {
+        Vector2 direction = (Vector2)Input.mousePosition - (Vector2)startPos;
+
+        // 최대 moveRange까지만 이동
+        direction = Vector2.ClampMagnitude(direction, moveRange);
+
+        // 핸들 위치 보간 이동
+        JoysticHandle.position = Vector3.Lerp(
+            JoysticHandle.position,
+            startPos + (Vector3)direction,
+            Time.deltaTime * handleSpeed
+        );
+
+        // MoveInput은 정규화된 값 (-1 ~ 1)
+        moveInput = direction / moveRange;
+    }
+
+    private void EndStick()
+    {
+        JoysticBackground.gameObject.SetActive(false);
+        moveInput = Vector2.zero;
     }
 }
