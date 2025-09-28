@@ -159,15 +159,9 @@ public class GameManager : Singleton<GameManager>
     private void ShowArrow(Transform target)
     {
         arrowPrefab.SetActive(true);
-        arrowPrefab.transform.forward = mainCamera.transform.forward;
+        //arrowPrefab.transform.forward = mainCamera.transform.forward;
         arrowPrefab.transform.position = target.position;
-
-        // 기존 tween이 있다면 제거
-        // if (arrowTween != null && arrowTween.IsActive())
-        // {
-        //     arrowTween.Kill();
-        // }
-
+        
         // 화살표 시작 위치
         Vector3 startPos = arrowPrefab.transform.position;
         

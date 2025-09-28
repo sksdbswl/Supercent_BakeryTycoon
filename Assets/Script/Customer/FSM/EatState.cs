@@ -8,7 +8,6 @@ public class EatState : CustomerBaseState
     public override void Enter()
     {
         stateMachine.Customer.CustomerUI.OnSprite(stateMachine.Customer.CustomerUI.Eat);
-        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackMove);
         stateMachine.Customer.StartCoroutine(TrySitCoroutine());
     }
 
@@ -29,31 +28,22 @@ public class EatState : CustomerBaseState
             yield return new WaitForSeconds(0.5f); 
         }
 
+        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackMove);
+        
         // 자리로 이동
         stateMachine.Customer.MoveToEat(table.SeatPosition);
 
         // 이동 완료될 때까지 대기
-        while (! stateMachine.Customer.ArriveCheck())
+        while (!stateMachine.Customer.ArriveCheck())
         {
             yield return null;
         }
-        
-        // 자리 도착까지 대기
-        //yield return WaitUntilArrived(table.SeatPosition);
 
         // 도착 후 애니메이션 전환
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Seat);
 
         // 식사 시작
         yield return EattingWaiting(table);
-    }
-
-    private IEnumerator WaitUntilArrived(Transform target, float threshold = 0.1f)
-    {
-        while (Vector3.Distance(stateMachine.Customer.transform.position, target.position) > threshold)
-        {
-            yield return null;
-        }
     }
 
     private IEnumerator EattingWaiting(UnLock table)
