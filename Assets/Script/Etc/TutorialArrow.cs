@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerTutorialArrow : MonoBehaviour
+public class TutorialArrow : MonoBehaviour
 {
     [Header("Tutorial Arrow on Player")]
     [SerializeField] private Transform player;          
