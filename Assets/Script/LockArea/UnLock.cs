@@ -39,7 +39,8 @@ public class UnLock : MonoBehaviour
 
     [HideInInspector]
     public bool isUnlocked = false;
-
+    private bool isPlayerInside = false;
+    
     private IUnlockAction unlockAction;
 
     private void Awake()
@@ -72,21 +73,27 @@ public class UnLock : MonoBehaviour
         Player player = other.GetComponent<Player>();
         if (player != null)
         {
+            isPlayerInside = true;
             TryUnlock(player);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Player player = other.GetComponent<Player>();
+        if (player != null)
+        {
+            isPlayerInside = false;
         }
     }
 
     public void TryUnlock(Player player)
     {
-        // 비용 지불 연출 시작 → Unlock은 내부에서 실행됨
         StartCoroutine(PlayPayEffect(player)); 
     }
     
-    private bool CanUnlock(Player player) => player.Money >= cost;
-
-    private void Unlock(Player player)
+    private void Unlock()
     {
-        player.SpendMoney(cost);
         isUnlocked = true;
         if (LockIcon != null)
             LockIcon.SetActive(false);
@@ -108,13 +115,17 @@ public class UnLock : MonoBehaviour
 
     private int remainCost = 0;
     
-    // 비용 지불 연출
     private IEnumerator PlayPayEffect(Player player)
     {
         int payAmount = Mathf.Min(remainCost, player.Money);
 
         for (int i = 0; i < payAmount; i++)
         {
+            if (!isPlayerInside)
+            {
+                yield break;
+            }
+
             GameObject money = GenericPoolManager.Instance.Get(
                 GameManager.Instance.MoneyZone.moneyPrefab,
                 player.BreadTransform.position,
@@ -125,14 +136,15 @@ public class UnLock : MonoBehaviour
             yield return StartCoroutine(GameManager.Instance.MoveTo(money, gameObject.transform, 0.05f, true));
 
             remainCost--;
-            costText.text = remainCost.ToString();
+            if (costText != null)
+                costText.text = remainCost.ToString();
 
             player.SpendMoney(1);
         }
 
         if (remainCost <= 0)
         {
-            Unlock(player);
+            Unlock();
 
             if (Targets != null && Targets.Length > 0)
             {
