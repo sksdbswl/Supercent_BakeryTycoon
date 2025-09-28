@@ -31,7 +31,7 @@ public class EatState : CustomerBaseState
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackMove);
         
         // 자리로 이동
-        stateMachine.Customer.MoveToEat(table.SeatPosition);
+        stateMachine.Customer.MoveToNavAgentPoint(table.SeatPosition);
 
         // 이동 완료될 때까지 대기
         while (!stateMachine.Customer.ArriveCheck())
@@ -64,10 +64,5 @@ public class EatState : CustomerBaseState
         table.Seat.Dirty();
 
         stateMachine.ChangeState(stateMachine.LeavingState);
-    }
-
-    public override void Exit()
-    {
-        //stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
     }
 }

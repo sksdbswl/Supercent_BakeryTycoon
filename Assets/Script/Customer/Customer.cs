@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -88,18 +89,35 @@ public class Customer : MonoBehaviour, IProductTarget
     {
         if (!navAgent.pathPending && navAgent.remainingDistance <= navAgent.stoppingDistance)
         {
-            // 속도가 거의 0일 때만 도착으로 간주 (선택 사항)
-            if (!navAgent.hasPath || navAgent.velocity.sqrMagnitude < 0.01f)
-                return true;
+            return true;
+            // if (!navAgent.hasPath || navAgent.velocity.sqrMagnitude < 0.01f)
+            // {
+            //     return true;
+            // }
         }
         
         return false;
     }
 
-    public void MoveToEat(Transform target)
+    public void MoveToNavAgentPoint(Transform target)
     {
-        // 대기 루틴 시작
-        navAgent.SetDestination(target.transform.position);
+        navAgent.updateRotation = true;
+        navAgent.SetDestination(target.position);
+
+        StartCoroutine(RotateOnArrive(target));
+    }
+
+    private IEnumerator RotateOnArrive(Transform target)
+    {
+        while (navAgent.pathPending || navAgent.remainingDistance > navAgent.stoppingDistance)
+        {
+            yield return null;
+        }
+
+        navAgent.updateRotation = false;
+
+        Quaternion targetRot = Quaternion.LookRotation(target.forward);
+        transform.DORotate(targetRot.eulerAngles, 0.3f);
     }
     
     public void Payment(GameManager.PaymentType type)

@@ -5,12 +5,7 @@ using UnityEngine;
 public class BuyState:CustomerBaseState
 {
     public BuyState(CustomerStateMachine stateMachine) : base(stateMachine) { }
-
-    public override void Enter()
-    {
-        //Debug.Log("계산해주세요~");
-    }
-
+    
     public IEnumerator FinishAfterDelay(Player player, GameObject paperBox)
     {
         yield return PackingBread(player, paperBox);
@@ -46,7 +41,7 @@ public class BuyState:CustomerBaseState
         if (boxAnimator != null)
         {
             boxAnimator.SetTrigger("Open");
-            yield return new WaitForSeconds(0.5f); // 박스 열리는 시간
+            yield return new WaitForSeconds(0.2f);
         }
 
         foreach (var bread in stateMachine.Customer.PickedUpBreads)
@@ -61,7 +56,7 @@ public class BuyState:CustomerBaseState
 
         boxAnimator.SetTrigger("Close");
 
-        yield return GameManager.Instance.MoveTo(box.gameObject, stateMachine.Customer.BreadTransform, 0.8f, false);
+        yield return GameManager.Instance.MoveTo(box.gameObject, stateMachine.Customer.BreadTransform, 0.3f, false);
         
         box.transform.SetParent(stateMachine.Customer.BreadTransform);
         box.transform.localPosition = Vector3.zero;

@@ -28,7 +28,7 @@ public class VisitState : CustomerBaseState
         }
 
         // 이동 시작
-        stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
+        stateMachine.Customer.MoveToNavAgentPoint(targetPoint.transform);
     }
 
     public override void Update()
@@ -123,7 +123,6 @@ public class VisitState : CustomerBaseState
     {
         targetShowcase = showcase;
 
-        if (targetPoint != null)
-            stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
+        if (targetPoint != null) stateMachine.Customer.MoveToNavAgentPoint(targetPoint.transform);
     }
 }

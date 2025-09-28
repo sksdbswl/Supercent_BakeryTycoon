@@ -11,7 +11,8 @@ public class LeavingState : CustomerBaseState
         stateMachine.Customer.CustomerUI.OnLike();
         var customer = stateMachine.Customer;
         
-        customer.navAgent.SetDestination(GameManager.Instance.customerSpawner.spawnPosition.position);
+        stateMachine.Customer.MoveToNavAgentPoint(GameManager.Instance.customerSpawner.spawnPosition);
+        //customer.navAgent.SetDestination(GameManager.Instance.customerSpawner.spawnPosition.position);
         customer.animator.SetTrigger(CustomerAnimationController.StackMove);
 
         stateMachine.Customer.StartCoroutine(WaitToReturnPool(stateMachine.Customer));
