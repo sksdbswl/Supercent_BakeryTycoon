@@ -33,7 +33,8 @@ public class Seat : MonoBehaviour
 
             if(cheir != null)
                 cheir.transform.rotation = originalRotation;
-
+            
+            SoundManager.Instance.PlaySound(SoundType.CleanUp);
             GameManager.Instance.OnStepComplete(GameManager.TutorialStep.CleanZoneArrow);
         }
     }

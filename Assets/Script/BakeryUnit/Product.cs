@@ -118,6 +118,7 @@ public class Product : MonoBehaviour
         transform.localRotation = Quaternion.identity;
 
         target.PickedUpBreads.Push(this);
+        SoundManager.Instance.PlaySound(SoundType.Get);
     }
 
     [Header("Movement Settings")]
@@ -178,6 +179,7 @@ public class Product : MonoBehaviour
         
         transform.localRotation = Quaternion.identity;
         meshCollider.isTrigger = true;
+        SoundManager.Instance.PlaySound(SoundType.Put);
     }
 
     public void SetTrigger()

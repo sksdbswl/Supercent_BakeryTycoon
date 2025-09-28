@@ -36,6 +36,8 @@ public class MoneyZone : MonoBehaviour
             
             moneyStack.Push(money);
         }
+        
+        SoundManager.Instance.PlaySound(SoundType.Cashier);
     }
 
     public GameObject PopMoney()
@@ -80,6 +82,8 @@ public class MoneyZone : MonoBehaviour
                 currentPlayer.AddMoney(1);
                 StartCoroutine(GameManager.Instance.MoveTo(money, currentPlayer.transform, 0.5f, true));
             }
+
+            SoundManager.Instance.PlaySound(SoundType.Money);
 
             yield return new WaitForSeconds(collectDelay);
         }

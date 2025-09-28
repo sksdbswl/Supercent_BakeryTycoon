@@ -97,6 +97,8 @@ public class UnLock : MonoBehaviour
         isUnlocked = true;
         if (LockIcon != null)
             LockIcon.SetActive(false);
+        
+        SoundManager.Instance.PlaySound(SoundType.Open);
     }
 
     public bool CanSit() => !isOccupied;
@@ -118,7 +120,8 @@ public class UnLock : MonoBehaviour
     private IEnumerator PlayPayEffect(Player player)
     {
         int payAmount = Mathf.Min(remainCost, player.Money);
-
+        SoundManager.Instance.PlaySound(SoundType.Money);
+        
         for (int i = 0; i < payAmount; i++)
         {
             if (!isPlayerInside)
