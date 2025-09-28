@@ -98,7 +98,7 @@ public class Product : MonoBehaviour
         int count = target.PickedUpBreads.Count;
         
         Vector3 startPos = transform.position;
-        Vector3 endPos = target.BreadTransform.position + new Vector3(0f, 0.5f * count, 0f);
+        Vector3 endPos = target.BreadTransform.position + new Vector3(0f, 0.3f * count, 0f);
 
         Vector3 control1 = startPos + Vector3.up * curveHeight;
         Vector3 control2 = endPos + Vector3.up * curveHeight;
@@ -117,7 +117,7 @@ public class Product : MonoBehaviour
         if (rb != null) rb.isKinematic = true;
 
         transform.SetParent(target.BreadTransform);
-        transform.localPosition = new Vector3(0f, 0.5f * count, 0f);
+        transform.localPosition = new Vector3(0f, 0.3f * count, 0f);
         transform.localRotation = Quaternion.identity;
     }
 

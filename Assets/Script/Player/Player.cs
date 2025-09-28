@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IProductTarget
 {
+    public PlayerUI playerUI;
     public PlayerStateMachine PlayerStateMachine { get; private set; }
     public Animator animator { get; private set; }
     public PlayerMover Mover { get; private set; }
@@ -19,20 +20,21 @@ public class Player : MonoBehaviour, IProductTarget
 
     [field: SerializeField] public Transform BreadTransform { get; set; }
     public Stack<Product> PickedUpBreads { get; set; } = new Stack<Product>();
-
+    
     private void Awake()
     {
         // 초기 플레이어 설정
         animator = GetComponentInChildren<Animator>();
         Mover = GetComponent<PlayerMover>();
         characterController = GetComponent<CharacterController>();
-
+        playerUI = GetComponent<PlayerUI>();
+            
         // 초기 플레이어 생성 및 FSM 시작 선언
         PlayerStateMachine = new PlayerStateMachine(this);
         PlayerStateMachine.ChangeState(PlayerStateMachine.IdleState);
 
         // 초기 플레이어 자산 설정
-        Money = 10000;
+        Money = 50;
     }
 
     private void Update()
@@ -75,15 +77,19 @@ public class Player : MonoBehaviour, IProductTarget
 
     private IEnumerator GetProductsCoroutine()
     {
-        var term = new WaitForSeconds(0.5f);
+        var term = new WaitForSeconds(0.2f);
 
         while (isClosedContainer)
         {
             switch (Container)
             {
                 case Oven oven:
-                    //var product = oven.GetProduct();
-
+                    if (PickedUpBreads.Count >= 10)
+                    {
+                        playerUI.MaxIcon.SetActive(true);
+                        break;
+                    }
+                    
                     if (oven.BakedCheck())
                     {
                         var queueBread = oven.breadQueue.Dequeue();
@@ -94,6 +100,8 @@ public class Player : MonoBehaviour, IProductTarget
                     break;
 
                 case Showcase showcase:
+                    //;
+                    
                     if (PickedUpBreads.Count == 0)
                     {
                         showcase.SetBusy(false);
@@ -101,6 +109,7 @@ public class Player : MonoBehaviour, IProductTarget
                     }
 
                     var bread = PickedUpBreads.Pop();
+                    playerUI.MaxIcon.SetActive(false);
                     showcase.Exhibition(bread);
                     bread.MoveTo(this, Product.GoalType.Showcase);
                     break;

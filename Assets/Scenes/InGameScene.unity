@@ -5481,7 +5481,6 @@ MonoBehaviour:
   customerSpawner: {fileID: 2121770335}
   cashierZone: {fileID: 1690953717}
   diningZone: {fileID: 444639434}
-  bezierDuration: 0.5
 --- !u!4 &2121770334
 Transform:
   m_ObjectHideFlags: 0
@@ -5760,10 +5759,6 @@ PrefabInstance:
       propertyPath: joystick
       value: 
       objectReference: {fileID: 379951443}
-    - target: {fileID: 4224082510765426696, guid: 49a5c79a17e8a490b9f32d2d19afee9a, type: 3}
-      propertyPath: moveSpeed
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 7288300110257645427, guid: 49a5c79a17e8a490b9f32d2d19afee9a, type: 3}
       propertyPath: m_Name
       value: Player
