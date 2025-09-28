@@ -115,7 +115,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private List<TutorialData> tutorialOrder;
 
     private Queue<TutorialData> tutorialQueue = new Queue<TutorialData>();
-    private TutorialData currentData;
+    public TutorialData currentData;
     
     private void Start()
     {
@@ -159,7 +159,6 @@ public class GameManager : Singleton<GameManager>
     private void ShowArrow(Transform target)
     {
         arrowPrefab.SetActive(true);
-        //arrowPrefab.transform.forward = mainCamera.transform.forward;
         arrowPrefab.transform.position = target.position;
         
         // 화살표 시작 위치
