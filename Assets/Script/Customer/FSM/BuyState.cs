@@ -13,16 +13,10 @@ public class BuyState:CustomerBaseState
 
     public IEnumerator FinishAfterDelay(Player player, GameObject paperBox)
     {
-        // 1. 포장 애니메이션 실행
         yield return PackingBread(player, paperBox);
 
-        // 2. 결제 처리 대기 (애니메이션 포함)
-        yield return new WaitForSeconds(2f);
-
-        // 3. 지불
         stateMachine.Customer.Payment(GameManager.PaymentType.Cashier);
         
-        // 4. 결제 완료 후 상태 전환
         FinishBuying(player);
     }
 
@@ -55,22 +49,20 @@ public class BuyState:CustomerBaseState
             yield return new WaitForSeconds(0.5f); // 박스 열리는 시간
         }
 
-        // 손님의 빵을 상자로 이동 (DoTween 또는 Transform)
         foreach (var bread in stateMachine.Customer.PickedUpBreads)
         {
+            yield return GameManager.Instance.MoveTo(bread.gameObject, box.transform, 0.8f,true);
+
             bread.transform.SetParent(box.transform);
             bread.transform.localPosition = Vector3.zero;
-            // 필요하면 DoTween Bezier 이동
-            yield return new WaitForSeconds(0.2f); // 빵 하나 이동 대기
+
+            yield return new WaitForSeconds(0.2f); 
         }
 
-        if (boxAnimator != null)
-        {
-            boxAnimator.SetTrigger("Close");
-            yield return new WaitForSeconds(0.5f); // 박스 닫는 시간
-        }
+        boxAnimator.SetTrigger("Close");
 
-        // 상자를 손님 손 위치로 이동
+        yield return GameManager.Instance.MoveTo(box.gameObject, stateMachine.Customer.BreadTransform, 0.8f, false);
+        
         box.transform.SetParent(stateMachine.Customer.BreadTransform);
         box.transform.localPosition = Vector3.zero;
     }

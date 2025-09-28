@@ -62,7 +62,7 @@ public class MoneyZone : MonoBehaviour
             if (money != null)
             {
                 player.AddMoney(1);
-                StartCoroutine(GameManager.Instance.MoveTo(money, player.transform, 0.5f));
+                StartCoroutine(GameManager.Instance.MoveTo(money, player.transform, 0.5f, true));
                 
                 yield return new WaitForSeconds(collectDelay);
             }

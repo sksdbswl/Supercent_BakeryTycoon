@@ -125,7 +125,7 @@ public class UnLock : MonoBehaviour
             cost--;
             costText.text = cost.ToString();
             
-            yield return StartCoroutine(GameManager.Instance.MoveTo(money, gameObject.transform,0.05f));
+            yield return StartCoroutine(GameManager.Instance.MoveTo(money, gameObject.transform,0.05f, true));
         }
 
         // 모든 돈 연출이 끝난 뒤에 해금 처리

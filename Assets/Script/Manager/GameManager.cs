@@ -61,7 +61,7 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// 기본 배지어 무브 처리
     /// </summary>
-    public IEnumerator MoveTo(GameObject obj, Transform endObj, float bezierDuration)
+    public IEnumerator MoveTo(GameObject obj, Transform endObj, float bezierDuration, bool returnPool)
     {
         Vector3 start = obj.transform.position;
 
@@ -83,7 +83,10 @@ public class GameManager : Singleton<GameManager>
         }
 
         var origin = obj.GetComponent<PooledObject>();
-        
-        GenericPoolManager.Instance.Release(origin.OriginPrefab, origin.gameObject);
+
+        if (returnPool)
+        {
+            GenericPoolManager.Instance.Release(origin.OriginPrefab, origin.gameObject);
+        }
     }
 }
