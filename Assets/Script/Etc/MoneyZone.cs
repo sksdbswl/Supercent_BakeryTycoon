@@ -44,30 +44,43 @@ public class MoneyZone : MonoBehaviour
         return moneyStack.Pop();
     }
     
+    private bool isPlayerInside = false;
+    private Player currentPlayer;
+
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Player>();
-        
         if (player)
         {
-            StartCoroutine(CollectMoneyCoroutine(player));
+            isPlayerInside = true;
+            currentPlayer = player;
+
+            StartCoroutine(CollectMoneyWhileInside());
         }
-        
-        GameManager.Instance.OnStepComplete(GameManager.TutorialStep.MoneyPickupArrow);
     }
 
-    private IEnumerator CollectMoneyCoroutine(Player player)
+    private void OnTriggerExit(Collider other)
     {
-        while (moneyStack.Count > 0)
+        var player = other.GetComponent<Player>();
+        if (player && player == currentPlayer)
+        {
+            isPlayerInside = false;
+            currentPlayer = null;
+        }
+    }
+
+    private IEnumerator CollectMoneyWhileInside()
+    {
+        while (isPlayerInside && moneyStack.Count > 0)
         {
             GameObject money = PopMoney();
             if (money != null)
             {
-                player.AddMoney(1);
-                StartCoroutine(GameManager.Instance.MoveTo(money, player.transform, 0.5f, true));
-                
-                yield return new WaitForSeconds(collectDelay);
+                currentPlayer.AddMoney(1);
+                StartCoroutine(GameManager.Instance.MoveTo(money, currentPlayer.transform, 0.5f, true));
             }
+
+            yield return new WaitForSeconds(collectDelay);
         }
     }
 }
