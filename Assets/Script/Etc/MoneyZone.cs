@@ -54,7 +54,8 @@ public class MoneyZone : MonoBehaviour
         {
             isPlayerInside = true;
             currentPlayer = player;
-
+            GameManager.Instance.OnStepComplete(GameManager.TutorialStep.MoneyPickupArrow);
+            
             StartCoroutine(CollectMoneyWhileInside());
         }
     }

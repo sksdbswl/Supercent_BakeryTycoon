@@ -9,20 +9,15 @@ public class OpenUnlockAction : IUnlockAction
         this.particle = particle;
     }
 
-    // UnlockTarget 배열로 수정
     public void Execute(Player player, UnlockTarget[] targets)
     {
-        Debug.Log("새로운 자리가 열렸습니다!");
-
         foreach (var target in targets)
         {
             if (target == null) continue;
 
-            // 비활성화할 오브젝트 처리
             if (target.Deactivate != null)
                 target.Deactivate.SetActive(false);
 
-            // 파티클 재생
             if (particle != null && target.Activate != null)
             {
                 Transform particlePos = target.Activate.transform.Find("ParticlePos");

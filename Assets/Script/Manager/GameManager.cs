@@ -25,7 +25,6 @@ public class GameManager : Singleton<GameManager>
         UnlockActionFactory.OpenParticle = openParticlePrefab;
     }
     
-    
     /// <summary>
     /// 오픈 지역 확인
     /// </summary>
@@ -98,6 +97,8 @@ public class GameManager : Singleton<GameManager>
     {
         public TutorialStep step;
         public Transform targetPos;
+        public Transform cameraTargetPos; 
+        public float cameraMoveDuration = 1f;
     }
     
      public enum TutorialStep
@@ -107,7 +108,8 @@ public class GameManager : Singleton<GameManager>
         CashierArrow,      // 계산대 이동
         MoneyPickupArrow,  // 돈 픽업
         UnlockZoneArrow,   // 해금 지역
-        CleanZoneArrow     // 청소 지역
+        CleanZoneArrow,    // 청소 지역
+        UpGradeZone        // 업그레이드 지역
     }
 
     [Header("Tutorial Settings")]
@@ -133,7 +135,6 @@ public class GameManager : Singleton<GameManager>
 
             if (step == TutorialStep.UnlockZoneArrow)
             {
-                Debug.Log("해금 완료. 다음 단계(청소)는 손님 이용 후 진행됩니다.");
                 return;
             }
 
@@ -147,6 +148,15 @@ public class GameManager : Singleton<GameManager>
         {
             currentData = tutorialQueue.Dequeue();
             ShowArrow(currentData.targetPos);
+
+            if (currentData.cameraTargetPos != null)
+            {
+                mainCamera.MoveToPositionTemporarily(
+                    currentData.cameraTargetPos.position, 
+                    currentData.cameraMoveDuration, 
+                    1f 
+                );
+            }
         }
         else
         {

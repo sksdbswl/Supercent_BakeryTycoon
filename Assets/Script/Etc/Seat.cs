@@ -25,9 +25,6 @@ public class Seat : MonoBehaviour
         var player = other.GetComponent<Player>();
         if (player != null && !isCleared)
         {
-            GameManager.Instance.OnStepComplete(GameManager.TutorialStep.CleanZoneArrow);
-            
-            Debug.Log($"청소합니다 ! {isCleared}");
             isCleared = true;
             trash.SetActive(false);
             seat.SetOccupied(false); 
@@ -36,13 +33,14 @@ public class Seat : MonoBehaviour
 
             if(cheir != null)
                 cheir.transform.rotation = originalRotation;
+
+            GameManager.Instance.OnStepComplete(GameManager.TutorialStep.CleanZoneArrow);
         }
     }
 
     public void Dirty()
     {
         GameManager.Instance.NextStep();
-        Debug.Log($"더러워 졌어요 {isCleared}");
         isCleared = false;
         cleanUp.gameObject.SetActive(false);
         Quaternion rotated = originalRotation * Quaternion.Euler(0, 110, 0);
