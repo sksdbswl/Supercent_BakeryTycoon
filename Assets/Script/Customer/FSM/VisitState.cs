@@ -34,8 +34,6 @@ public class VisitState : CustomerBaseState
     public override void Update()
     {
         if (targetShowcase == null || targetPoint == null || isPicking) return;
-
-        // NavMeshAgent 도착 체크
         if (!stateMachine.Customer.ArriveCheck()) return;
 
         // 도착 후 행동

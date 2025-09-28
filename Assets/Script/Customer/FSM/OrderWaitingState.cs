@@ -37,7 +37,7 @@ public class OrderWaitingState : CustomerBaseState
 
         // 포인트 확보 후 이동
         var customer = stateMachine.Customer;
-        customer.navAgent.SetDestination(targetPoint.transform.position);
+        stateMachine.Customer.MoveToNavAgentPoint(targetPoint.transform);
         customer.animator.SetTrigger(CustomerAnimationController.StackMove);
 
         // 이동 완료될 때까지 대기

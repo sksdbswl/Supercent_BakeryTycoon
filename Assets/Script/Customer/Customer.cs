@@ -90,10 +90,6 @@ public class Customer : MonoBehaviour, IProductTarget
         if (!navAgent.pathPending && navAgent.remainingDistance <= navAgent.stoppingDistance)
         {
             return true;
-            // if (!navAgent.hasPath || navAgent.velocity.sqrMagnitude < 0.01f)
-            // {
-            //     return true;
-            // }
         }
         
         return false;

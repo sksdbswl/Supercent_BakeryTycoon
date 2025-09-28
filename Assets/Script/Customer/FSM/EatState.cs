@@ -29,19 +29,19 @@ public class EatState : CustomerBaseState
         }
 
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackMove);
+        stateMachine.Customer.CustomerUI.Balloon.SetActive(false);
         
-        // 자리로 이동
         stateMachine.Customer.MoveToNavAgentPoint(table.SeatPosition);
 
-        // 이동 완료될 때까지 대기
         while (!stateMachine.Customer.ArriveCheck())
         {
             yield return null;
         }
-
-        // 도착 후 애니메이션 전환
+        
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Seat);
-
+        stateMachine.Customer.navAgent.enabled = false; 
+        stateMachine.Customer.transform.position = table.SeatPosition.position + Vector3.up * 0.4f;
+        
         // 식사 시작
         yield return EattingWaiting(table);
     }
@@ -53,13 +53,12 @@ public class EatState : CustomerBaseState
             yield return null;
         }
         
-        stateMachine.Customer.CustomerUI.Balloon.SetActive(false);
         QueueManager.Instance.ReleaseDiningPoint(stateMachine.Customer.currentPoint);
         stateMachine.Customer.currentPoint = null;
         
-        //상태 전환
-        yield return new WaitForSeconds(12f);
+        yield return new WaitForSeconds(10f);
         
+        stateMachine.Customer.navAgent.enabled = true;
         stateMachine.Customer.Payment(GameManager.PaymentType.Dining);
         table.Seat.Dirty();
 

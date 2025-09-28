@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BuyState:CustomerBaseState
 {
+    private static readonly int Open = Animator.StringToHash("Open");
+    private static readonly int Close = Animator.StringToHash("Close");
     public BuyState(CustomerStateMachine stateMachine) : base(stateMachine) { }
     
     public IEnumerator FinishAfterDelay(Player player, GameObject paperBox)
@@ -28,7 +30,6 @@ public class BuyState:CustomerBaseState
         QueueManager.Instance.ReleaseCashierPoint(stateMachine.Customer.currentPoint);
         stateMachine.Customer.currentPoint = null;
         
-        // LeavingState 전환
         stateMachine.ChangeState(stateMachine.LeavingState);
         player.Customer = null;
     }
@@ -40,7 +41,7 @@ public class BuyState:CustomerBaseState
 
         if (boxAnimator != null)
         {
-            boxAnimator.SetTrigger("Open");
+            boxAnimator.SetTrigger(Open);
             yield return new WaitForSeconds(0.2f);
         }
 
@@ -54,7 +55,7 @@ public class BuyState:CustomerBaseState
             yield return new WaitForSeconds(0.2f); 
         }
 
-        boxAnimator.SetTrigger("Close");
+        boxAnimator.SetTrigger(Close);
 
         yield return GameManager.Instance.MoveTo(box.gameObject, stateMachine.Customer.BreadTransform, 0.3f, false);
         
