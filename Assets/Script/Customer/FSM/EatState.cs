@@ -60,6 +60,6 @@ public class EatState : CustomerBaseState
 
     public override void Exit()
     {
-        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
+        //stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
     }
 }

@@ -36,24 +36,31 @@ public class OrderWaitingState : CustomerBaseState
         }
 
         // 포인트 확보 후 이동
-        stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
-        
+        var customer = stateMachine.Customer;
+        customer.navAgent.SetDestination(targetPoint.transform.position);
+        customer.animator.SetTrigger(CustomerAnimationController.StackMove);
+
+        // 이동 완료될 때까지 대기
+        while (!customer.ArriveCheck())
+        {
+            yield return null;
+        }
+
+        // 이동 완료 후 Idle 애니메이션
+        customer.animator.SetTrigger(CustomerAnimationController.StackIdle);
+
         // 맨 앞 자리 될 때까지 대기
-        while (!QueueManager.Instance.CheckMyTurn(stateMachine.Customer, myQueueType))
+        while (!QueueManager.Instance.CheckMyTurn(customer, myQueueType))
         {
             yield return null;
         }
 
         yield return new WaitForSeconds(0.5f);
-        
+
         // 상태 전환
         if (wantsToEatIn)
-        {
             stateMachine.ChangeState(stateMachine.EatState);
-        }
         else
-        {
             stateMachine.ChangeState(stateMachine.BuyState);
-        }
     }
 }

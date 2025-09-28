@@ -6,15 +6,13 @@ public class VisitState : CustomerBaseState
 {
     private Showcase targetShowcase;
     private NavPoint targetPoint;
+    private bool isPicking = false;
 
     public VisitState(CustomerStateMachine stateMachine) : base(stateMachine) { }
 
-    private bool IsArrived = false;
-    private bool isPickUp = false;
-    
     public override void Enter()
     {
-        // 랜덤 쇼케이스 선택
+        // 랜덤 쇼케이스 선택 및 빈 자리 확보
         targetShowcase = ShowCaseManager.Instance.GetRandomShowcase();
         if (targetShowcase == null)
         {
@@ -23,34 +21,95 @@ public class VisitState : CustomerBaseState
         }
 
         targetPoint = targetShowcase.GetFreePoint();
-
-        // 쇼케이스에서 빈 자리 가져오기
         if (targetPoint == null)
         {
             Debug.Log("쇼케이스 자리가 없음, 대기 또는 다른 행동");
             return;
         }
 
-        // 이동
+        // 이동 시작
         stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
     }
 
     public override void Update()
     {
-        if (targetPoint == null || targetShowcase == null || isPickUp) return;
+        if (targetShowcase == null || targetPoint == null || isPicking) return;
 
+        // NavMeshAgent 도착 체크
         if (!stateMachine.Customer.ArriveCheck()) return;
-        stateMachine.Customer.CustomerUI.SetBreadCount(stateMachine.Customer.customerData.quantity);
-        stateMachine.Customer.CustomerUI.OnSprite(stateMachine.Customer.CustomerUI.Want);
+
+        // 도착 후 행동
+        OnArriveAtShowcase();
+    }
+
+    private void OnArriveAtShowcase()
+    {
+        // UI 업데이트
+        var customerUI = stateMachine.Customer.CustomerUI;
+        var customerData = stateMachine.Customer.customerData;
+
+        customerUI.SetBreadCount(customerData.quantity);
+        customerUI.OnSprite(customerUI.Want);
+
+        // Idle 애니메이션
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Idle);
 
-        IsArrived = true;
-        if (!IsArrived) return;
-        IsArrived = false;
+        // 쇼케이스가 사용 중이면 대기
         if (targetShowcase.IsBusy) return;
-        
-        // 쇼케이스 사용 시작
-        PickUpBread();
+
+        // 빵 집기 시작
+        StartPickUpBread();
+    }
+
+    private void StartPickUpBread()
+    {
+        if (isPicking) return;
+
+        isPicking = true;
+        stateMachine.Customer.StartCoroutine(PickUpBreadCoroutine());
+    }
+
+    private IEnumerator PickUpBreadCoroutine()
+    {
+        var customer = stateMachine.Customer;
+        var customerUI = customer.CustomerUI;
+        var data = customer.customerData;
+
+        while (data.pickedUpCount < data.quantity)
+        {
+            if (targetShowcase.IsBusy)
+            {
+                yield return new WaitForSeconds(0.5f);
+                continue;
+            }
+
+            Product bread = targetShowcase.GetProduct();
+            if (bread == null)
+            {
+                yield return new WaitForSeconds(0.5f);
+                continue;
+            }
+
+            // 한 번만 애니메이션
+            if (!customer.isPickingAnimationPlayed)
+            {
+                customer.animator.SetTrigger(CustomerAnimationController.StackIdle);
+                customer.isPickingAnimationPlayed = true;
+            }
+
+            // 빵 가져오기
+            data.pickedUpCount++;
+            customerUI.SetBreadCount(data.quantity - data.pickedUpCount);
+
+            bread.MoveTo(customer, Product.GoalType.Customer);
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        // 픽업 완료
+        customer.isPickingAnimationPlayed = false;
+        isPicking = false;
+        stateMachine.ChangeState(stateMachine.OrderWaitingState);
     }
 
     public override void Exit()
@@ -59,61 +118,12 @@ public class VisitState : CustomerBaseState
         if (targetPoint != null)
             targetPoint.IsOccupied = false;
     }
-    
+
     public void SetTargetShowcase(Showcase showcase)
     {
         targetShowcase = showcase;
 
         if (targetPoint != null)
             stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
-    }
-
-    public void PickUpBread()
-    {
-        isPickUp = true;
-        stateMachine.Customer.StartCoroutine(PickUpBreadCoroutine());
-    }
-    
-
-    private IEnumerator PickUpBreadCoroutine()
-    {
-        int need = stateMachine.Customer.customerData.quantity;
-        int pickup = stateMachine.Customer.customerData.pickedUpCount;
-        
-        while (pickup < need)
-        {
-            if (targetShowcase.IsBusy)
-            {
-                yield return new WaitForSeconds(0.5f);
-                continue; 
-            }
-
-            Product bread = targetShowcase.GetProduct();
-            if (bread == null)
-            {
-                yield return new WaitForSeconds(0.5f);
-                continue; 
-            }
-
-            // 빵 가져가기 전에 애니메이션 한 번만 실행
-            if (!stateMachine.Customer.isPickingAnimationPlayed)
-            {
-                stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackIdle); 
-                stateMachine.Customer.isPickingAnimationPlayed = true;
-            }
-            
-            // 빵 가져가기
-            pickup++;
-            stateMachine.Customer.CustomerUI.SetBreadCount(
-                need - pickup
-            );
-
-            bread.MoveTo(stateMachine.Customer, Product.GoalType.Customer);
-
-            yield return new WaitForSeconds(0.5f);
-        }
-
-        stateMachine.ChangeState(stateMachine.OrderWaitingState);
-        isPickUp = false;
     }
 }

@@ -15,7 +15,7 @@ public class CheckOutState:CustomerBaseState
         if (targetPoint != null)
         {
             stateMachine.Customer.navAgent.SetDestination(targetPoint.transform.position);
-            stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
+            //stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
         }
         
         //일정 시간이 지나면 떠나
@@ -36,6 +36,6 @@ public class CheckOutState:CustomerBaseState
     
     public override void Exit()
     {
-        stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
+        //stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.Move);
     }
 }
