@@ -104,7 +104,6 @@ public class UnLock : MonoBehaviour
         isOccupied = occupied;
     }
 
-    // 다음 해금 가능 상태 설정 (NextUnlock에서 호출 가능)
     public void SetUnlockedState(bool state)
     {
         isUnlocked = state;
@@ -122,7 +121,10 @@ public class UnLock : MonoBehaviour
                 player.BreadTransform.position, 
                 Quaternion.identity, 
                 GameManager.Instance.MoneyZone.zonePoint);
-
+            
+            cost--;
+            costText.text = cost.ToString();
+            
             yield return StartCoroutine(GameManager.Instance.MoveTo(money, gameObject.transform,0.05f));
         }
 

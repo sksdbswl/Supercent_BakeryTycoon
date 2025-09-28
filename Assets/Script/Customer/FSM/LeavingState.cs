@@ -24,10 +24,15 @@ public class LeavingState : CustomerBaseState
             yield return null;
         }
         
-        GenericPoolManager.Instance.Release(customer.PooledObject.OriginPrefab, customer.PooledObject.gameObject);
         if (customer.currentPaperBox != null)
         {
-            GenericPoolManager.Instance.Release(customer.currentPaperBox, customer.currentPaperBox.gameObject);
+            
+            var origin = customer.currentPaperBox.GetComponent<PooledObject>();
+            GenericPoolManager.Instance.Release(origin.OriginPrefab, origin.gameObject);
         }
+        
+        stateMachine.Customer.CustomerUI.OffState();
+        GenericPoolManager.Instance.Release(customer.PooledObject.OriginPrefab, customer.PooledObject.gameObject);
+
     }
 }
