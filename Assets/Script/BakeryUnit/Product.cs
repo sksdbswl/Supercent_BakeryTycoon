@@ -93,7 +93,7 @@ public class Product : MonoBehaviour
     // 오븐,쇼케이스 -> Player / Customer 픽업지점 :: 공용 Bezier 이동
     private IEnumerator MoveToTargetBezier(IProductTarget target)
     {
-        int count = target.PickedUpBreads.Count + 1; 
+        int count = target.PickedUpBreads.Count; 
     
         Vector3 startPos = transform.position;
         Vector3 endPos = target.BreadTransform.position + new Vector3(0f, 0.3f * count, 0f);

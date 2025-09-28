@@ -15,7 +15,9 @@ public class OrderWaitingState : CustomerBaseState
         wantsToEatIn = stateMachine.Customer.customerData.wantsToEatIn;
         myQueueType = wantsToEatIn ? QueueManager.QueueType.Dining : QueueManager.QueueType.Cashier;
         
+        CustomerAnimationController.ResetAllTriggers(stateMachine.Customer.animator);
         stateMachine.Customer.animator.SetTrigger(CustomerAnimationController.StackMove);
+        
         stateMachine.Customer.CustomerUI.OnSprite(stateMachine.Customer.CustomerUI.Cashier);
         
         // 대기 루틴 시작
@@ -47,6 +49,7 @@ public class OrderWaitingState : CustomerBaseState
         }
 
         // 이동 완료 후 Idle 애니메이션
+        CustomerAnimationController.ResetAllTriggers(customer.animator);
         customer.animator.SetTrigger(CustomerAnimationController.StackIdle);
 
         // 맨 앞 자리 될 때까지 대기

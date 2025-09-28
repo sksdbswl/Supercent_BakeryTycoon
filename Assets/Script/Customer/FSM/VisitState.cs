@@ -108,6 +108,7 @@ public class VisitState : CustomerBaseState
 
         // 픽업 완료
         customer.isPickingAnimationPlayed = false;
+        customer.animator.SetTrigger(CustomerAnimationController.StackMove);
         isPicking = false;
         stateMachine.ChangeState(stateMachine.OrderWaitingState);
     }
