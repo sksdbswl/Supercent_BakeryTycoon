@@ -9,14 +9,11 @@ public class Player : MonoBehaviour, IProductTarget
     public PlayerStateMachine PlayerStateMachine { get; private set; }
     public Animator animator { get; private set; }
     public PlayerMover Mover { get; private set; }
-
     public event Action<int> OnMoneyChanged;
     public int Money { get; set; }
 
     private bool isClosedContainer = false;
     public IProductContainer Container;
-
-    public CharacterController characterController;
 
     [field: SerializeField] public Transform BreadTransform { get; set; }
     public Stack<Product> PickedUpBreads { get; set; } = new Stack<Product>();
@@ -26,7 +23,6 @@ public class Player : MonoBehaviour, IProductTarget
         // 초기 플레이어 설정
         animator = GetComponentInChildren<Animator>();
         Mover = GetComponent<PlayerMover>();
-        characterController = GetComponent<CharacterController>();
         playerUI = GetComponent<PlayerUI>();
             
         // 초기 플레이어 생성 및 FSM 시작 선언

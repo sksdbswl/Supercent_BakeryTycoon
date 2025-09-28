@@ -6,8 +6,14 @@ public class IdleState : PlayerBaseState
 
     public override void Enter()
     {
-      //Debug.Log("Idle Enter");   
-      stateMachine.Player.animator.SetTrigger(PlayerAnimationController.Idle);
+        if (stateMachine.Player.PickedUpBreads.Count > 0)
+        {
+            stateMachine.Player.animator.SetTrigger(PlayerAnimationController.StackIdle);
+        }
+        else
+        {
+            stateMachine.Player.animator.SetTrigger(PlayerAnimationController.Idle);
+        }
     }
     
     public override void Update()
@@ -18,10 +24,5 @@ public class IdleState : PlayerBaseState
         {
             stateMachine.ChangeState(new MoveState(stateMachine));
         }
-    }
-
-    public override void Exit()
-    {
-        //Debug.Log("Idle Exit");   
     }
 }

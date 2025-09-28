@@ -6,7 +6,14 @@ public class MoveState : PlayerBaseState
 
     public override void Enter()
     {
-        stateMachine.Player.animator.SetTrigger(PlayerAnimationController.Move);
+        if (stateMachine.Player.PickedUpBreads.Count > 0)
+        {
+            stateMachine.Player.animator.SetTrigger(PlayerAnimationController.StackMove);
+        }
+        else
+        {
+            stateMachine.Player.animator.SetTrigger(PlayerAnimationController.Move);
+        }
     }
     
     public override void Update()
@@ -20,10 +27,5 @@ public class MoveState : PlayerBaseState
         }
 
         stateMachine.Player.Mover.Move(move);
-    }
-
-    public override void Exit()
-    {
-        stateMachine.Player.animator.ResetTrigger(PlayerAnimationController.Move);
     }
 }
