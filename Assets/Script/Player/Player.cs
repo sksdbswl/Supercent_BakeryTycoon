@@ -34,7 +34,7 @@ public class Player : MonoBehaviour, IProductTarget
         PlayerStateMachine.ChangeState(PlayerStateMachine.IdleState);
 
         // 초기 플레이어 자산 설정
-        Money = 50;
+        Money = 20;
     }
 
     private void Update()

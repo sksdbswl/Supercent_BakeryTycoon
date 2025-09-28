@@ -19,7 +19,7 @@ public class PlayerStateMachine : StateMachine
     public Player Player { get; }
     public IdleState IdleState { get; }
     public MoveState MoveState { get; }
-    public BakingState BakingState { get; }
+    //public BakingState BakingState { get; }
     public RestockState RestockState { get; }
     public PaymentState PaymentState { get; }
     
@@ -29,7 +29,7 @@ public class PlayerStateMachine : StateMachine
 
         IdleState = new IdleState(this);
         MoveState = new MoveState(this);
-        BakingState = new BakingState(this);
+        //BakingState = new BakingState(this);
         RestockState = new RestockState(this);
         PaymentState = new PaymentState(this);
     }

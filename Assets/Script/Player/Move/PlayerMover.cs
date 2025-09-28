@@ -48,50 +48,6 @@ public class PlayerMover : MonoBehaviour
         }
     }
     #endregion
-
-
-    // private void Update()
-    // {
-    //     Vector3 move = Vector3.zero;
-    //     
-    //     // 1. 모바일 조이스틱
-    //     if (joystick != null && joystick.MoveInput.sqrMagnitude > 0.01f)
-    //     {
-    //         move = new Vector3(joystick.MoveInput.x, 0, joystick.MoveInput.y);
-    //         isClickMoving = false; // 클릭 이동 무효화
-    //     }
-    //     // 2. 키보드/게임패드
-    //     else if (moveInput.sqrMagnitude > 0.01f)
-    //     {
-    //         move = new Vector3(moveInput.x, 0, moveInput.y);
-    //         isClickMoving = false;
-    //     }
-    //     // 3. 마우스 클릭 이동
-    //     else if (isClickMoving)
-    //     {
-    //         Vector3 dir = clickTarget - transform.position;
-    //         dir.y = 0;
-    //         if (dir.magnitude < 0.1f)
-    //             isClickMoving = false; // 목표 도착
-    //         else
-    //             move = dir.normalized;
-    //     }
-    //
-    //     // 실제 이동
-    //     if (move.sqrMagnitude > 0.01f)
-    //     {
-    //         move.y = 0;
-    //         controller.Move(move * moveSpeed * Time.deltaTime);
-    //         transform.forward = move.normalized; // 이동 방향 바라보기
-    //         player.animator.ResetTrigger(PlayerAnimationController.Idle);
-    //         player.animator.SetTrigger(PlayerAnimationController.Move);
-    //     }
-    //     else
-    //     {
-    //         player.animator.ResetTrigger(PlayerAnimationController.Move);
-    //         player.animator.SetTrigger(PlayerAnimationController.Idle);
-    //     }
-    // }
     
     /// <summary>
     /// 현재 입력으로부터 이동 방향을 계산

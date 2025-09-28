@@ -55,6 +55,7 @@ public class UnLock : MonoBehaviour
 
         GameManager.Instance.Register(this);
         isOccupied = false;
+        remainCost = cost;
     }
 
     private void Start()
@@ -77,17 +78,10 @@ public class UnLock : MonoBehaviour
 
     public void TryUnlock(Player player)
     {
-        if (!CanUnlock(player))
-        {
-            Debug.Log("자산이 부족합니다!");
-            return;
-        }
-
         // 비용 지불 연출 시작 → Unlock은 내부에서 실행됨
         StartCoroutine(PlayPayEffect(player)); 
     }
-
-
+    
     private bool CanUnlock(Player player) => player.Money >= cost;
 
     private void Unlock(Player player)
@@ -111,30 +105,39 @@ public class UnLock : MonoBehaviour
         if (LockIcon != null)
             LockIcon.SetActive(!state);
     }
+
+    private int remainCost = 0;
     
     // 비용 지불 연출
     private IEnumerator PlayPayEffect(Player player)
     {
-        for (int i = 0; i < cost; i++)
+        int payAmount = Mathf.Min(remainCost, player.Money);
+
+        for (int i = 0; i < payAmount; i++)
         {
             GameObject money = GenericPoolManager.Instance.Get(
-                GameManager.Instance.MoneyZone.moneyPrefab, 
-                player.BreadTransform.position, 
-                Quaternion.identity, 
-                GameManager.Instance.MoneyZone.zonePoint);
-            
-            cost--;
-            costText.text = cost.ToString();
-            
-            yield return StartCoroutine(GameManager.Instance.MoveTo(money, gameObject.transform,0.05f, true));
+                GameManager.Instance.MoneyZone.moneyPrefab,
+                player.BreadTransform.position,
+                Quaternion.identity,
+                GameManager.Instance.MoneyZone.zonePoint
+            );
+
+            yield return StartCoroutine(GameManager.Instance.MoveTo(money, gameObject.transform, 0.05f, true));
+
+            remainCost--;
+            costText.text = remainCost.ToString();
+
+            player.SpendMoney(1);
         }
 
-        // 모든 돈 연출이 끝난 뒤에 해금 처리
-        Unlock(player);
-
-        if (Targets != null && Targets.Length > 0)
+        if (remainCost <= 0)
         {
-            unlockAction.Execute(player, Targets);
+            Unlock(player);
+
+            if (Targets != null && Targets.Length > 0)
+            {
+                unlockAction.Execute(player, Targets);
+            }
         }
     }
 }
