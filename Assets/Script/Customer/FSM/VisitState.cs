@@ -28,6 +28,7 @@ public class VisitState : CustomerBaseState
         }
 
         // 이동 시작
+        targetShowcase.Customers.Enqueue(stateMachine.Customer);
         stateMachine.Customer.MoveToNavAgentPoint(targetPoint.transform);
     }
 
@@ -54,7 +55,8 @@ public class VisitState : CustomerBaseState
 
         // 쇼케이스가 사용 중이면 대기
         if (targetShowcase.IsBusy) return;
-
+        if (targetShowcase.Customers.Peek() != stateMachine.Customer) return;
+        
         // 빵 집기 시작
         StartPickUpBread();
     }
@@ -101,7 +103,7 @@ public class VisitState : CustomerBaseState
 
             bread.MoveTo(customer, Product.GoalType.Customer);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
 
         // 픽업 완료
@@ -115,6 +117,8 @@ public class VisitState : CustomerBaseState
         // 자리 반환
         if (targetPoint != null)
             targetPoint.IsOccupied = false;
+
+        targetShowcase.Customers.Dequeue();
     }
 
     public void SetTargetShowcase(Showcase showcase)

@@ -6,6 +6,7 @@ public class Showcase : ProductContainer
     public Transform BreadPos;
     [Header("손님 대기 포인트")]
     public List<NavPoint> CustomerPoints = new List<NavPoint>();
+    public Queue<Customer> Customers = new Queue<Customer>();
     
     public bool IsBusy { get; private set; }
     
