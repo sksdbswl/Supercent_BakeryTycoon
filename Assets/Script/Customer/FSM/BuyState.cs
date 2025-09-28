@@ -47,12 +47,8 @@ public class BuyState:CustomerBaseState
 
         foreach (var bread in stateMachine.Customer.PickedUpBreads)
         {
+            bread.SetTrigger();
             yield return GameManager.Instance.MoveTo(bread.gameObject, box.transform, 0.8f,true);
-
-            bread.transform.SetParent(box.transform);
-            bread.transform.localPosition = Vector3.zero;
-
-            yield return new WaitForSeconds(0.2f); 
         }
 
         boxAnimator.SetTrigger(Close);

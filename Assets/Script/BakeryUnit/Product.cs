@@ -93,13 +93,10 @@ public class Product : MonoBehaviour
     // 오븐,쇼케이스 -> Player / Customer 픽업지점 :: 공용 Bezier 이동
     private IEnumerator MoveToTargetBezier(IProductTarget target)
     {
-        target.PickedUpBreads.Push(this);
-        
-        int count = target.PickedUpBreads.Count;
-        
+        int count = target.PickedUpBreads.Count + 1; 
+    
         Vector3 startPos = transform.position;
         Vector3 endPos = target.BreadTransform.position + new Vector3(0f, 0.3f * count, 0f);
-
         Vector3 control1 = startPos + Vector3.up * curveHeight;
         Vector3 control2 = endPos + Vector3.up * curveHeight;
 
@@ -119,6 +116,8 @@ public class Product : MonoBehaviour
         transform.SetParent(target.BreadTransform);
         transform.localPosition = new Vector3(0f, 0.3f * count, 0f);
         transform.localRotation = Quaternion.identity;
+
+        target.PickedUpBreads.Push(this);
     }
 
     [Header("Movement Settings")]
@@ -179,6 +178,11 @@ public class Product : MonoBehaviour
         
         transform.localRotation = Quaternion.identity;
         meshCollider.isTrigger = true;
+    }
+
+    public void SetTrigger()
+    {
+        meshCollider.isTrigger = false;
     }
 }
 

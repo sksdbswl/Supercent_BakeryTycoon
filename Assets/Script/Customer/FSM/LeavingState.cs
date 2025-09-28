@@ -12,7 +12,6 @@ public class LeavingState : CustomerBaseState
         var customer = stateMachine.Customer;
         
         stateMachine.Customer.MoveToNavAgentPoint(GameManager.Instance.customerSpawner.spawnPosition);
-        //customer.navAgent.SetDestination(GameManager.Instance.customerSpawner.spawnPosition.position);
         customer.animator.SetTrigger(CustomerAnimationController.StackMove);
 
         stateMachine.Customer.StartCoroutine(WaitToReturnPool(stateMachine.Customer));
@@ -27,9 +26,18 @@ public class LeavingState : CustomerBaseState
         
         if (customer.currentPaperBox != null)
         {
-            
             var origin = customer.currentPaperBox.GetComponent<PooledObject>();
             GenericPoolManager.Instance.Release(origin.OriginPrefab, origin.gameObject);
+        }
+
+        if (stateMachine.Customer.PickedUpBreads.Count > 0)
+        {
+            foreach (var bread in stateMachine.Customer.PickedUpBreads)
+            {
+                var origin = bread.GetComponent<PooledObject>();
+                bread.SetTrigger();
+                GenericPoolManager.Instance.Release(origin.OriginPrefab, origin.gameObject);
+            }
         }
         
         stateMachine.Customer.CustomerUI.OffState();

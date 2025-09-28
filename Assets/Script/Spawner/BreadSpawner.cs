@@ -9,10 +9,10 @@ public class BreadSpawner : MonoBehaviour
     [SerializeField] private Transform spawnParent;
     [SerializeField] private Transform spawnPoint; 
     [SerializeField] private Transform movePoint; 
-    [SerializeField] private float createInterval = 5f;
     [SerializeField] private Showcase showcase;
-    [SerializeField] private float forceDelay = 1f; 
-    [SerializeField] private float forcePower = 6f;
+    private float createInterval = 1f;
+    private float forceDelay = 0.5f; 
+    private float forcePower = 4.5f;
 
     private int MaxBread = 10;
     public int Bread = 0;
@@ -51,7 +51,7 @@ public class BreadSpawner : MonoBehaviour
                     }
 
                     // 빵 이동은 코루틴으로 병렬 처리
-                    StartCoroutine(MoveAndBakeBread(bread, product));
+                    //StartCoroutine(MoveAndBakeBread(bread, product));
                     
                     // Bread 수 증가 및 Oven Bake는 이동과 동시에 처리
                     if (product != null)
@@ -66,23 +66,7 @@ public class BreadSpawner : MonoBehaviour
             yield return new WaitForSeconds(createInterval);
         }
     }
-
-    // 빵 이동 전용 코루틴
-    private IEnumerator MoveAndBakeBread(GameObject bread, Product product)
-    {
-        Transform obj = bread.transform;
-        Vector3 target = movePoint.position;
-        float speed = 1f;
-
-        while (Vector3.Distance(obj.position, target) > 0.01f)
-        {
-            obj.position = Vector3.Lerp(obj.position, target, speed * Time.deltaTime);
-            yield return null;
-        }
-
-        obj.position = target;
-    }
-
+    
     // Force 지연 적용
     private IEnumerator AddForceAfterDelay(Rigidbody rb, Product product)
     {

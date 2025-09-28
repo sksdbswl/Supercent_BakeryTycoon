@@ -89,6 +89,7 @@ public class Player : MonoBehaviour, IProductTarget
                     if (oven.BakedCheck())
                     {
                         var queueBread = oven.breadQueue.Dequeue();
+                        
                         queueBread.MoveTo(this, Product.GoalType.Player);
                         oven.GetProduct();
                         
