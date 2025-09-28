@@ -66,6 +66,7 @@ public class UnLock : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (isUnlocked) return;
+        GameManager.Instance.OnStepComplete(GameManager.TutorialStep.UnlockZoneArrow);
 
         Player player = other.GetComponent<Player>();
         if (player != null)

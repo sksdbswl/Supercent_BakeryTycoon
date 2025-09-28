@@ -95,13 +95,13 @@ public class Player : MonoBehaviour, IProductTarget
                         var queueBread = oven.breadQueue.Dequeue();
                         queueBread.MoveTo(this, Product.GoalType.Player);
                         oven.GetProduct();
+                        
+                        GameManager.Instance.OnStepComplete(GameManager.TutorialStep.PickupBread);
                     }
                        
                     break;
 
                 case Showcase showcase:
-                    //;
-                    
                     if (PickedUpBreads.Count == 0)
                     {
                         showcase.SetBusy(false);
@@ -112,6 +112,8 @@ public class Player : MonoBehaviour, IProductTarget
                     playerUI.MaxIcon.SetActive(false);
                     showcase.Exhibition(bread);
                     bread.MoveTo(this, Product.GoalType.Showcase);
+                    GameManager.Instance.OnStepComplete(GameManager.TutorialStep.ShowcaseArrow);
+                    
                     break;
 
                 case Cashier cashier:
@@ -123,9 +125,10 @@ public class Player : MonoBehaviour, IProductTarget
                             Customer = currentCustomer;
                             GameObject paperBox = cashier.SpawnPaperBox();
                             Customer.currentPaperBox = paperBox;
-
                             Customer.StartCoroutine(Customer.CustomerStateMachine.BuyState
                                 .FinishAfterDelay(this, paperBox));
+                            
+                            GameManager.Instance.OnStepComplete(GameManager.TutorialStep.CashierArrow);
                         }
                     }
 

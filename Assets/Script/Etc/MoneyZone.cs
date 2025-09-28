@@ -52,6 +52,8 @@ public class MoneyZone : MonoBehaviour
         {
             StartCoroutine(CollectMoneyCoroutine(player));
         }
+        
+        GameManager.Instance.OnStepComplete(GameManager.TutorialStep.MoneyPickupArrow);
     }
 
     private IEnumerator CollectMoneyCoroutine(Player player)

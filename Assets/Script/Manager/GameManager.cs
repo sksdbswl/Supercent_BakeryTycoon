@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -44,7 +45,6 @@ public class GameManager : Singleton<GameManager>
         return unlocks.FindAll(u => u.unlockType == UnlockType.Open && u.isUnlocked && u.CanSit());
     }
     
-    
     /// <summary>
     /// 돈 생성 지역 관리
     /// </summary>
@@ -88,5 +88,96 @@ public class GameManager : Singleton<GameManager>
         {
             GenericPoolManager.Instance.Release(origin.OriginPrefab, origin.gameObject);
         }
+    }
+    
+    /// <summary>
+    /// 튜토리얼 적용
+    /// </summary>
+    [System.Serializable]
+    public class TutorialData
+    {
+        public TutorialStep step;
+        public Transform targetPos;
+    }
+    
+     public enum TutorialStep
+    {
+        PickupBread,       // 오븐에서 빵 픽업
+        ShowcaseArrow,     // 쇼케이스에 놓기
+        CashierArrow,      // 계산대 이동
+        MoneyPickupArrow,  // 돈 픽업
+        UnlockZoneArrow,   // 해금 지역
+        CleanZoneArrow     // 청소 지역
+    }
+
+    [Header("Tutorial Settings")]
+    [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private List<TutorialData> tutorialOrder;
+
+    private Queue<TutorialData> tutorialQueue = new Queue<TutorialData>();
+    private TutorialData currentData;
+    
+    private void Start()
+    {
+        foreach (var step in tutorialOrder)
+            tutorialQueue.Enqueue(step);
+        
+        NextStep();
+    }
+    
+    public void OnStepComplete(TutorialStep step)
+    {
+        if (currentData != null && currentData.step == step)
+        {
+            HideArrow();
+
+            if (step == TutorialStep.UnlockZoneArrow)
+            {
+                Debug.Log("해금 완료. 다음 단계(청소)는 손님 이용 후 진행됩니다.");
+                return;
+            }
+
+            NextStep();
+        }
+    }
+    
+    public void NextStep()
+    {
+        if (tutorialQueue.Count > 0)
+        {
+            currentData = tutorialQueue.Dequeue();
+            ShowArrow(currentData.targetPos);
+        }
+        else
+        {
+            currentData = null; 
+        }
+    }
+
+    private Tween arrowTween;
+
+    private void ShowArrow(Transform target)
+    {
+        arrowPrefab.SetActive(true);
+        arrowPrefab.transform.forward = mainCamera.transform.forward;
+        arrowPrefab.transform.position = target.position;
+
+        // 기존 tween이 있다면 제거
+        // if (arrowTween != null && arrowTween.IsActive())
+        // {
+        //     arrowTween.Kill();
+        // }
+
+        // 화살표 시작 위치
+        Vector3 startPos = arrowPrefab.transform.position;
+        
+        arrowTween = arrowPrefab.transform.DOMoveY(startPos.y + 0.2f, 0.5f)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetEase(Ease.InOutSine); 
+    }
+    
+    private void HideArrow()
+    {
+        arrowPrefab.SetActive(false);
     }
 }
