@@ -8,6 +8,7 @@ public class Cashier : ProductContainer
     public Transform PaperBoxPosition;
     [SerializeField] private GameObject paperBoxPrefab;
     [SerializeField] private Transform spawnParent; 
+    public GameObject TriggerCheck;
     
     // 손님 대기 관리용
     public Queue<Customer> cashierQueue => QueueManager.Instance.cashierQueue;

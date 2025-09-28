@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IProductTarget
@@ -62,10 +63,15 @@ public class Player : MonoBehaviour, IProductTarget
     {
         var container = other.GetComponent<IProductContainer>();
         if (container == null) return;
-
         Container = container;
         isClosedContainer = true;
 
+        GameObject triggerObj = GetTriggerObject(container);
+        if (triggerObj != null)
+        {
+            TriggerZoneScaleUp(triggerObj);
+        }
+        
         if (isClosedContainer) StartCoroutine(GetProductsCoroutine());
     }
 
@@ -85,7 +91,7 @@ public class Player : MonoBehaviour, IProductTarget
                         playerUI.MaxIcon.SetActive(true);
                         break;
                     }
-                    
+
                     if (oven.BakedCheck())
                     {
                         var queueBread = oven.breadQueue.Dequeue();
@@ -150,8 +156,39 @@ public class Player : MonoBehaviour, IProductTarget
                 showcase.SetBusy(false);
             }
 
+            GameObject triggerObj = GetTriggerObject(container);
+            if (triggerObj != null)
+            {
+                TriggerZoneScaleDown(triggerObj);
+            }
+            
             Container = null;
             isClosedContainer = false;
         }
+    }
+
+    private GameObject GetTriggerObject(IProductContainer container)
+    {
+        switch (container)
+        {
+            case Oven oven: return oven.TriggerCheck;
+            case Showcase showcase: return showcase.TriggerCheck;
+            case Cashier cashier: return cashier.TriggerCheck;
+            default: return null;
+        }
+    }
+    
+    public void TriggerZoneScaleUp(GameObject obj, float scaleAmount = 0.2f, float duration = 0.3f)
+    {
+        obj.transform.DOKill();
+        obj.transform.DOScale(obj.transform.localScale + Vector3.one * scaleAmount, duration)
+            .SetEase(Ease.OutBack);
+    }
+
+    public void TriggerZoneScaleDown(GameObject obj, float duration = 0.3f)
+    {
+        obj.transform.DOKill();
+        obj.transform.DOScale(Vector3.one, duration) 
+            .SetEase(Ease.OutBack);
     }
 }

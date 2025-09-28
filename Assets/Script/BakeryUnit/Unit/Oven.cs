@@ -6,7 +6,8 @@ public class Oven : ProductContainer
 {
     [SerializeField] private float bakingTime = 3f;
     public Queue<Product> breadQueue = new Queue<Product>();
-
+    public GameObject TriggerCheck;
+    
     public void Bake(Product product)
     {
         AddProduct(product);

@@ -7,6 +7,7 @@ public class Showcase : ProductContainer
     [Header("손님 대기 포인트")]
     public List<NavPoint> CustomerPoints = new List<NavPoint>();
     public Queue<Customer> Customers = new Queue<Customer>();
+    public GameObject TriggerCheck;
     
     public bool IsBusy { get; private set; }
     
