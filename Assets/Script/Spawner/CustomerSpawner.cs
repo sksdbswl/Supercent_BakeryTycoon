@@ -32,7 +32,7 @@ public class CustomerSpawner : MonoBehaviour
 
                     for (int i = 0; i < spawnCount; i++)
                     {
-                        SpawnCustomer(showcase);
+                        yield return StartCoroutine(SpawnCustomer(showcase));
                     }
                 }
             }
@@ -41,19 +41,21 @@ public class CustomerSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnCustomer(Showcase targetShowcase)
+    private IEnumerator SpawnCustomer(Showcase targetShowcase)
     {
+        yield return new WaitForSeconds(1f);
+
         GameObject obj = GenericPoolManager.Instance.Get(customerPrefab, spawnPosition.position, Quaternion.identity, spawnParent);
         obj.SetActive(true);
 
         Customer customer = obj.GetComponent<Customer>();
         customer.navAgent.Warp(spawnPosition.position);
         customer.startPos = startPos;
-        
-        // VisitState에서 이동할 쇼케이스 지정
+
         var visitState = customer.CustomerStateMachine.VisitState;
         visitState.SetTargetShowcase(targetShowcase);
     }
+
 
     private int CountActiveCustomers(Showcase showcase)
     {
