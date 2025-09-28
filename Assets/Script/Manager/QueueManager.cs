@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class QueueManager : Singleton<QueueManager>
 {
+    public enum QueueType
+    {
+        Cashier,
+        Dining,
+        Entry
+    }
+
     [Header("대기열 포인트")]
     public List<NavPoint> CashierPoints = new List<NavPoint>();
     public List<NavPoint> DiningPoints = new List<NavPoint>();
@@ -64,6 +71,7 @@ public class QueueManager : Singleton<QueueManager>
         }
 
         int index = 0;
+        
         //3. 점유시 큐에 담긴 손님의 포인트를 리스트 순서대로 적용
         foreach (var customer in queue)
         {
@@ -75,13 +83,6 @@ public class QueueManager : Singleton<QueueManager>
         }
     }
     
-    public enum QueueType
-    {
-        Cashier,
-        Dining,
-        Entry
-    }
-
     public bool CheckMyTurn(Customer customer, QueueType type)
     {
         Queue<Customer> targetQueue = type switch

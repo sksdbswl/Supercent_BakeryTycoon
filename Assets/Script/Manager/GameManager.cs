@@ -8,7 +8,8 @@ public class GameManager : Singleton<GameManager>
 {
     public CameraController mainCamera;
     public MoneyZone MoneyZone;
-    
+    private Tween arrowTween;
+
     [Header("Particle System Settings")]
     public ParticleSystem openParticlePrefab;
     
@@ -163,15 +164,12 @@ public class GameManager : Singleton<GameManager>
             currentData = null; 
         }
     }
-
-    private Tween arrowTween;
-
+    
     private void ShowArrow(Transform target)
     {
         arrowPrefab.SetActive(true);
         arrowPrefab.transform.position = target.position;
         
-        // 화살표 시작 위치
         Vector3 startPos = arrowPrefab.transform.position;
         
         arrowTween = arrowPrefab.transform.DOMoveY(startPos.y + 0.2f, 0.5f)

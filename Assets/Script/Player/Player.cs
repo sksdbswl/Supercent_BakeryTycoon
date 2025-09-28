@@ -21,17 +21,14 @@ public class Player : MonoBehaviour, IProductTarget
     
     private void Awake()
     {
-        // 초기 플레이어 설정
         animator = GetComponentInChildren<Animator>();
         Mover = GetComponent<PlayerMover>();
         playerUI = GetComponent<PlayerUI>();
             
-        // 초기 플레이어 생성 및 FSM 시작 선언
         PlayerStateMachine = new PlayerStateMachine(this);
         PlayerStateMachine.ChangeState(PlayerStateMachine.IdleState);
 
-        // 초기 플레이어 자산 설정
-        Money = 100;
+        Money = 0;
     }
 
     private void Update()
@@ -136,8 +133,6 @@ public class Player : MonoBehaviour, IProductTarget
                     }
 
                     break;
-                default:
-                    break;
             }
 
             yield return term;
@@ -167,6 +162,9 @@ public class Player : MonoBehaviour, IProductTarget
         }
     }
 
+    /// <summary>
+    /// 플레이어 유닛 트리거 확인
+    /// </summary>
     private GameObject GetTriggerObject(IProductContainer container)
     {
         switch (container)

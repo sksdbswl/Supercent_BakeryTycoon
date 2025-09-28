@@ -8,7 +8,6 @@ public enum SoundType
     Cashier,
     Money,
     Open,
-    Stand,
     CleanUp,
 }
 

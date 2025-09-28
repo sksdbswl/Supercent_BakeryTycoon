@@ -61,7 +61,6 @@ public class UnLock : MonoBehaviour
 
     private void Start()
     {
-        // UnlockType별 전략 생성
         unlockAction = UnlockActionFactory.Create(unlockType);
     }
 

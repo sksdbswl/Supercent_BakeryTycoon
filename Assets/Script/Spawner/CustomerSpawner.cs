@@ -6,7 +6,7 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private GameObject customerPrefab; 
     [SerializeField] private Transform spawnParent;     
     [SerializeField] public Transform spawnPosition;
-    [SerializeField] private float checkInterval = 10f;  // 체크 간격
+    [SerializeField] private float checkInterval = 10f;
     [SerializeField] private Transform startPos;
     
     private void Start()

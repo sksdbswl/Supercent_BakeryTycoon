@@ -14,7 +14,6 @@ public class PlayerMover : MonoBehaviour
     private CharacterController controller;
     private Camera mainCam;
 
-    // Input System
     private Vector2 moveInput; // 키보드/게임패드
     private Vector3 clickTarget;
     private bool isClickMoving = false;
@@ -48,7 +47,6 @@ public class PlayerMover : MonoBehaviour
         }
     }
     #endregion
-    
     /// <summary>
     /// 현재 입력으로부터 이동 방향을 계산
     /// </summary>

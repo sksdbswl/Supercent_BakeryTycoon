@@ -10,7 +10,6 @@ public abstract class StateMachine
     {
         if (currentState == newState) return;
         
-        // 기존 상태가 있으면 Exit 후 전환
         currentState?.Exit();
         currentState = newState;
         currentState?.Enter();

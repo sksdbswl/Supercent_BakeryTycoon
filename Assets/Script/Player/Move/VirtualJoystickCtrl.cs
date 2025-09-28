@@ -6,7 +6,7 @@ public class VirtualJoystickCtrl : MonoBehaviour
     [Header("JoyController")]
     [SerializeField] private RectTransform JoysticBackground;
     [SerializeField] private RectTransform JoysticHandle;
-    [SerializeField] private RectTransform ExtraIndicator; // 실제 입력 위치 표시용
+    [SerializeField] private RectTransform ExtraIndicator;
     [Space]
     [SerializeField] private float handleSpeed = 10f;
 

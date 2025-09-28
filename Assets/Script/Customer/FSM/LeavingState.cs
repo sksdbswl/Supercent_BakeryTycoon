@@ -42,6 +42,5 @@ public class LeavingState : CustomerBaseState
         
         stateMachine.Customer.CustomerUI.OffState();
         GenericPoolManager.Instance.Release(customer.PooledObject.OriginPrefab, customer.PooledObject.gameObject);
-
     }
 }

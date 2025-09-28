@@ -6,6 +6,7 @@ public class BuyState:CustomerBaseState
 {
     private static readonly int Open = Animator.StringToHash("Open");
     private static readonly int Close = Animator.StringToHash("Close");
+    
     public BuyState(CustomerStateMachine stateMachine) : base(stateMachine) { }
     
     public IEnumerator FinishAfterDelay(Player player, GameObject paperBox)
