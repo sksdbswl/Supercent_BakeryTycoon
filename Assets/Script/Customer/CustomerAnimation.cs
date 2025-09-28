@@ -6,4 +6,5 @@ public static class CustomerAnimationController
     public static readonly int Move  = Animator.StringToHash("Move");
     public static readonly int StackIdle  = Animator.StringToHash("StackIdle");
     public static readonly int StackMove  = Animator.StringToHash("StackMove");
+    public static readonly int Seat  = Animator.StringToHash("Seat");
 }
