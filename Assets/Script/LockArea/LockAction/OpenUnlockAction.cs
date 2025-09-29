@@ -46,9 +46,11 @@ public class OpenUnlockAction : IUnlockAction
                     anim.SetTrigger("Open");
             }
 
-            target.CurrentUnlock.gameObject.SetActive(false);
+            if (target.CurrentUnlock != null)
+            {
+                target.CurrentUnlock.gameObject.SetActive(false);
+            }
 
-            // 다음 해금 지역 초기화 (잠금 해제 가능 상태)
             if (target.NextUnlock != null)
             {
                 target.NextUnlock.SetUnlockedState(false);

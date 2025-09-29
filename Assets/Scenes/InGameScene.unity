@@ -2150,7 +2150,7 @@ PrefabInstance:
     - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
       propertyPath: Targets.Array.data[0].Activate
       value: 
-      objectReference: {fileID: 435150430}
+      objectReference: {fileID: 0}
     - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
       propertyPath: Targets.Array.data[0].CurrentUnlock
       value: 
@@ -5084,11 +5084,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1863550755}
     - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
+      propertyPath: Targets.Array.data[1].Activate
+      value: 
+      objectReference: {fileID: 1863550755}
+    - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
       propertyPath: Targets.Array.data[0].NextUnlock
       value: 
       objectReference: {fileID: 754251550}
     - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
+      propertyPath: Targets.Array.data[1].NextUnlock
+      value: 
+      objectReference: {fileID: 754251550}
+    - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
       propertyPath: Targets.Array.data[0].CurrentUnlock
+      value: 
+      objectReference: {fileID: 1672322501}
+    - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
+      propertyPath: Targets.Array.data[1].CurrentUnlock
       value: 
       objectReference: {fileID: 1672322501}
     - target: {fileID: 7754904499680246043, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
@@ -6658,7 +6670,7 @@ PrefabInstance:
       objectReference: {fileID: 654819582}
     - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
       propertyPath: Targets.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
       propertyPath: Targets.Array.data[0].Activate
@@ -6667,7 +6679,7 @@ PrefabInstance:
     - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
       propertyPath: Targets.Array.data[1].Activate
       value: 
-      objectReference: {fileID: 1134022078}
+      objectReference: {fileID: 435150430}
     - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
       propertyPath: Targets.Array.data[0].Deactivate
       value: 
@@ -6677,9 +6689,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1672322501}
     - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
+      propertyPath: Targets.Array.data[1].Deactivate
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
+      propertyPath: Targets.Array.data[1].NextUnlock
+      value: 
+      objectReference: {fileID: 754251550}
+    - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
       propertyPath: Targets.Array.data[0].CurrentUnlock
       value: 
       objectReference: {fileID: 2106380577}
+    - target: {fileID: 6211651222527106736, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
+      propertyPath: Targets.Array.data[1].CurrentUnlock
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7754904499680246041, guid: ad67389ac0cc24a96b4c04d0b223307b, type: 3}
       propertyPath: cost
       value: 30

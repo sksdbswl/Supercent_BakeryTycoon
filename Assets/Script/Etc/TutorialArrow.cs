@@ -17,6 +17,16 @@ public class TutorialArrow : MonoBehaviour
 
     private void UpdatePlayerArrow()
     {
+        if (GameManager.Instance == null || 
+            GameManager.Instance.currentData == null || 
+            GameManager.Instance.currentData.targetPos == null)
+        {
+            playerArrow.SetActive(false);
+            DontDestroyOnLoad(gameObject);
+            return;
+        }
+        
+        Debug.Log($"arrow: {playerArrow}, player: {player}");
         Vector3 direction = GameManager.Instance.currentData.targetPos.position - player.position;
         direction.y = 0; 
 

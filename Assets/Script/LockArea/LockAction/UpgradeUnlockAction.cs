@@ -10,6 +10,6 @@ public class UpgradeUnlockAction : IUnlockAction
 
     public void Execute(Player player, UnlockTarget[] targets)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("컨텐츠 준비중 !");
     }
 }
