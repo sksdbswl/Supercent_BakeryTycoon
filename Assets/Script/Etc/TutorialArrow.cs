@@ -22,7 +22,7 @@ public class TutorialArrow : MonoBehaviour
             GameManager.Instance.currentData.targetPos == null)
         {
             playerArrow.SetActive(false);
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
             return;
         }
         
