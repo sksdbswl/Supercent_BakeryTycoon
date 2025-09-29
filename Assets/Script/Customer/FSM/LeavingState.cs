@@ -30,16 +30,6 @@ public class LeavingState : CustomerBaseState
             GenericPoolManager.Instance.Release(origin.OriginPrefab, origin.gameObject);
         }
 
-        if (stateMachine.Customer.PickedUpBreads.Count > 0)
-        {
-            foreach (var bread in stateMachine.Customer.PickedUpBreads)
-            {
-                var origin = bread.GetComponent<PooledObject>();
-                bread.SetTrigger();
-                GenericPoolManager.Instance.Release(origin.OriginPrefab, origin.gameObject);
-            }
-        }
-        
         stateMachine.Customer.CustomerUI.OffState();
         GenericPoolManager.Instance.Release(customer.PooledObject.OriginPrefab, customer.PooledObject.gameObject);
     }

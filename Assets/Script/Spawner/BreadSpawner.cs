@@ -49,11 +49,7 @@ public class BreadSpawner : MonoBehaviour
                         rb.velocity = Vector3.zero;
                         StartCoroutine(AddForceAfterDelay(rb, product));
                     }
-
-                    // 빵 이동은 코루틴으로 병렬 처리
-                    //StartCoroutine(MoveAndBakeBread(bread, product));
                     
-                    // Bread 수 증가 및 Oven Bake는 이동과 동시에 처리
                     if (product != null)
                     {
                         product.Init(this, showcase);
@@ -67,7 +63,6 @@ public class BreadSpawner : MonoBehaviour
         }
     }
     
-    // Force 지연 적용
     private IEnumerator AddForceAfterDelay(Rigidbody rb, Product product)
     {
         yield return new WaitForSeconds(forceDelay);

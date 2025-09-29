@@ -61,6 +61,16 @@ public class EatState : CustomerBaseState
         stateMachine.Customer.navAgent.enabled = true;
         stateMachine.Customer.Payment(GameManager.PaymentType.Dining);
         table.Seat.Dirty();
+        
+        if (stateMachine.Customer.PickedUpBreads.Count > 0)
+        {
+            foreach (var bread in stateMachine.Customer.PickedUpBreads)
+            {
+                var origin = bread.GetComponent<PooledObject>();
+                bread.SetTrigger();
+                GenericPoolManager.Instance.Release(origin.OriginPrefab, origin.gameObject);
+            }
+        }
 
         stateMachine.ChangeState(stateMachine.LeavingState);
     }

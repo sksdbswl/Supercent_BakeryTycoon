@@ -20,7 +20,6 @@ public class CustomerSpawner : MonoBehaviour
         {
             foreach (var showcase in ShowCaseManager.Instance.Showcases)
             {
-                // 쇼케이스별 현재 대기 인원
                 int activeCount = CountActiveCustomers(showcase);
                 int maxShowcaseCustomers = 5;
 

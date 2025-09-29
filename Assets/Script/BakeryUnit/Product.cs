@@ -132,12 +132,10 @@ public class Product : MonoBehaviour
     {
         int count = originShowcase.Products.Count - 1 ;
 
-        // 배치 규칙
         int perRow = 5;   // 가로 2
         int perCol = 2;   // 세로 5
         int perLayer = perRow * perCol; // 한 층에 10개
 
-        // 현재 인덱스에 따라 위치 계산
         int layer = count / perLayer;               // 몇 번째 층인지
         int rowInLayer = (count % perLayer) / perRow; // 세로 줄
         int colInRow = count % perRow;              // 가로 칸

@@ -20,14 +20,6 @@ public class BuyState:CustomerBaseState
 
     public void FinishBuying(Player player)
     {
-        // 손님이 들고 있는 빵 풀로 반환
-        while (stateMachine.Customer.PickedUpBreads.Count > 0)
-        {
-            Product bread = stateMachine.Customer.PickedUpBreads.Pop();
-            GenericPoolManager.Instance.Release(bread.PooledObject.OriginPrefab, bread.gameObject);
-        }
-        
-        // 계산 끝나면 포인트 해제
         QueueManager.Instance.ReleaseCashierPoint(stateMachine.Customer.currentPoint);
         stateMachine.Customer.currentPoint = null;
         
