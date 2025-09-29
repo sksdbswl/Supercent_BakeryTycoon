@@ -28,7 +28,8 @@ public class Cashier : ProductContainer
     public Customer GetCurrentCustomer()
     {
         if (cashierQueue.Count == 0) return null;
-        
-        return cashierQueue.Peek();
+
+        var customer = cashierQueue.Peek();
+        return customer.IsReadyToPay ? customer : null;
     }
 }

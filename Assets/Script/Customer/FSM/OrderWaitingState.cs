@@ -11,6 +11,7 @@ public class OrderWaitingState : CustomerBaseState
 
     public override void Enter()
     {
+        stateMachine.Customer.IsReadyToPay = false;
         stateMachine.Customer.isPickingAnimationPlayed = false;
         wantsToEatIn = stateMachine.Customer.customerData.wantsToEatIn;
         myQueueType = wantsToEatIn ? QueueManager.QueueType.Dining : QueueManager.QueueType.Cashier;
@@ -51,7 +52,8 @@ public class OrderWaitingState : CustomerBaseState
         // 이동 완료 후 Idle 애니메이션
         CustomerAnimationController.ResetAllTriggers(customer.animator);
         customer.animator.SetTrigger(CustomerAnimationController.StackIdle);
-
+        stateMachine.Customer.IsReadyToPay = true;
+        
         // 맨 앞 자리 될 때까지 대기
         while (!QueueManager.Instance.CheckMyTurn(customer, myQueueType))
         {

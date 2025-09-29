@@ -19,7 +19,8 @@ public class Customer : MonoBehaviour, IProductTarget
     public CustomerUI CustomerUI { get; set; }
     public Transform startPos;
     public bool isPickingAnimationPlayed = false;
-    
+    public bool IsReadyToPay { get; set; }
+
     private void OnEnable()
     {
         PickedUpBreads.Clear();       

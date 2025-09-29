@@ -26,7 +26,6 @@ public class TutorialArrow : MonoBehaviour
             return;
         }
         
-        Debug.Log($"arrow: {playerArrow}, player: {player}");
         Vector3 direction = GameManager.Instance.currentData.targetPos.position - player.position;
         direction.y = 0; 
 
