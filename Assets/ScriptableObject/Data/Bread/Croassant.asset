@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breadName: Croassant
   icon: {fileID: 21300000, guid: d0e306dc7c8603d4199e01fcfbfe2cb4, type: 3}
-  price: 3
+  price: 10
   description: "\uD06C\uB85C\uC544\uC0C1"

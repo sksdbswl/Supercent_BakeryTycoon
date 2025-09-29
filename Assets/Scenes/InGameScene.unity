@@ -431,10 +431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba00caff1ab4225af47013d53b5bcff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  croassantPrefab: {fileID: 7814139412610811324, guid: 9fe9c8e530a08434aae618f0fb5d76f4, type: 3}
-  croassantParent: {fileID: 1191478035}
-  customerPrefab: {fileID: 3769144362882373593, guid: 4dbce6cd6aeca456abcb59c6d4b6eaca, type: 3}
-  customerParent: {fileID: 1826704801}
 --- !u!114 &151776472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4999,7 +4995,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1522374073}
   m_Layer: 0
-  m_Name: PlaceToArea
+  m_Name: InstanceArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
